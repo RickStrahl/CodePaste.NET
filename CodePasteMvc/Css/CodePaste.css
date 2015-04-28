@@ -1,0 +1,328 @@
+﻿body
+{		
+	background: #eeeeee; 
+	background-repeat:repeat;
+	min-width: 500px;
+}
+pre {
+    background-color: transparent;
+}
+a:hover {
+    color: #c73030;
+    text-decoration: none;
+}
+#openid_identifier
+{
+    width: 400px;
+    padding-left: 25px;
+    background-image: url(images/openid-icon.png);
+    background-repeat: no-repeat;    
+    background-color:#F5F7FA;
+    border: solid 1px lightsteelblue;
+}
+#imgBanner 
+{	
+	position: absolute; 
+	top: 0px; 
+	left: 0px;
+	z-index:2;		
+	background-color: #323232;	
+	height: 95px;	
+	width: 100%;	
+	cursor: pointer;
+}
+#divHeaderBar
+{
+	position: absolute; z-index: 3;
+	top: 87px; right: 0; left: 110px; 
+	padding: 6px; 
+	padding-left: 10px; 
+	background: #535353;
+	color: White;	 
+	min-width: 600px; 	
+	border-radius: 5px 0 0 5px;
+	box-shadow: 4px 4px 3px #535353;
+}
+#divHeaderBar a, #divHeaderBar a:visited
+{
+	color: White;
+}
+#divHeaderBar a:hover
+{
+	color: Black;
+}
+.labelheader,.labelheaderblock
+{
+	margin: 10px 0px 2px 0px;	
+	font-weight: bold;
+}
+.labelheaderblock
+{      
+    display: block;
+    margin-bottom: 5px;
+}
+.codedisplay {
+    padding: 15px;
+    opacity: .01;
+    min-height: 300px;
+}
+#maincontainer
+{
+    min-height: 550px;
+	min-width: 480px;    
+	padding: 5px;	
+	margin-top: 120px;		
+}
+
+#divSidebar {
+    position: absolute;
+    top: 130px;
+    right: 15px;
+    margin-left: 15px;
+    padding-top: 30px;
+    text-align: center;
+    font-size: 80%;
+    vertical-align: top;
+}
+#divContainerContent
+{      
+  min-width: 400px;
+    
+   margin: 0px 230px 20px 20px;
+    
+  background: white;
+  padding: 15px;     
+  border: 1px solid silver;
+  border-radius: 10px 10px 10px 10px;
+  xbox-shadow: 3px 3px 6px #535353;
+}
+
+#txtSearch
+{
+	background-image: url(images/search.gif);
+	background-position: right;
+    background-repeat: no-repeat;  
+    opacity: .70;      
+}
+#txtSearch:focus
+{
+	opacity: 1;	
+}
+#Language
+{
+	min-width: 150px;	
+}
+#Code
+{
+	display: block;
+	font-family: "Liberation Mono", Consolas, "Courier New", monospace !important;
+	font-size: 100%;
+	width: 100%;
+	height: 300px;
+	margin-top: 10px; 
+	white-space: pre;	
+}
+.pagesubmitbutton
+{
+	display: block;
+	width: 80px;
+	height: 30px;
+	font-weight: bold;	
+	margin-top: 10px;
+}
+
+input[type=text]:focus, textarea:focus, select:focus
+{
+	background-color: Ivory ;
+}
+
+.field-validation-error
+{
+    color: #ff0000;
+}
+
+.input-validation-error
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors
+{
+    font-weight: bold;
+    color: maroon;
+}
+.logindisplay
+{
+	position: absolute;
+	right: 10px;
+	top: 60px;
+	color: White;
+	width: 400px;
+	z-index: 10;
+	text-align: right;
+}
+.logindisplay a, .logindisplay a:visited
+{
+	color: White;
+	text-decoration: none;
+}
+.logindisplay a:hover
+{
+	color: Black;
+}
+.listpageheader
+{
+	font-size: 140%;
+	font-weight: bold;
+	color: Maroon;
+	padding-bottom: 5px;	
+	margin-bottom: 15px;
+	border-bottom: solid 1px navy;
+}
+.footer
+{
+	border-top: solid 8px black;	
+	color: White;
+	padding: 10px;
+	padding-bottom: 50px;
+	margin-top: 20px;
+	font-size: 0.825em
+background: #000000; /* Old browsers */
+background: -moz-linear-gradient(-45deg,  #000000 0%, #535353 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#000000), color-stop(100%,#535353)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(-45deg,  #000000 0%,#535353 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(-45deg,  #000000 0%,#535353 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(-45deg,  #000000 0%,#535353 100%); /* IE10+ */
+background: linear-gradient(-45deg,  #000000 0%,#535353 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#000000', endColorstr='#535353',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+}	
+.footer a, .footer a:hover
+{
+	color: White;	
+}
+fieldset
+{
+	border-radius: 5px 5px 5px 5px;
+}
+.fieldmessage
+{
+	font-size: 80%;
+	color: Navy;		
+}
+.editbutton,.editbuttonright
+{
+	background-image: url(images/editwhite.gif);	
+	cursor: pointer;
+	width: 16px;
+	height: 16px;		
+}
+.editbuttonright
+{
+	float: right;
+}
+.editbutton:hover,.editbuttonright:hover
+{
+	background-image: url(images/editblue.gif);	
+}
+.snippetcomment,.snippetcommentauthor
+{
+	padding: 8px;	
+	background-image: url(images/LightBlueGradient.png);
+	background-repeat: repeat-x;
+	background-position: 0px -18px;
+	border: solid 1px silver;
+	margin: 5px;
+	margin-left: 150px;
+    border-radius: 5px 5px 5px 5px;
+}
+.snippetcommentauthor
+{
+	background-image: url(images/LightOrangeGradient.png);
+}
+.snippetcommentheader
+{
+	text-align: right; 
+	font-style: italic;
+	margin-bottom: 15px;
+}
+.snippet,.snippetofauthor
+{
+	padding: 10px;	
+	background-image: url(images/LightBlueGradient.png);
+	background-repeat: repeat-x;
+	background-position: 0px -10px;
+	border: solid 1px silver;
+	margin: 5px;
+    border-radius: 5px;
+} 
+.snippetofauthor
+{
+	background-image: url(images/LightOrangeGradient.png);
+}
+.snippetcode
+{		
+	overflow-x: auto;
+}
+.snippettitle
+{
+	margin-bottom: 10px;
+	min-height: 15px;
+    font-weight: bold;
+}
+.snippetauthor
+{
+	float: right;
+	font-size: 0.8em;
+	font-style: italic;
+}
+.snippetlang
+{
+	float: right;
+	font-size: 0.8em;	
+}
+.snippetcommentcount
+{
+	float: left;
+	background-image: url(images/comment.gif);
+	background-repeat: no-repeat;
+	background-position: 0px 3px;
+	padding: 5px;
+	padding-left: 20px;
+	font-size: 0.80em;
+}
+.viewcount
+{
+	float: left;
+	background-image: url(images/users.gif);
+	background-repeat: no-repeat;
+	background-position: 0px 3px;
+	padding: 5px;
+	padding-left: 20px;
+	padding-right: 10px;
+	font-size: 0.8em;
+}
+.user
+{
+	padding: 10px;	
+	background-image: url(images/LightBlueGradient.png);
+	background-repeat: repeat-x;
+	background-position: 0px -5px;
+	border: solid 1px silver;
+	margin: 5px;
+    border-radius: 5px;
+} 
+.username
+{
+	font-weight: bold;
+}
+
+@media(max-width: 767px) {
+    #divSidebar {
+        display: none;
+    }
+    #divContainerContent {
+        margin-right: 20px;     
+    }
+}

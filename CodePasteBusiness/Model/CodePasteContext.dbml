@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="CodePaste" EntityNamespace="CodePasteBusiness" ContextNamespace="CodePasteBusiness" Class="CodePasteDataContext" BaseType="Westwind.BusinessFramework.LinqToSql.DataContextSql" Serialization="Unidirectional" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=CodePaste;Integrated Security=True" SettingsObjectName="CodePasteBusiness.Properties.Settings" SettingsPropertyName="CodePasteConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Comments" Member="Comments">
+    <Type Name="Comment">
+      <Column Name="Id" Type="System.String" DbType="NVarChar(40) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SnippetId" Type="System.String" DbType="NVarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="CommentText" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
+      <Column Name="Author" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Entered" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tstamp" AccessModifier="Internal" Type="System.Data.Linq.Binary" DbType="rowversion NOT NULL" CanBeNull="false" IsVersion="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Favorites" Member="Favorites" AccessModifier="Internal">
+    <Type Name="Favorite">
+      <Column Name="Id" Type="System.String" DbType="NVarChar(40) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SnippetId" Storage="_RelatedId" Type="System.String" DbType="nvarchar(40)" CanBeNull="false" />
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Entered" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="tstamp" AccessModifier="Internal" Type="System.Data.Linq.Binary" DbType="rowversion NOT NULL" CanBeNull="false" IsVersion="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserGroups" Member="UserGroups">
+    <Type Name="UserGroup">
+      <Column Name="Id" Type="System.String" DbType="NVarChar(40) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="GroupUserId" Type="System.String" DbType="NVarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="GroupName" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Access" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="tstamp" AccessModifier="Internal" Type="System.Data.Linq.Binary" DbType="rowversion NOT NULL" CanBeNull="false" IsVersion="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SnippetClicks" Member="SnippetClicks">
+    <Type Name="SnippetClick">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SnippetId" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="IpAddress" Type="System.String" DbType="NVarChar(40) NOT NULL" CanBeNull="false" />
+      <Column Name="Entered" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UserTokens" Member="UserTokens">
+    <Type Name="UserToken">
+      <Column Name="Token" Type="System.String" DbType="nvarchar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.String" DbType="nvarchar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Entered" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Expires" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tstamp" Type="System.Data.Linq.Binary" DbType="rowversion NOT NULL" CanBeNull="false" IsVersion="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CodeSnippets" Member="CodeSnippets">
+    <Type Name="CodeSnippet">
+      <Column Name="Id" Type="System.String" DbType="NVarChar(40) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(40)" CanBeNull="true" />
+      <Column Name="Code" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Comment" Type="System.String" DbType="NVarChar(2000)" CanBeNull="true" />
+      <Column Name="Tags" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="IsPrivate" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="ShowLineNumbers" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Author" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Theme" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Language" Type="System.String" DbType="nvarchar(40)" CanBeNull="true" />
+      <Column Name="IsAbuse" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Entered" Type="System.DateTime" DbType="DateTime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Views" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsTemporary" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="tstamp" AccessModifier="Internal" Type="System.Data.Linq.Binary" DbType="rowversion NOT NULL" CanBeNull="false" IsVersion="true" />
+      <Column Name="LinkedUrl" Type="System.String" DbType="nvarchar(512)" CanBeNull="true" />
+      <Column Name="LinkedUrlUpdated" Storage="_LiinkedUrlUpdated" Type="System.DateTime" DbType="datetime NOT NULL" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FormattedCode" Type="System.String" DbType="nvarchar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="Id" Type="System.String" DbType="NVarChar(40) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastLanguage" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Theme" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="InActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="IsAdmin" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Visits" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Snippets" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Updated" AutoSync="Always" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Entered" AutoSync="Always" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="OpenId" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="OpenIdClaim" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="Validator" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="tstamp" AccessModifier="Internal" Type="System.Data.Linq.Binary" DbType="rowversion NOT NULL" CanBeNull="false" IsVersion="true" />      
+    </Type>
+  </Table>
+  <Table Name="dbo.AdditionalSnippets" Member="AdditionalSnippets">
+    <Type Name="AdditionalSnippet">
+      <Column Name="Id" Type="System.String" DbType="NVarChar(40) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="SnippetId" Type="System.String" DbType="NVarChar(40)" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(40)" CanBeNull="true" />
+      <Column Name="Code" Type="System.String" DbType="NText" CanBeNull="true" />
+      <Column Name="Language" Type="System.String" DbType="NVarChar(40)" CanBeNull="true" />
+      <Column Name="tstamp" AccessModifier="Internal" Type="System.Data.Linq.Binary" DbType="rowversion" CanBeNull="true" IsVersion="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SpamKeywords" Member="SpamKeywords">
+    <Type Name="SpamKeyword">
+      <Column Name="Pk" AutoSync="Never" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="Keyword" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.LogSnippetClick" Method="LogSnippetClick">
+    <Parameter Name="SnippetId" Parameter="snippetId" Type="System.String" DbType="VarChar(MAX)" />
+    <Parameter Name="IpAddress" Parameter="ipAddress" Type="System.String" DbType="VarChar(MAX)" />
+    <ElementType Name="LogSnippetClickResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+</Database>

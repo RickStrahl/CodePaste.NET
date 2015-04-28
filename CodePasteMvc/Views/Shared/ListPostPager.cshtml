@@ -1,0 +1,24 @@
+@model CodePasteMvc.Controllers.PagingDetails
+
+ @if (Model.RenderPager)
+ {
+     <div class="pager">            
+         @for (int i = 1; i <= Model.PageCount; i++)
+         {
+
+             if (Model.Page != i)
+             {
+                 <a href="javascript: @(Model.ClientPageClickHandler)(@i);" class="pagebutton">@i</a>
+             }
+             else
+             {
+                 <span class="pagebutton-selected">@i</span>
+             }
+
+         }
+     </div>
+ }
+ 
+   
+
+

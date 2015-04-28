@@ -1,0 +1,103 @@
+@using System.Web.UI.WebControls
+@using CodePasteBusiness
+@using CodePasteMvc
+@using CodePasteMvc.Controllers
+@using Westwind.Utilities
+@using Westwind.Web
+@using Westwind.Web.Mvc
+@{
+    Layout = "~/views/shared/_layout.cshtml";
+}
+@section headers {
+
+    <title>CodePaste.Net - Snippet Listing</title>
+    <meta id="metaKeyWords" name="Keywords" content="CodePaste,Paste,Code,DotNet,.Net,C#,ASP.NET,AJAX,JQuery,Rick Strahl,HTML,CSS,JavScript,ADO.Net,West Wind Technologies,WebLog,Blog" />
+    <meta id="metaDescription" name="Description" content="CodePage.NET - paste and link .NET code for referencing from Social Network sites. Store, link and organize your code snippets." />
+    <script src="~/Scripts/List.js" type="text/javascript"></script>
+
+    <style type="text/css">
+    </style>
+}
+@{
+    // Create serverVars instance for JavaScript vars visible in .js file
+    var serverVars = new JsonVariables( "serverVars");
+    serverVars.Add("baseUrl", Request.ApplicationPath);
+    serverVars.Add("callbackHandler", Url.Content("~/CodePasteHandler.ashx"));
+    Response.Write("<script>" + serverVars.ToHtmlString(true) + "</script>");
+
+    // simplify strongly typed var access in View
+    busCodeSnippet busSnippet = ViewData["busSnippet"] as busCodeSnippet;
+    IEnumerable<CodeSnippetListItem> snippetList = ViewData["SnippetList"] as IEnumerable<CodeSnippetListItem>;
+    string title = ViewData["PageTitle"] as string ?? string.Empty;
+    CodePasteMvc.Controllers.SnippetController controller = ViewContext.Controller as CodePasteMvc.Controllers.SnippetController;
+    AppUserState UserState = ViewData["UserState"] as AppUserState;
+}
+
+@Html.Raw(((ErrorDisplay)this.ViewData["ErrorDisplay"]).Show(450, true))
+
+<div class="rightalign" style="font-size: 0.825em">
+    Format:
+    <select id="ApiFormats" style="font-size: 8pt">
+        <option value="Html">Web Page</option>
+        <option value="Xml" title="?format=xml">Xml</option>
+        <option value="Json" title="?format=json">Json</option>
+        <option value="Rss" title="?format=rss">Rss Feed</option>
+        <option value="Atom" title="?format=atom">Atom Feed</option>
+    </select>
+</div>
+<div class="listpageheader">@title</div>
+
+@{
+    bool OddEven = true;
+    foreach (CodeSnippetListItem snip in snippetList)
+    {
+
+        <div class="@( !string.IsNullOrEmpty(snip.UserId) && snip.UserId == UserState.UserId ? "snippetofauthor" : "snippet")" id="snippet_@snip.Id">
+            <div class="snippetlang">
+                @if(snip.Language != "text" && snip.Language != "NoFormat")
+                {
+                    <a href="~/list/language/@snip.Language">@snip.Language</a>
+                }
+            </div>
+            <div class="snippettitle">
+                <a href='@Url.Action("Show", new {id = snip.Id})'>
+                    @(string.IsNullOrEmpty(snip.Title) ?
+                    "No Title" :
+                    Html.Encode(snip.Title))
+                </a>
+
+            </div>
+            <div class="snippetcode">
+                <pre>@busSnippet.GetCodeLines(snip.Code, 10)</pre>
+            </div>
+
+            <div class="toolbarcontainer" style="margin-top: 5px;">
+                <div class="snippetauthor">@Html.Raw(!string.IsNullOrEmpty(snip.Author) ? " by " + snip.GetAuthorLink() + "&nbsp;&nbsp;" : string.Empty)   @TimeUtils.FriendlyDateString(snip.Entered, true)</div>
+                <div><small>Tags: @Html.Raw(Url.GetTagLinkList(snip.Tags))</small></div>
+            </div>
+
+            <div class="rightalign">
+                @if (snip.Views > 1)
+            {
+                    <div class="viewcount">
+                        @snip.Views Views
+                    </div>
+            }
+
+                <div class="snippetcommentcount">
+                    @(snip.CommentCount < 1 ? "no" : snip.CommentCount.ToString()) comments
+                </div>
+            </div>
+
+            @if (UserState.IsAdmin)
+        {
+                <div style="font-size: smaller; margin: 5px 0"><a href="javascript:{}" class="removelink">Remove Snippet</a></div>
+        }
+        else
+        {
+                <span>&nbsp;</span>
+        }
+        </div>
+    }
+}
+

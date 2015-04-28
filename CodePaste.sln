@@ -1,0 +1,92 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.22823.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B218E292-7657-4CBB-B377-2E48BE3FE776}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodePasteBusiness", "CodePasteBusiness\CodePasteBusiness.csproj", "{F6060956-3E40-48DC-94E3-44A041083208}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodePasteMvc", "CodePasteMvc\CodePasteMvc.csproj", "{57E0E75B-F3EB-41A5-82D6-A91DB1AAC500}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpFormat", "CSHARPFORMAT\CSharpFormat.csproj", "{7A17C857-F1ED-465F-A455-E0607E681F69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Westwind.Utilities", "..\WestwindToolkit\Westwind.Utilities\Westwind.Utilities.csproj", "{1C9829A8-8979-4493-863C-635726F8A61C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		DemoMode|Any CPU = DemoMode|Any CPU
+		Deploy|Any CPU = Deploy|Any CPU
+		net40|Any CPU = net40|Any CPU
+		Release|Any CPU = Release|Any CPU
+		SandBox|Any CPU = SandBox|Any CPU
+		Shareware|Any CPU = Shareware|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F6060956-3E40-48DC-94E3-44A041083208}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6060956-3E40-48DC-94E3-44A041083208}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6060956-3E40-48DC-94E3-44A041083208}.DemoMode|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6060956-3E40-48DC-94E3-44A041083208}.DemoMode|Any CPU.Build.0 = Debug|Any CPU
+		{F6060956-3E40-48DC-94E3-44A041083208}.Deploy|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6060956-3E40-48DC-94E3-44A041083208}.Deploy|Any CPU.Build.0 = Debug|Any CPU
+		{F6060956-3E40-48DC-94E3-44A041083208}.net40|Any CPU.ActiveCfg = Release|Any CPU
+		{F6060956-3E40-48DC-94E3-44A041083208}.net40|Any CPU.Build.0 = Release|Any CPU
+		{F6060956-3E40-48DC-94E3-44A041083208}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6060956-3E40-48DC-94E3-44A041083208}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6060956-3E40-48DC-94E3-44A041083208}.SandBox|Any CPU.ActiveCfg = Release|Any CPU
+		{F6060956-3E40-48DC-94E3-44A041083208}.SandBox|Any CPU.Build.0 = Release|Any CPU
+		{F6060956-3E40-48DC-94E3-44A041083208}.Shareware|Any CPU.ActiveCfg = Release|Any CPU
+		{F6060956-3E40-48DC-94E3-44A041083208}.Shareware|Any CPU.Build.0 = Release|Any CPU
+		{57E0E75B-F3EB-41A5-82D6-A91DB1AAC500}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57E0E75B-F3EB-41A5-82D6-A91DB1AAC500}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57E0E75B-F3EB-41A5-82D6-A91DB1AAC500}.DemoMode|Any CPU.ActiveCfg = Debug|Any CPU
+		{57E0E75B-F3EB-41A5-82D6-A91DB1AAC500}.DemoMode|Any CPU.Build.0 = Debug|Any CPU
+		{57E0E75B-F3EB-41A5-82D6-A91DB1AAC500}.Deploy|Any CPU.ActiveCfg = Debug|Any CPU
+		{57E0E75B-F3EB-41A5-82D6-A91DB1AAC500}.Deploy|Any CPU.Build.0 = Debug|Any CPU
+		{57E0E75B-F3EB-41A5-82D6-A91DB1AAC500}.net40|Any CPU.ActiveCfg = Release|Any CPU
+		{57E0E75B-F3EB-41A5-82D6-A91DB1AAC500}.net40|Any CPU.Build.0 = Release|Any CPU
+		{57E0E75B-F3EB-41A5-82D6-A91DB1AAC500}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57E0E75B-F3EB-41A5-82D6-A91DB1AAC500}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57E0E75B-F3EB-41A5-82D6-A91DB1AAC500}.SandBox|Any CPU.ActiveCfg = Release|Any CPU
+		{57E0E75B-F3EB-41A5-82D6-A91DB1AAC500}.SandBox|Any CPU.Build.0 = Release|Any CPU
+		{57E0E75B-F3EB-41A5-82D6-A91DB1AAC500}.Shareware|Any CPU.ActiveCfg = Release|Any CPU
+		{57E0E75B-F3EB-41A5-82D6-A91DB1AAC500}.Shareware|Any CPU.Build.0 = Release|Any CPU
+		{7A17C857-F1ED-465F-A455-E0607E681F69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A17C857-F1ED-465F-A455-E0607E681F69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A17C857-F1ED-465F-A455-E0607E681F69}.DemoMode|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A17C857-F1ED-465F-A455-E0607E681F69}.DemoMode|Any CPU.Build.0 = Debug|Any CPU
+		{7A17C857-F1ED-465F-A455-E0607E681F69}.Deploy|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A17C857-F1ED-465F-A455-E0607E681F69}.Deploy|Any CPU.Build.0 = Debug|Any CPU
+		{7A17C857-F1ED-465F-A455-E0607E681F69}.net40|Any CPU.ActiveCfg = Release|Any CPU
+		{7A17C857-F1ED-465F-A455-E0607E681F69}.net40|Any CPU.Build.0 = Release|Any CPU
+		{7A17C857-F1ED-465F-A455-E0607E681F69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A17C857-F1ED-465F-A455-E0607E681F69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A17C857-F1ED-465F-A455-E0607E681F69}.SandBox|Any CPU.ActiveCfg = Release|Any CPU
+		{7A17C857-F1ED-465F-A455-E0607E681F69}.SandBox|Any CPU.Build.0 = Release|Any CPU
+		{7A17C857-F1ED-465F-A455-E0607E681F69}.Shareware|Any CPU.ActiveCfg = Release|Any CPU
+		{7A17C857-F1ED-465F-A455-E0607E681F69}.Shareware|Any CPU.Build.0 = Release|Any CPU
+		{1C9829A8-8979-4493-863C-635726F8A61C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C9829A8-8979-4493-863C-635726F8A61C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C9829A8-8979-4493-863C-635726F8A61C}.DemoMode|Any CPU.ActiveCfg = Deploy|Any CPU
+		{1C9829A8-8979-4493-863C-635726F8A61C}.DemoMode|Any CPU.Build.0 = Deploy|Any CPU
+		{1C9829A8-8979-4493-863C-635726F8A61C}.Deploy|Any CPU.ActiveCfg = Deploy|Any CPU
+		{1C9829A8-8979-4493-863C-635726F8A61C}.Deploy|Any CPU.Build.0 = Deploy|Any CPU
+		{1C9829A8-8979-4493-863C-635726F8A61C}.net40|Any CPU.ActiveCfg = net40|Any CPU
+		{1C9829A8-8979-4493-863C-635726F8A61C}.net40|Any CPU.Build.0 = net40|Any CPU
+		{1C9829A8-8979-4493-863C-635726F8A61C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C9829A8-8979-4493-863C-635726F8A61C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C9829A8-8979-4493-863C-635726F8A61C}.SandBox|Any CPU.ActiveCfg = SandBox|Any CPU
+		{1C9829A8-8979-4493-863C-635726F8A61C}.SandBox|Any CPU.Build.0 = SandBox|Any CPU
+		{1C9829A8-8979-4493-863C-635726F8A61C}.Shareware|Any CPU.ActiveCfg = SandBox|Any CPU
+		{1C9829A8-8979-4493-863C-635726F8A61C}.Shareware|Any CPU.Build.0 = SandBox|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

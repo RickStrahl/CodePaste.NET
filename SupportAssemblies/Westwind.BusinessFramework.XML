@@ -1,0 +1,2698 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Westwind.BusinessFramework</name>
+    </assembly>
+    <members>
+        <member name="T:Westwind.BusinessFramework.BusinessObjectOptions">
+            <summary>
+            Contains public options that can be set to affect how
+            the business object operates
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.BusinessObjectOptions.ThrowExceptions">
+            <summary>
+            Determines whether exceptions are thrown on errors
+            or whether error messages are merely set.
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.BusinessObjectOptions.TrackingMode">
+            <summary>
+            Determines how LINQ is used for object tracking. 
+            
+            In connected mode all changes are tracked until SubmitChanges or Save
+            is called. Save() reverts to calling SubmitChanges.
+            
+            In disconnected mode a new context is created for each data operation
+            and save uses Attach to reattach to a context.
+            
+            Use Connected for much better performance use disconnected if you
+            prefer atomic operations in the database with individual entities.
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.BusinessObjectOptions.ConnectionString">
+            <summary>
+            Optional Connection string that is used with the data context
+            
+            Note: This property should be set in the constructor/Initialize of the
+            business object. 
+            
+            If blank the default context connection string is used.
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.BusinessObjectOptions.ConflictResolutionMode">
+            <summary>
+            Determines the default Conflict Resolution mode for changes submitted
+            to the context.
+            </summary>
+        </member>
+        <member name="T:Westwind.BusinessFramework.ConflictResolutionModes">
+            <summary>
+            Determines how conflicts on SubmitChanges are handled.
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.ConflictResolutionModes.None">
+            <summary>
+            No Conflict resolution - nothing is done when conflicts
+            occur. You can check Context.ChangeConflicts manually
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.ConflictResolutionModes.ForceChanges">
+            <summary>
+            Forces all changes to get written. Last one wins strategy
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.ConflictResolutionModes.AbortChanges">
+            <summary>
+            Aborts all changes and updates the entities with the values
+            from the database.
+            </summary>
+        </member>
+        <member name="T:Westwind.BusinessFramework.ResultListTypes">
+            <summary>
+            ADO.NET Result types
+            </summary>
+        </member>
+        <member name="T:Westwind.BusinessFramework.TrackingModes">
+            <summary>
+            Determines how LINQ Change Tracking is applied
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.TrackingModes.Connected">
+            <summary>
+            Uses a LINQ connected data context for change management
+            whenever possible. Save and SubmitChanges operation is used
+            to persist changes. In general this provides better performance
+            for change tracking.
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.TrackingModes.Disconnected">
+            <summary>
+            Creates a new DataContext for each operation and performs .Save 
+            operations by reconnecting to the DataContext.
+            </summary>
+        </member>
+        <member name="T:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2">
+            <summary>
+            Business object base class that acts as a container for a base entity
+            type and a DbContext instance. Subclasses of this business object
+            should be used to implement most data related logic that deals with
+            creating, updating, removing and querying of data use EF Code First.
+            
+            The business object provides base CRUD methods like Load, NewEntity,
+            Remove. The Save() method uses the EF specific context based SaveChanges
+            which saves all pending changes (not just those for the current entity 
+            and its relations). As such these business objects should be used as
+            atomically as possible and call Save() as often as possible to change
+            pending data.
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <typeparam name="TContext"></typeparam>
+        </member>
+        <member name="T:Westwind.BusinessFramework.EfCodeFirst.IBusinessObject`1">
+            <summary>
+            Marker interface for business object and so we have access to
+            DbContext instance.
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.#ctor">
+            <summary>
+            Base constructor using default behavior.
+            Loads a new DbContext
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.#ctor(Westwind.BusinessFramework.EfCodeFirst.IBusinessObject{`1})">
+            <summary>
+            Use this constructor to share a DbContext 
+            from another business object.
+            
+            Useful for 'child business' objects that
+            need to operate from within internal business object
+            operations.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.Initialize">
+            <summary>
+            Override to hook post Context intialization
+            Fired by all constructors.
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.InitializeInternal">
+            <summary>
+            Internal common pre-Context creation initialization code
+            fired by all constructors
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.NewEntity">
+            <summary>
+            Creates a new instance of an Entity tracked
+            by the DbContext.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.OnNewEntity(`0)">
+            <summary>
+            Overridable method that allows adding post NewEntity functionaly
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.Load(System.Int32)">
+            <summary>
+            Loads in instance based on its integer id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.Load(System.Guid)">
+            <summary>
+            Loads in instance based on its Guid id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.Load(System.String)">
+            <summary>
+            Loads in instance based on its string id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.LoadBase(System.Object)">
+            <summary>
+            Loads an instance based on its key field id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.LoadBase(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Loads an entity based on a Lambda expression
+            </summary>
+            <param name="whereClauseLambda"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.OnEntityLoaded(`0)">
+            <summary>
+            Fired after an entity has been loaded with the .Load() method
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.Attach(`0,System.Boolean)">
+            <summary>
+            Attaches an untracked to the internal context and 
+            marks it as modified optionally
+            Note: child elements need to be manually added.
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.Attach(System.Object,System.Boolean)">
+            <summary>
+            Attaches an untracked entity to an entity set and marks it as modified.
+            Note: child elements need to be manually added.
+            </summary>
+            <param name="entity"></param>
+            <param name="entitySet"></param>
+            <param name="markAsModified"></param>
+            <param name="addNew"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.Delete(`0,System.Data.Entity.DbSet,System.Boolean)">
+            <summary>
+            removes an individual entity instance.
+            
+            This method allows specifying an entity in a dbSet other
+            then the main one as long as it's specified by the dbSet
+            parameter.
+            </summary>
+            <param name="entity"></param>
+            <param name="dbSet">Optional - 
+            Allows specifying the DbSet to which the entity passed belongs.
+            If not specified the current DbSet for the current entity is used </param>
+            <param name="saveChanges">Optional - 
+            If true does a Context.SaveChanges. Set to false
+            when other changes in the Context are pending and you don't want them to commit
+            immediately
+            </param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.Delete(System.Object)">
+            <summary>
+            Deletes an entity from the main entity set
+            based on a key value.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.OnBeforeDelete(`0)">
+            <summary>
+            Called before a delete operation occurs
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.OnAfterDelete(`0)">
+            <summary>
+            Called after a resource is deleted. Runs within the same
+            transaction scope
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.AbortChanges">
+            <summary>
+            Cancel Changes on the current connected context
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.Save(`0)">
+            <summary>
+            Saves all changes. 
+            </summary>
+            <remarks>
+            This method calls Context.SaveChanges() so it saves
+            all changes made in the context not just changes made
+            to the current entity. It's crucial to Save() as
+            atomically as possible or else use separate Business
+            object instances with separate contexts.
+            </remarks>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.OnBeforeSave(`0)">
+            <summary>
+            Hook point fired just before the save method is called.
+            
+            Override this method to fix up entity values before a save
+            operation occurs.                
+            </summary>
+            <returns>return true to save or false to avoid saving</returns>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.OnAfterSave(`0)">
+            <summary>
+            Hook point fired after the Save operation has completed
+            successfully. Note doesn't fire if the Save() operation
+            fails.
+            
+            Override this method to fix up or fire actions after
+            the Save operation completes.
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.Validate(`0,System.Boolean)">
+            <summary>
+            Validate() is used to validate business rules on the business object. 
+            Generally this method consists of a bunch of if statements that validate 
+            the data of the business object and adds any errors to the 
+            <see>wwBusiness.ValidationErrors</see> collection.
+            
+            If the <see>wwBusiness.AutoValidate</see> flag is set to true causes Save()
+             to automatically call this method. Must be overridden to perform any 
+            validation.
+            <seealso>Class wwBusiness Class ValidationErrorCollection</seealso>
+            </summary>
+            <param name="entity">Optional entity to validate. Defaults to this.Entity</param>
+            <param name="clearValidationErrors">If true clears all validation errors before processing rules</param>
+            <returns>True or False.</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.OnValidate(`0)">
+            <summary>
+            Method that should be overridden in a business object to handle actual validation. 
+            This method is called from the Validate method.
+            
+            This method should add any errors to the <see cref="P:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.ValidationErrors"/> collection.
+            </summary>
+            <param name="entity">The entity to be validated</param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.GetProperties(System.String,System.Object)">
+            <summary>
+            Loads the Properties dictionary with values from a Properties property of 
+            an entity object. Once loaded you can access the dictionary to read and write
+            values from it arbitrarily and use SetProperties to write the values back
+            in serialized form to the underlying property for database storage.
+            </summary>
+            <param name="stringFieldNameToLoadFrom"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.SetProperties(System.String,System.Object)">
+            <summary>
+            Saves the Properties Dictionary - in serialized string form - to a specified entity field which 
+            in turn allows writing the data back to the database.
+            </summary>
+            <param name="stringFieldToSaveTo"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.SetChildBusinessObject(Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase{`0,`1})">
+            <summary>
+            Passes the DbContext from the current business object to the 
+            a child business object so all operations are running
+            in the same context. This allows sharing of Business
+            object logic in the same context
+            </summary>
+            <param name="childBusObject"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.IsNewEntity(`0)">
+            <summary>
+            Checks to see if the current entity has been added
+            to the data context as a new entity
+            
+            This entity specific version is more efficient
+            than the generic object parameter version.
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.IsNewEntity(System.Object)">
+            <summary>
+            Checks to see if the current entity has been added
+            to the data context as a new entity
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.GetEntityEntry(`0)">
+            <summary>
+            Returns the Entity Entry meta data object that provides
+            various pieces of info on the entity.
+            
+            Use this specific version if possible for faster retrieval.
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.GetEntityEntry(System.Object)">
+            <summary>
+            Returns the Entity Entry meta data object that provides
+            various pieces of info on the entity
+            
+            Generic version that works with any entity not just those
+            of the type defined on this business object.
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.ExecuteNonQuery(System.String,System.Object[])">
+            <summary>
+            Allows execution of an arbitrary non query SQL command against
+            the database.
+            
+            Format can either be named parameters (@pk, @name)
+            with DbParameter objects (CreateParameter) or by using @0,@1 for
+            positional parameters and passing in the actual values.
+            
+            Uses the Entity Sql Connection
+            </summary>
+            <param name="sql">Sql statement as a string</param>
+            <param name="parameters">Named parameter objects</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.Execute``1(System.String,System.Object[])">
+            <summary>
+            Allows execution of a SQL command as s tring agains the Context's
+            provider and return the result as an Entity collection
+            
+            Format can either be named parameters (@pk, @name)
+            with DbParameter objects (CreateParameter) or by using @p0,p1 for
+            positional parameters and passing in the actual values.
+            </summary>
+            <typeparam name="TResult"></typeparam>
+            <param name="sql">Sql String. 
+            </param>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.CreateParameter(System.String,System.Object,System.Data.ParameterDirection,System.Data.DbType)">
+            <summary>
+            Creates a new SQL Parameter
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+            <param name="direction"></param>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.OpenConnection">
+            <summary>
+            Opens the connection on this business object's Context.
+            Use this before manually creating Transactions to ensure
+            transactions execute on a single connection.
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.CloseConnection">
+            <summary>
+            explicitly closes a connection
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.CreateParameter(System.String,System.Object,System.Data.ParameterDirection)">
+            <summary>
+            Createst a new Sql Parameter
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+            <param name="direction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.SetError(System.String)">
+            <summary>
+            Sets an internal error message.
+            </summary>
+            <param name="Message"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.SetError(System.Exception,System.Boolean)">
+            <summary>
+            Sets an internal error exception
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.SetError">
+            <summary>
+            Clear out errors
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.ToString">
+            <summary>
+            Overridden to display error messages if one exists
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.DbSet">
+            <summary>
+            Internally re-usable DbSet instance.
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.ObjectContext">
+            <summary>
+            Get an instance of the underlying object context
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.ValidationErrors">
+            <summary>
+            A collection that can be used to hold errors. This collection
+            is set by the AddValidationError method.
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.AutoValidate">
+            <summary>
+            Determines whether or not the Save operation causes automatic
+            validation
+            </summary>                        
+        </member>
+        <member name="P:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.Entity">
+            <summary>
+            Internally loaded instance from load and newentity calls
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.ErrorMessage">
+            <summary>
+            Error Message of the last exception
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.ErrorException">
+            <summary>
+            Instance of an exception object that caused the last error
+            </summary>            img
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstBusinessBase`2.Properties" -->
+        <member name="T:Westwind.BusinessFramework.EfCodeFirst.DbContextFactory">
+            <summary>
+            Class that creates dbContext instances and scopes them
+            either to a thread or a Web context for efficient reuse.
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.DbContextFactory.GetDbContext``1">
+            <summary>
+            Creates a new DbContext for a specific DbContext type
+            </summary>
+            <typeparam name="TDbContext"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.DbContextFactory.GetDbContext``1(System.String)">
+            <summary>
+            Creates a new DbContext for a specific DbContext type with an explicit
+            connection string id
+            </summary>
+            <typeparam name="TDbContext"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.DbContextFactory.GetWebRequestOrThreadScopedDataContext``1(System.String,System.String)">
+            <summary>
+            Retrieves a Web Request DbContext if available. If not available will use a thread scoped DbContext instead
+            </summary>
+            <typeparam name="TDbContext"></typeparam>
+            <param name="connectionStringId">Optional connection string ID from .config file</param>
+            <param name="key">optional key name of the cached item</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.DbContextFactory.GetWebRequestScopedDbContext``1(System.String,System.String)">
+            <summary>
+            Creates a ASP.NET Context scoped instance of a DbContext. This static
+            method creates a single instance and reuses it whenever this method is
+            called.
+            
+            This version creates an internal request specific key shared key that is
+            shared by each caller of this method from the current Web request.
+            </summary>
+            <param name="connectionStringId">optional connectionstring id to load context with</param>
+            <param name="key">Optional name of the key to store</param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.DbContextFactory.GetThreadScopedDbContext``1(System.String,System.String)">
+            <summary>
+            Creates a Thread Scoped DataContext object that can be reused.
+            The DataContext is stored in Thread local storage.
+            </summary>
+            <typeparam name="TDataContext"></typeparam>
+            <param name="connectionStringId">optional connection string ID from config file</param>
+            <param name="key">optional key name of the context to cache</param>     
+            <typeparam name="TDbContext">DbContext Parameter</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.DbContextFactory.GetWebRequestScopedDbContextInternal(System.Type,System.String,System.String)">
+            <summary>
+            Internal method that handles creating a context that is scoped to the HttpContext Items collection
+            by creating and holding the DataContext there.
+            </summary>
+            <param name="type"></param>
+            <param name="key"></param>
+            <param name="connectionString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.DbContextFactory.GetThreadScopedDbContextInternal(System.Type,System.String,System.String)">
+            <summary>
+            Creates a Thread Scoped DataContext object that can be reused.
+            The DataContext is stored in Thread local storage.
+            </summary>
+            <typeparam name="TDataContext"></typeparam>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstContext">
+            <summary>
+            Customization of the LINQ to SQL DataContext class that provides
+            core ADO.NET Data Access methods to the data context via a Db 
+            property.
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EfCodeFirst.EfCodeFirstContext.#ctor(Westwind.Utilities.Data.DataAccessBase)">
+            <summary>
+            Custom constructor that allows passing in of a custom IDbNative context
+            to provide SQL interactivity.
+            </summary>
+            <param name="dbNative"></param>
+        </member>
+        <member name="T:Westwind.BusinessFramework.EntityBase">
+            <summary>
+            A base class that can be used as a base an EntityBase
+            class which can be specified explicitly using the 
+            EntityBase="Westwind.BusinessFramework.LinqToSql.EntityBase" 
+            on the Database key of the DMBL file.
+            
+            Currently not used for anything but potentially add
+            functionality in the future.
+            </summary>
+        </member>
+        <member name="T:Westwind.BusinessFramework.EntityState">
+            <summary>
+            Class that maintains some entity related settings
+            on an EntityBase instance
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.EntityState.IsNew">
+            <summary>
+            Set to true when an entity is created with NewEntity
+            and unset when Save() is successfully called on it
+            
+            Note affects only entities created with NewEntity
+            </summary>
+        </member>
+        <member name="T:Westwind.BusinessFramework.IDbNative">
+            <summary>
+            Interface that describes a
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.OpenConnection">
+            <summary>
+            Opens a connection to the database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.CloseConnection">
+            <summary>
+            Opens the connection on this data context
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.BeginTransaction">
+            <summary>
+            Begins a new transaction on this instance
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.CommitTransaction">
+            <summary>
+            Commits a transaction on this instance
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.RollbackTransaction">
+            <summary>
+            Rollsback a transaction on this instance
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.CreateCommand(System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Creates a new SQL Command
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="dbParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.CreateParameter(System.String,System.Object)">
+            <summary>
+            Creates a new SQL Parameter
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.CreateParameter(System.String,System.Object,System.Data.ParameterDirection)">
+            <summary>
+            Creates a new SQL Parameter
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+            <param name="direction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.GetCommand(System.Linq.IQueryable)">
+            <summary>
+            Retrieves a DbCommand from an IQueryable. 
+            
+            Note: This routine may have parameter mapping imperfections 
+            due to the limited parameter data available in the query's
+            parameter collection.
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.ExecuteReader(System.Data.Common.DbCommand,System.Data.Common.DbParameter[])">
+            <summary>
+            Returns a DbDataReader from a SQL statement.
+            
+            Note:
+            Reader is created with CommandBehavior.CloseConnection
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="dbParameters"></param>
+            <returns>DataReader or Null.</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.ExecuteReader(System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Returns a DbDataReader from a SQL statement.
+            
+            Note:
+            Reader is created with CommandBehavior.CloseConnection
+            </summary>
+            <param name="sql"></param>
+            <param name="dbParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.ExecuteReader(System.Linq.IQueryable)">
+            <summary>
+            Executes a LINQ to SQL query and returns the results as a DataReader.
+            </summary>
+            <param name="query">LINQ query object</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.ExecuteDataTable(System.Data.Common.DbCommand,System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a SQL command and retrieves a DataTable of the result
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="tableName"></param>
+            <param name="dbParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.ExecuteDataTable(System.String,System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a SQL command from a string and retrieves a DataTable of the result
+            </summary>
+            <param name="sql"></param>
+            <param name="tableName"></param>
+            <param name="dbParameters"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.ExecuteDataTable(System.Linq.IQueryable,System.String)">
+            <summary>
+            Creates a DataTable from a Linq Query expression
+            </summary>
+            <param name="query">A LINQ to SQL query object</param>
+            <param name="tableName">The resulting table name.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.ExecuteDataSet(System.Data.Common.DbCommand,System.Data.DataSet,System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Runs a query and returns a table in a DataSet either passed in or
+            by creating a new one.
+            </summary>
+            <param name="sqlCommand">SQL Command object</param>
+            <param name="dataSet">Dataset to add table to</param>
+            <param name="tableName">Name of the result table</param>
+            <param name="dbParameters">Optional SQL statement parameters</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.ExecuteDataSet(System.String,System.Data.DataSet,System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Runs a query and returns a table in a DataSet either passed in or
+            by creating a new one.
+            </summary>
+            <param name="sqlCommand">SQL string to execute</param>
+            <param name="dataSet">Dataset to add table to</param>
+            <param name="tableName">Name of the result table</param>
+            <param name="dbParameters">Optional SQL statement parameters</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.ExecuteDataSet(System.Linq.IQueryable,System.Data.DataSet,System.String)">
+            <summary>
+            Runs a query and returns a table in a DataSet either passed in or
+            by creating a new one.
+            </summary>
+            <param name="sqlCommand">SQL string to execute</param>
+            <param name="dataSet">Dataset to add table to</param>
+            <param name="tableName">Name of the result table</param>
+            <param name="dbParameters">Optional SQL statement parameters</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.ExecuteNonQuery(System.Data.Common.DbCommand,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a raw Sql Command against the server that doesn't return
+            a result set.
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="dbParameters"></param>
+            <returns>-1 on error, records affected otherwise</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.ExecuteNonQuery(System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a raw Sql Command against the server that doesn't return
+            a result set.
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="dbParameters"></param>
+            <returns>-1 on error. Records affected otherwise</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.ExecuteScalar(System.Data.Common.DbCommand,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a SQL Query and returns a single result value that isn't
+            part of a result cursor
+            </summary>
+            <param name="command"></param>
+            <param name="dbParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.IDbNative.ExecuteScalar(System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a SQL QUery from a string and returns a single value
+            </summary>
+            <param name="sql"></param>
+            <param name="dbParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Westwind.BusinessFramework.IDbNative.ErrorMessage">
+            <summary>
+            Error Message set on error of operations
+            </summary>
+        </member>
+        <member name="T:Westwind.BusinessFramework.SqlNative">
+            <summary>
+            Sql Server Native Data Connector implementation layered
+            ontop of plain old ADO.NET.
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.SqlNative.DbProvider">
+            <summary>
+            Internal Provider factory for native commands
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.SqlNative._syncLock">
+            <summary>
+            Internal locking object
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.OpenConnection">
+            <summary>
+            Opens a connection to the database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.CloseConnection">
+            <summary>
+            Opens the connection on this data context
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.BeginTransaction">
+            <summary>
+            Starts a new transaction on this connection/instance.
+            
+            NOTE: provided only for ADO.NET style transactions
+            LINQ to SQL will create its own connection instances
+            and will close open transactions on its own.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.CommitTransaction">
+            <summary>
+            Commits all changes to the database and ends the transaction
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.RollbackTransaction">
+            <summary>
+            Rolls back a transaction
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.CreateCommandWithValues(System.String,System.Object[])">
+            <summary>
+            Pass positional parameters
+            </summary>
+            <param name="sql"></param>
+            <param name="dbParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.CreateCommand(System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Creates a new SQL Command
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="dbParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.CreateParameter(System.String,System.Object,System.Data.ParameterDirection)">
+            <summary>
+            Creates a new SQL Parameter
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+            <param name="direction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.CreateParameter(System.String,System.Object)">
+            <summary>
+            Creates a new SQL Parameter
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+            <param name="direction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.GetCommand(System.Linq.IQueryable)">
+            <summary>
+            Retrieves a DbCommand from an IQueryable. 
+            
+            Note: This routine may have parameter mapping imperfections 
+            due to the limited parameter data available in the query's
+            parameter collection.
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.ExecuteReader(System.Data.Common.DbCommand,System.Data.Common.DbParameter[])">
+            <summary>
+            Returns a DbDataReader from a SQL statement.
+            
+            Note:
+            Reader is created with CommandBehavior.CloseConnection
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="dbParameters"></param>
+            <returns>DataReader or Null.</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.ExecuteReader(System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Returns a DbDataReader from a SQL statement.
+            
+            Note:
+            Reader is created with CommandBehavior.CloseConnection
+            </summary>
+            <param name="sql"></param>
+            <param name="dbParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.ExecuteReader(System.Linq.IQueryable)">
+            <summary>
+            Executes a LINQ to SQL query and returns the results as a DataReader.
+            </summary>
+            <param name="query">LINQ query object</param>        
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.ExecuteDataTable(System.Data.Common.DbCommand,System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a SQL command and retrieves a DataTable of the result
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="tableName"></param>
+            <param name="dbParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.ExecuteDataTable(System.String,System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a SQL command from a string and retrieves a DataTable of the result
+            </summary>
+            <param name="sql"></param>
+            <param name="tableName"></param>
+            <param name="dbParameters"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.ExecuteDataTable(System.Linq.IQueryable,System.String)">
+            <summary>
+            Creates a DataTable from a Linq Query expression
+            </summary>
+            <param name="query">A LINQ to SQL query object</param>
+            <param name="tableName">The resulting table name.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.ExecuteDataSet(System.Data.Common.DbCommand,System.Data.DataSet,System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Runs a query and returns a table in a DataSet either passed in or
+            by creating a new one.
+            </summary>
+            <param name="sqlCommand">SQL Command object</param>
+            <param name="dataSet">Dataset to add table to</param>
+            <param name="tableName">Name of the result table</param>
+            <param name="dbParameters">Optional SQL statement parameters</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.ExecuteDataSet(System.String,System.Data.DataSet,System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Runs a query and returns a table in a DataSet either passed in or
+            by creating a new one.
+            </summary>
+            <param name="sqlCommand">SQL string to execute</param>
+            <param name="dataSet">Dataset to add table to</param>
+            <param name="tableName">Name of the result table</param>
+            <param name="dbParameters">Optional SQL statement parameters</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.ExecuteDataSet(System.Linq.IQueryable,System.Data.DataSet,System.String)">
+            <summary>
+            Runs a query and returns a table in a DataSet either passed in or
+            by creating a new one.
+            </summary>
+            <param name="sqlCommand">SQL string to execute</param>
+            <param name="dataSet">Dataset to add table to</param>
+            <param name="tableName">Name of the result table</param>
+            <param name="dbParameters">Optional SQL statement parameters</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.ExecuteNonQuery(System.Data.Common.DbCommand,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a raw Sql Command against the server that doesn't return
+            a result set.
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="dbParameters"></param>
+            <returns>-1 on error, records affected otherwise</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.ExecuteNonQuery(System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a raw Sql Command against the server that doesn't return
+            a result set.
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="dbParameters"></param>
+            <returns>-1 on error. Records affected otherwise</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.ExecuteScalar(System.Data.Common.DbCommand,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a SQL Query and returns a single result value that isn't
+            part of a result cursor
+            </summary>
+            <param name="command"></param>
+            <param name="dbParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.SqlNative.ExecuteScalar(System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a SQL QUery from a string and returns a single value
+            </summary>
+            <param name="sql"></param>
+            <param name="dbParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Westwind.BusinessFramework.SqlNative.Connection">
+            <summary>
+            Active Connection if any
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.SqlNative.Transaction">
+            <summary>
+            Active Transaction if any
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.SqlNative.ErrorMessage">
+            <summary>
+            Error Message if an error occurs
+            </summary>
+        </member>
+        <member name="T:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2">
+            <summary>
+            Base Business Object class that wrappers LINQ as a data access layer.
+            
+            Assume:
+            Operations work best and efficiently when tables have a TimeStamp field
+            
+            Each business object maps to a primary Entity/Table, but can of course
+            access other tables.
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <typeparam name="TContext"></typeparam>    
+        </member>
+        <member name="F:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.ProviderFactory">
+            <summary>
+            The provider factory used for direct ADO.NET operations
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.#ctor">
+            <summary>
+            Base constructor - initializes the business object's
+            context and table mapping info
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.#ctor(`1)">
+            <summary>
+            Constructore that allows passing in an existing DataContext
+            so several business objects can share Context scope.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.IntializeInternal">
+            <summary>
+            Internal method called to initialize various sub objects
+            and default settings.
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.Initialize">
+            <summary>
+            Initializes the business object explicitly.
+            
+            This method can be overridden by any subclasses that want to customize
+            the instantiation behavior and should call back to the base method
+            
+            The core features this method performs are:
+            - Create a new context     
+            - Creates the TableInfo
+            
+            Overrides should create the Context FIRST 
+            then call back into the base Initialize
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.CreateTableInfo">
+            <summary>
+            Create an instance of the TableInfo structure. Can be overridden
+            to allow customization.
+            
+            If null is returned 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.CreateContext">
+            <summary>
+            Creates an instance of the context object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.CreateContext(System.String)">
+            <summary>
+            Allows creating a new context with a specific connection string.
+            
+            The connection string can either be a full connection string or
+            a connection string .Config entry.
+            </summary>
+            <param name="ConnectionString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.EnsureMetaDataIsLoaded(`1)">
+            <summary>
+            Ensures that the MetaData
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.Load(System.Int32)">
+            <summary>
+            Loads an individual instance of an entity and returns the instance.
+             Entity is also set with the entity if loaded.
+            
+            This method works with single primary keys
+            of:
+            int
+            string
+            Guid
+            </summary>
+            <param name="id">integer primary key</param>
+            <returns>entity or null. Also sets Entity property</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.Load(System.String)">
+            <summary>
+            Loads an individual instance of an entity and returns the instance.
+             Entity is also set with the entity if loaded.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.Load(System.Object)">
+            <summary>
+            Loads an individual instance of an object and returns the instance.
+             Entity is also set with the entity if loaded.
+            
+            This method works with single primary keys
+            of:
+            int
+            string
+            Guid
+            </summary>
+            <param name="pk"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.Load(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Loads an entity based on a lambda expression.
+            This allows a bit more control over which record
+            to retrieve.
+            
+            Note: The behavior of this method may result in
+            multiple matches and only the first match is retrieved
+            </summary>
+            <param name="predicate">a where clause Lambda expression</param>
+            <returns>Entity object or null. Entity is also set</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.LoadBase(System.Data.Objects.ObjectQuery{`0})">
+            <summary>
+            
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.LoadBase(System.String,System.Object[])">
+            <summary>
+            Loads a single record based on a generic SQL command. Can be used
+            for customized Load behaviors where entities are loaded up.
+            </summary>
+            <param name="sqlLoadCommand"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.LoadBase(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Loads an entity based on a predicate expression that 
+            can be applied against the bus object's TEntity type.
+            </summary>
+            <param name="predicate">Lambda where expression  that returns bool</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.NewEntity(System.Boolean)">
+            <summary>
+            Create a new entity instance. When in connected mode the instance
+            is automatically added to the context unless you pass false to the
+            constructor.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.NewEntity">
+            <summary>
+            Create a new entity instance on the Entity property and return
+            the instance. The instance created is automatically added to the context
+            in connected mode.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.Save(`0)">
+            <summary>
+            Saves a disconnected entity object
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.Save">
+            <summary>
+            Saves the internally stored Entity object
+            by submitting all changes. Note this is the
+            'connected' version that submits all pending
+            changes on the current data context.
+            
+            For subclassing you should override the alternate
+            entity signature.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.CancelChanges">
+            <summary>
+            Aborts all changes made to tracked entities.
+            
+            Effectively creates a new DataContext
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.IsPkEmpty(System.Object)">
+            <summary>
+            Check to see if a PK value is empty which means
+            we're dealing with a new record.
+            
+            Supports string, int/int?, Guid
+            </summary>
+            <param name="pkVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.AbortChanges">
+            <summary>
+            Cancel Changes on the current connected context
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.SubmitChanges(Westwind.BusinessFramework.EntityFramework.ConflictResolutionModes)">
+            <summary>
+            Saves changes on the current connected context.
+            Preferrably you should use Save() rather than
+            this method, but this provides a more low level
+            direct context saving approach if you are
+            working with connected data.
+            
+            This method is also called from the Save() method.
+            </summary>
+            <param name="ConflictResolutionMode">Determines how change conflicts are applied</param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.SubmitChanges">
+            <summary>
+            Saves changes on the current connected context.
+            Preferrably you should use Save() rather than
+            this method, but this provides a more low level
+            direct context saving approach if you are
+            working with connected data.
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.Delete(System.Object)">
+            <summary>
+            Deletes an entity specific by its Pk
+            </summary>
+            <param name="Pk"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.Delete">
+            <summary>
+            Deletes the active Entity object
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.Delete(`0)">
+            <summary>
+            Deletes a specific entity object.
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.ExecuteNonQuery(System.Data.Common.DbCommand,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a query command against server using a DbCommand object.        
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="parameters">Named sql parameters</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.ExecuteNonQuery(System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a string based SQL Command
+            </summary>
+            <param name="sql"></param>
+            <param name="parameters">Named sql parameters</param>
+            <returns>-1 on failure, otherwise count of records affected</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.ExecuteScalar(System.Data.Common.DbCommand,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a SQL statement and returns a single value
+            </summary>
+            <param name="command"></param>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.ExecuteScalar(System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            
+            </summary>
+            <param name="command"></param>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.ExecuteReader(System.Data.Common.DbCommand,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a raw DbCommand and returns a DataReader
+            </summary>
+            <param name="command"></param>
+            <param name="parameters">Named sql parameters</param>
+            <returns>null on failure, DataReader otherwise</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.ExecuteReader(System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a sql string and returns a data reader
+            </summary>
+            <param name="sql">Sql string to execute</param>
+            <param name="parameters">Named sql parameters</param>
+            <returns>null on failure. DataReader otherwise</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.ExecuteReader(System.Linq.IQueryable)">
+            <summary>
+            Creates a DataReader from a query.
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.ExecuteDataTable(System.Data.Common.DbCommand,System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Returns an instance of a DataTable from a dbCommand object.
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.ExecuteDataTable(System.String,System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Returns an instance of a DataTable from a dbCommand object.
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.ExecuteDataSet(System.Data.Common.DbCommand,System.Data.DataSet,System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Returns an instance of a DataTable from a dbCommand object.
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.ExecuteDataSet(System.String,System.Data.DataSet,System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Returns an instance of a DataTable from a dbCommand object.
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.Validate(`0)">
+            <summary>
+            Validate() is used to validate business rules on the business object. 
+            Generally this method consists of a bunch of if statements that validate 
+            the data of the business object and adds any errors to the 
+            <see>wwBusiness.ValidationErrors</see> collection.
+            
+            If the <see>wwBusiness.AutoValidate</see> flag is set to true causes Save()
+             to automatically call this method. Must be overridden to perform any 
+            validation.
+            <seealso>Class wwBusiness Class ValidationErrorCollection</seealso>
+            </summary>
+            <returns>True or False.</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.Validate">
+            <summary>
+            Validates the current entity object. Overloads of this method
+            should set the validation error collection and return false from
+            this method.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.OnLoaded(`0)">
+            <summary>
+            Called after load has completed. Ideal point to hook post Load 
+            logic that is fired from all Load() based overrides.        
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.OnNewEntityLoaded(`0)">
+            <summary>
+            Called after a new instance has been created. Ideal for creating
+            and default values after new instance has been created.
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.OnBeforeSave(`0)">
+            <summary>
+            Called before Save() makes the actual database call.
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.OnValidate(`0)">
+            <summary>
+            Method that should be overridden in a business object to handle actual validation. 
+            This method is called from the Validate method.
+            
+            This method should add any errors to the <see cref="P:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.ValidationErrors"/> collection.
+            </summary>
+            <param name="entity">The entity to be validated</param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.GetProperties(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="stringFieldNameToLoadFrom"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.SetProperties(System.String)">
+            <summary>
+            Saves the Properties Dictionary to a specified field value
+            </summary>
+            <param name="stringFieldToSaveTo"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.SetError(System.String)">
+            <summary>
+            Sets an internal error message.
+            </summary>
+            <param name="Message"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.SetError(System.Exception)">
+            <summary>
+            Sets an internal error exception
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.SetError">
+            <summary>
+            Clear out errors
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.Context">
+            <summary>
+            Instance of the Data Context that is used for this class.
+            Note that this is a primary instance only - other instances
+            can be used in other situations.
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.TableInfo">
+            <summary>
+            Contains information about the primary table that is mapped
+            to this business object. Contains table name, Pk and version
+            field info. 
+            
+            Values are automatically set by the constructor so ensure
+            that the base constructor is always called.
+            </summary>        
+        </member>
+        <member name="P:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.Options">
+            <summary>
+            Contains options for the business object's operation
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.Entity">
+            <summary>
+            Instance of a locally managed entity object. Set with Load and New
+            methods.
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.AutoValidate">
+            <summary>
+            Determines whether or not the Save operation causes automatic
+            validation
+            </summary>        
+        </member>
+        <member name="P:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.ErrorException">
+            <summary>
+            Instance of an exception object that caused the last error
+            </summary>                
+        </member>
+        <member name="P:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.ValidationErrors">
+            <summary>
+            A collection that can be used to hold errors. This collection
+            is set by the AddValidationError method.
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.ErrorMessage">
+            <summary>
+            Error Message of the last exception
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:Westwind.BusinessFramework.EntityFramework.BusinessObjectEF`2.Properties" -->
+        <member name="T:Westwind.BusinessFramework.EntityFramework.TrackingMode">
+            <summary>
+            Determines how LINQ Change Tracking is applied
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.EntityFramework.TrackingMode.Connected">
+            <summary>
+            Uses a LINQ connected data context for change management
+            whenever possible. Save and SubmitChanges operation is used
+            to persist changes. In general this provides better performance
+            for change tracking.
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.EntityFramework.TrackingMode.Disconnected">
+            <summary>
+            Creates a new DataContext for each operation and performs .Save 
+            operations by reconnecting to the DataContext.
+            </summary>
+        </member>
+        <member name="T:Westwind.BusinessFramework.EntityFramework.ConflictResolutionModes">
+            <summary>
+            Determines how conflicts on SubmitChanges are handled.
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.EntityFramework.ConflictResolutionModes.None">
+            <summary>
+            No Conflict resolution - nothing is done when conflicts
+            occur. You can check Context.ChangeConflicts manually
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.EntityFramework.ConflictResolutionModes.ForceChanges">
+            <summary>
+            Forces all changes to get written. Last one wins strategy
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.EntityFramework.ConflictResolutionModes.AbortChanges">
+            <summary>
+            Aborts all changes and updates the entities with the values
+            from the database.
+            </summary>
+        </member>
+        <member name="T:Westwind.BusinessFramework.EntityFramework.BusinessObjectOptions">
+            <summary>
+            Contains public options that can be set to affect how
+            the business object operates
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.EntityFramework.BusinessObjectOptions.ThrowExceptions">
+            <summary>
+            Determines whether exceptions are thrown on errors
+            or whether error messages are merely set.
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.EntityFramework.BusinessObjectOptions.TrackingMode">
+            <summary>
+            Determines how LINQ is used for object tracking. 
+            
+            In connected mode all changes are tracked until SubmitChanges or Save
+            is called. Save() reverts to calling SubmitChanges.
+            
+            In disconnected mode a new context is created for each data operation
+            and save uses Attach to reattach to a context.
+            
+            Use Connected for much better performance use disconnected if you
+            prefer atomic operations in the database with individual entities.
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.EntityFramework.BusinessObjectOptions.ConnectionString">
+            <summary>
+            Optional Connection string that is used with the data context
+            
+            Note: This property should be set in the constructor/Initialize of the
+            business object. 
+            
+            If blank the default context connection string is used.
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.EntityFramework.BusinessObjectOptions.ConflictResolutionMode">
+            <summary>
+            Determines the default Conflict Resolution mode for changes submitted
+            to the context.
+            </summary>
+        </member>
+        <member name="T:Westwind.BusinessFramework.EntityFramework.ObjectContextSql">
+            <summary>
+            Customization of the LINQ to SQL DataContext class that provides
+            core ADO.NET Data Access methods to the data context.
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.DbProvider">
+            <summary>
+            Internal Provider factory for native commands
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.EntityFramework.ObjectContextSql._syncLock">
+            <summary>
+            Internal locking object
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.#ctor(System.String)">
+            <summary>
+            Initialize a new HelpBuilderEntities object.
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.#ctor(System.Data.EntityClient.EntityConnection)">
+            <summary>
+            Initialize a new HelpBuilderEntities object.
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.#ctor(System.Data.EntityClient.EntityConnection,System.String)">
+            <summary>
+            Initialize a new HelpBuilderEntities object.
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.OpenConnection">
+            <summary>
+            Opens a connection to the database
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.CloseConnection">
+            <summary>
+            Opens the connection on this data context
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.CreateCommand(System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Creates a new SQL Command
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="dbParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.CreateParameter(System.String,System.Object)">
+            <summary>
+            Creates a new SQL Parameter
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.CreateParameter(System.String,System.Object,System.Data.ParameterDirection)">
+            <summary>
+            Creates a new SQL Parameter
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+            <param name="direction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.GetCommand(System.Linq.IQueryable)">
+            <summary>
+            Retrieves a DbCommand from an IQueryable. 
+            
+            Note: This routine may have parameter mapping imperfections 
+            due to the limited parameter data available in the query's
+            parameter collection.
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.ExecuteReader(System.Data.Common.DbCommand,System.Data.Common.DbParameter[])">
+            <summary>
+            Returns a DbDataReader from a SQL statement.
+            
+            Note:
+            Reader is created with CommandBehavior.CloseConnection
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="dbParameters"></param>
+            <returns>DataReader or Null.</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.ExecuteReader(System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Returns a DbDataReader from a SQL statement.
+            
+            Note:
+            Reader is created with CommandBehavior.CloseConnection
+            </summary>
+            <param name="sql"></param>
+            <param name="dbParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.ExecuteReader(System.Linq.IQueryable)">
+            <summary>
+            Executes a LINQ to SQL query and returns the results as a DataReader.
+            </summary>
+            <param name="query">LINQ query object</param>        
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.ExecuteDataTable(System.Data.Common.DbCommand,System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a SQL command and retrieves a DataTable of the result
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="tableName"></param>
+            <param name="dbParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.ExecuteDataTable(System.String,System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a SQL command from a string and retrieves a DataTable of the result
+            </summary>
+            <param name="sql"></param>
+            <param name="tableName"></param>
+            <param name="dbParameters"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.ExecuteDataTable(System.Linq.IQueryable,System.String)">
+            <summary>
+            Creates a DataTable from a Linq Query expression
+            </summary>
+            <param name="query">A LINQ to SQL query object</param>
+            <param name="tableName">The resulting table name.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.ExecuteDataSet(System.Data.Common.DbCommand,System.Data.DataSet,System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Runs a query and returns a table in a DataSet either passed in or
+            by creating a new one.
+            </summary>
+            <param name="sqlCommand">SQL Command object</param>
+            <param name="dataSet">Dataset to add table to</param>
+            <param name="tableName">Name of the result table</param>
+            <param name="dbParameters">Optional SQL statement parameters</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.ExecuteDataSet(System.String,System.Data.DataSet,System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Runs a query and returns a table in a DataSet either passed in or
+            by creating a new one.
+            </summary>
+            <param name="sqlCommand">SQL string to execute</param>
+            <param name="dataSet">Dataset to add table to</param>
+            <param name="tableName">Name of the result table</param>
+            <param name="dbParameters">Optional SQL statement parameters</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.ExecuteDataSet(System.Linq.IQueryable,System.Data.DataSet,System.String)">
+            <summary>
+            Runs a query and returns a table in a DataSet either passed in or
+            by creating a new one.
+            </summary>
+            <param name="sqlCommand">SQL string to execute</param>
+            <param name="dataSet">Dataset to add table to</param>
+            <param name="tableName">Name of the result table</param>
+            <param name="dbParameters">Optional SQL statement parameters</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.ExecuteNonQuery(System.Data.Common.DbCommand,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a raw Sql Command against the server that doesn't return
+            a result set.
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="dbParameters"></param>
+            <returns>-1 on error, records affected otherwise</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.ExecuteNonQuery(System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a raw Sql Command against the server that doesn't return
+            a result set.
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="dbParameters"></param>
+            <returns>-1 on error. Records affected otherwise</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.ExecuteScalar(System.Data.Common.DbCommand,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a SQL Query and returns a single result value that isn't
+            part of a result cursor
+            </summary>
+            <param name="command"></param>
+            <param name="dbParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.ExecuteScalar(System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a SQL QUery from a string and returns a single value
+            </summary>
+            <param name="sql"></param>
+            <param name="dbParameters"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Westwind.BusinessFramework.EntityFramework.ObjectContextSql.DbConnection">
+            <summary>
+            Internally used raw SQL provider connection
+            </summary>
+        </member>
+        <member name="T:Westwind.BusinessFramework.EntityFramework.QueryConverter`2">
+            <summary>
+            This class acts like a wrapped LINQ to SQL Query converter
+            that provides error handling. Each of the calls is wrapped
+            and sets error messages on the hosting business object.
+            
+            Check busObject.ErrorMessage or busObject.ErrorException
+            for errors if the result from the conversion method call
+            is null.
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <typeparam name="TContext"></typeparam>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.QueryConverter`2.#ctor(Westwind.BusinessFramework.EntityFramework.BusinessObjectEF{`0,`1},Westwind.BusinessFramework.EntityFramework.ObjectContextSql)">
+            <summary>
+            Constructor initializes the converter with an instance
+            of the full business object so that error messages/exceptions
+            can be fired back into the business object.
+            </summary>
+            <param name="business">instance of a BusinessObjectLinq</param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.QueryConverter`2.ToDataReader(System.Object)">
+            <summary>
+            Returns a DataReader from a Linq to Sql query
+            
+            DataReader is created with CommandBehavior.CloseConnection
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.QueryConverter`2.ToDataTable(System.Object,System.String,System.Boolean)">
+            <summary>
+            Creates a DataTable from a query.
+            </summary>
+            <param name="query">The Linq to Sql query</param>
+            <param name="tableName">The name of the table to create</param>
+            <param name="ExecuteWithSchema">determines whether extra schema information is retrieved with the query</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.QueryConverter`2.ToDataTable(System.Object,System.String)">
+            <summary>
+            Creates a DataTable from a query.
+            </summary>
+            <param name="query">The Linq to Sql query</param>
+            <param name="tableName">The name of the table to create</param>
+            <param name="ExecuteWithSchema">determines whether extra schema information is retrieved with the query</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.QueryConverter`2.ToDataSet(System.Object,System.Data.DataSet,System.String)">
+            <summary>
+            Converts a query to a Table in a DataSet. You can pass in the
+            dataset if you choose.
+            </summary>
+            <param name="query"></param>
+            <param name="dataSet"></param>
+            <param name="tableName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.QueryConverter`2.ToDataSet(System.Object,System.String)">
+            <summary>
+            Converts a query to a Table in a DataSet. You can pass in the
+            dataset if you choose.
+            </summary>        
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.QueryConverter`2.ToList(System.Object)">
+            <summary>
+            Returns a generic List&gt;&lt; of entities
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.QueryConverter`2.ToArray(System.Object)">
+            <summary>
+            Returns a generic array of entities
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Westwind.BusinessFramework.EntityFramework.TableInfo`1">
+            <summary>
+            Field structure for holding table information.
+            A Table Info object is specific for a mapped entity
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.TableInfo`1.#ctor">
+            <summary>
+            Default constructor - no assignments of any sort are applied.
+            Use this constructor if you want to manually assign and override the
+            values of the TableInfo structure
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.EntityFramework.TableInfo`1.#ctor(Westwind.BusinessFramework.EntityFramework.ObjectContextSql)">
+            <summary>
+            Initializes the TableInfo with information
+            from a provided context
+            </summary>
+            <param name="context">instance of the context</param>
+            <param name="entityType">The type of the entity</param>
+        </member>
+        <member name="F:Westwind.BusinessFramework.EntityFramework.TableInfo`1.EntityTablename">
+            <summary>
+            The name of the table that is mapped by the main Entity associated
+            with this business object. 
+            
+            This will be the containername + tablename (WebStoreEntities.wws_Lookup)
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.EntityFramework.TableInfo`1.DbTableName">
+            <summary>
+            The raw table name without container prefix.
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.EntityFramework.TableInfo`1.PkField">
+            <summary>
+            The primary key id field used by this table.
+            </summary>
+        </member>
+        <member name="T:Westwind.BusinessFramework.LinqToSql.DataContextFactory">
+            <summary>
+            This class provides several static methods for loading DataContext objects 
+            in a variety of ways. You can load the data context as normal one new instance
+            at a time, or you can choose to use one of the scoped factory methods that
+            can scope the DataContext to a WebRequest or a Thread context (in a WinForm app
+            for example).
+            
+            Using scoped variants can be more efficient in some scenarios and allows passing
+            a DataContext across multiple otherwise unrelated components so that the change
+            context can be shared. 
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.DataContextFactory.GetDataContext``1">
+            <summary>
+            Creates a new Data Context for a specific DataContext type
+            
+            Provided merely for compleness sake here - same as new YourDataContext()
+            </summary>
+            <typeparam name="TDataContext"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.DataContextFactory.GetDataContext``1(System.String)">
+            <summary>
+            Creates a new Data Context for a specific DataContext type with a connection string
+            
+            Provided merely for compleness sake here - same as new YourDataContext()
+            </summary>
+            <typeparam name="TDataContext"></typeparam>
+            <param name="connectionString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.DataContextFactory.GetWebRequestScopedDataContext``1">
+            <summary>
+            Creates a ASP.NET Context scoped instance of a DataContext. This static
+            method creates a single instance and reuses it whenever this method is
+            called.
+            
+            This version creates an internal request specific key shared key that is
+            shared by each caller of this method from the current Web request.
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.DataContextFactory.GetWebRequestScopedDataContext``1(System.String)">
+            <summary>
+            Creates a ASP.NET Context scoped instance of a DataContext. This static
+            method creates a single instance and reuses it whenever this method is
+            called.
+            
+            This version lets you specify a specific key so you can create multiple 'shared'
+            DataContexts explicitly.
+            </summary>
+            <typeparam name="TDataContext"></typeparam>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.DataContextFactory.GetWebRequestScopedDataContext``1(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <typeparam name="TDataContext"></typeparam>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.DataContextFactory.GetWebRequestScopedDataContextInternal(System.Type,System.String,System.String)">
+            <summary>
+            Internal method that handles creating a context that is scoped to the HttpContext Items collection
+            by creating and holding the DataContext there.
+            </summary>
+            <param name="type"></param>
+            <param name="key"></param>
+            <param name="connectionString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.DataContextFactory.GetThreadScopedDataContext``1">
+            <summary>
+            Creates a Thread Scoped DataContext object that can be reused.
+            The DataContext is stored in Thread local storage.
+            </summary>
+            <typeparam name="TDataContext"></typeparam>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.DataContextFactory.GetThreadScopedDataContext``1(System.String)">
+            <summary>
+            Creates a Thread Scoped DataContext object that can be reused.
+            The DataContext is stored in Thread local storage.
+            </summary>
+            <typeparam name="TDataContext"></typeparam>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.DataContextFactory.GetThreadScopedDataContextInternal(System.Type,System.String,System.String)">
+            <summary>
+            Creates a Thread Scoped DataContext object that can be reused.
+            The DataContext is stored in Thread local storage.
+            </summary>
+            <typeparam name="TDataContext"></typeparam>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.DataContextFactory.GetScopedDataContext``1(System.String,System.String)">
+            <summary>
+            Returns either Web Request scoped DataContext or a Thread scoped
+            request object if not running a Web request (ie. HttpContext.Current)
+            is not available.
+            </summary>
+            <typeparam name="TDataContext"></typeparam>
+            <param name="key"></param>
+            <param name="ConnectionString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.DataContextFactory.GetScopedDataContext``1(System.String)">
+            <summary>
+            Returns either Web Request scoped DataContext or a Thread scoped
+            request object if not running a Web request (ie. HttpContext.Current)
+            is not available.
+            </summary>
+            <typeparam name="TDataContext"></typeparam>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.DataContextFactory.GetScopedDataContext``1">
+            <summary>
+            Returns either Web Request scoped DataContext or a Thread scoped
+            request object if not running a Web request (ie. HttpContext.Current)
+            is not available.
+            </summary>
+            <typeparam name="TDataContext"></typeparam>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Westwind.BusinessFramework.LinqToSql.QueryConverter`2">
+            <summary>
+            This class acts like a wrapped LINQ to SQL Query converter
+            that provides error handling. Each of the calls is wrapped
+            and sets error messages on the hosting business object.
+            
+            Check busObject.ErrorMessage or busObject.ErrorException
+            for errors if the result from the conversion method call
+            is null.
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <typeparam name="TContext"></typeparam>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.QueryConverter`2.#ctor(Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq{`0,`1},Westwind.BusinessFramework.LinqToSql.DataContextSql)">
+            <summary>
+            Constructor initializes the converter with an instance
+            of the full business object so that error messages/exceptions
+            can be fired back into the business object.
+            </summary>
+            <param name="business">instance of a BusinessObjectLinq</param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.QueryConverter`2.ToDataReader(System.Object)">
+            <summary>
+            Returns a DataReader from a Linq to Sql query
+            
+            DataReader is created with CommandBehavior.CloseConnection
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.QueryConverter`2.ToDataTable(System.Object,System.String,System.Boolean)">
+            <summary>
+            Creates a DataTable from a query.
+            </summary>
+            <param name="query">The Linq to Sql query</param>
+            <param name="tableName">The name of the table to create</param>
+            <param name="ExecuteWithSchema">determines whether extra schema information is retrieved with the query</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.QueryConverter`2.ToDataTable(System.Object,System.String)">
+            <summary>
+            Creates a DataTable from a query.
+            </summary>
+            <param name="query">The Linq to Sql query</param>
+            <param name="tableName">The name of the table to create</param>
+            <param name="ExecuteWithSchema">determines whether extra schema information is retrieved with the query</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.QueryConverter`2.ToDataSet(System.Object,System.Data.DataSet,System.String)">
+            <summary>
+            Converts a query to a Table in a DataSet. You can pass in the
+            dataset if you choose.
+            </summary>
+            <param name="query"></param>
+            <param name="dataSet"></param>
+            <param name="tableName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.QueryConverter`2.ToDataSet(System.Object,System.String)">
+            <summary>
+            Converts a query to a Table in a DataSet. You can pass in the
+            dataset if you choose.
+            </summary>        
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.QueryConverter`2.ToList(System.Object)">
+            <summary>
+            Returns a generic List&gt;&lt; of entities
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.QueryConverter`2.ToArray(System.Object)">
+            <summary>
+            Returns a generic array of entities
+            </summary>
+            <param name="query"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2">
+            <summary>
+            Base Business Object class that wrappers LINQ as a data access layer.
+            
+            Assume:
+            Operations work best and efficiently when tables have a TimeStamp field
+            
+            Each business object maps to a primary Entity/Table, but can of course
+            access other tables.
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+            <typeparam name="TContext"></typeparam>    
+        </member>
+        <member name="F:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.ProviderFactory">
+            <summary>
+            The provider factory used for direct ADO.NET operations
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.#ctor">
+            <summary>
+            Base constructor - initializes the business object's
+            context and table mapping info
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.#ctor(`1)">
+            <summary>
+            Constructore that allows passing in an existing DataContext
+            so several business objects can share Context scope.
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.IntializeInternal">
+            <summary>
+            Internal method called to initialize various sub objects
+            and default settings.
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.Initialize">
+            <summary>
+            Initializes the business object explicitly.
+            
+            This method can be overridden by any subclasses that want to customize
+            the instantiation behavior and should call back to the base method
+            
+            The core features this method performs are:
+            - Create a new context     
+            - Creates the TableInfo
+            
+            Overrides should create the Context FIRST 
+            then call back into the base Initialize
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.CreateContext">
+            <summary>
+            Creates an instance of the context object.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.CreateContext(System.String)">
+            <summary>
+            Allows creating a new context with a specific connection string.
+            
+            The connection string can either be a full connection string or
+            a connection string .Config entry.
+            </summary>
+            <param name="ConnectionString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.CreateContext(System.Data.IDbConnection)">
+            <summary>
+            Instantiates a DataContext by passing in a provider specific connection
+            object
+            </summary>
+            <param name="connection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.CreateTableInfo">
+            <summary>
+            Overridable Factory for TableInfo structure. Allows code to override
+            loading of this structure. Return non-null to override.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.Load(System.Object)">
+            <summary>
+            Loads an individual instance of an object and returns the instance.
+             Entity is also set with the entity if loaded.
+            
+            This method works with single primary keys
+            of:
+            int
+            string
+            Guid
+            </summary>
+            <param name="pk"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.Load(System.Int32)">
+            <summary>
+            Loads an individual instance of an entity and returns the instance.
+             Entity is also set with the entity if loaded.
+            
+            This method works with single primary keys
+            of:
+            int
+            string
+            Guid
+            </summary>
+            <param name="pk">integer primary key</param>
+            <returns>entity or null. Also sets Entity property</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.Load(System.String)">
+            <summary>
+            Loads an individual instance of an entity and returns the instance.
+             Entity is also set with the entity if loaded.
+            </summary>
+            <param name="pk"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.Load(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Loads an entity based on a lambda expression.
+            This allows a bit more control over which record
+            to retrieve.
+            
+            Note: The behavior of this method may result in
+            multiple matches and only the first match is retrieved
+            </summary>
+            <param name="predicate">a where clause Lambda expression</param>
+            <returns>Entity object or null. Entity is also set</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.LoadBase(System.String,System.Object[])">
+            <summary>
+            Loads a single record based on a generic SQL command. Can be used
+            for customized Load behaviors where entities are loaded up.
+            </summary>
+            <param name="sqlLoadCommand"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.LoadBase(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Loads an entity based on a predicate expression that 
+            can be applied against the bus object's TEntity type.
+            </summary>
+            <param name="predicate">Lambda where expression  that returns bool</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.NewEntity(System.Boolean)">
+            <summary>
+            Create a new entity instance. When in connected mode the instance
+            is automatically added to the context unless you pass false to the
+            constructor.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.NewEntity">
+            <summary>
+            Create a new entity instance on the Entity property and return
+            the instance. The instance created is automatically added to the context
+            in connected mode.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.Save(`0)">
+            <summary>
+            Saves a disconnected entity object
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.CancelChanges">
+            <summary>
+            Aborts all changes made to tracked entities.
+            
+            Effectively creates a new DataContext
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.IsPkEmpty(System.Object)">
+            <summary>
+            Check to see if a PK value is empty which means
+            we're dealing with a new record.
+            
+            Supports string, int/int?, Guid
+            </summary>
+            <param name="pkVal"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.AbortChanges">
+            <summary>
+            Cancel Changes on the current connected context
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.SubmitChanges(Westwind.BusinessFramework.ConflictResolutionModes)">
+            <summary>
+            Saves changes on the current connected context.
+            Preferrably you should use Save() rather than
+            this method, but this provides a more low level
+            direct context saving approach if you are
+            working with connected data.
+            
+            This method is also called from the Save() method.
+            </summary>
+            <param name="ConflictResolutionMode">Determines how change conflicts are applied</param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.SubmitChanges">
+            <summary>
+            Saves changes on the current connected context.
+            Preferrably you should use Save() rather than
+            this method, but this provides a more low level
+            direct context saving approach if you are
+            working with connected data.
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.Delete(System.Object)">
+            <summary>
+            Deletes an entity specific by its Pk
+            </summary>
+            <param name="Pk"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.Delete">
+            <summary>
+            Deletes the active Entity object
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.Delete(`0)">
+            <summary>
+            Deletes a specific entity object.
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.ExecuteNonQuery(System.Data.Common.DbCommand)">
+            <summary>
+            Executes a query command against server using a DbCommand object.        
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="parameters">Named sql parameters</param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.ExecuteNonQuery(System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a string based SQL Command
+            </summary>
+            <param name="sql"></param>
+            <param name="parameters">Named sql parameters</param>
+            <returns>-1 on failure, otherwise count of records affected</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.ExecuteScalar(System.Data.Common.DbCommand,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a SQL statement and returns a single value
+            </summary>
+            <param name="command"></param>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.ExecuteScalar(System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            
+            </summary>
+            <param name="command"></param>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.ExecuteReader(System.Data.Common.DbCommand,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a raw DbCommand and returns a DataReader
+            </summary>
+            <param name="command"></param>
+            <param name="parameters">Named sql parameters</param>
+            <returns>null on failure, DataReader otherwise</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.ExecuteReader(System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Executes a sql string and returns a data reader
+            </summary>
+            <param name="sql">Sql string to execute</param>
+            <param name="parameters">Named sql parameters</param>
+            <returns>null on failure. DataReader otherwise</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.ExecuteDataTable(System.Data.Common.DbCommand,System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Returns an instance of a DataTable from a dbCommand object.
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.ExecuteDataTable(System.String,System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Returns an instance of a DataTable from a dbCommand object.
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.ExecuteDataSet(System.Data.Common.DbCommand,System.Data.DataSet,System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Returns an instance of a DataTable from a dbCommand object.
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.ExecuteDataSet(System.String,System.Data.DataSet,System.String,System.Data.Common.DbParameter[])">
+            <summary>
+            Returns an instance of a DataTable from a dbCommand object.
+            </summary>
+            <param name="sqlCommand"></param>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.Validate(`0)">
+            <summary>
+            Validate() is used to validate business rules on the business object. 
+            Generally this method consists of a bunch of if statements that validate 
+            the data of the business object and adds any errors to the 
+            <see>wwBusiness.ValidationErrors</see> collection.
+            
+            If the <see>wwBusiness.AutoValidate</see> flag is set to true causes Save()
+             to automatically call this method. Must be overridden to perform any 
+            validation.
+            <seealso>Class wwBusiness Class ValidationErrorCollection</seealso>
+            </summary>
+            <returns>True or False.</returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.Validate">
+            <summary>
+            Validates the current entity object. Overloads of this method
+            should set the validation error collection and return false from
+            this method.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.OnLoaded(`0)">
+            <summary>
+            Called after load has completed. Ideal point to hook post Load 
+            logic that is fired from all Load() based overrides.        
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.OnNewEntityLoaded(`0)">
+            <summary>
+            Called after a new instance has been created. Ideal for creating
+            and default values after new instance has been created.
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.OnBeforeSave(`0)">
+            <summary>
+            Called before Save() makes the actual database call
+            to save the object.
+            
+            Return false to signify that you don't want to
+            save.
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.OnAfterSave(`0)">
+            <summary>
+            Called after the entity has been saved to disk
+            successfully.
+            
+            Return false to indicate that Save() should return
+            false even though the entity was successfully saved.        
+            </summary>
+            <param name="entity"></param>        
+            <returns></returns>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.OnValidate(`0)">
+            <summary>
+            Method that should be overridden in a business object to handle actual validation. 
+            This method is called from the Validate method.
+            
+            This method should add any errors to the <see cref="P:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.ValidationErrors"/> collection.
+            </summary>
+            <param name="entity">The entity to be validated</param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.GetProperties(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="stringFieldNameToLoadFrom"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.SetProperties(System.String)">
+            <summary>
+            Saves the Properties Dictionary to a specified field value
+            </summary>
+            <param name="stringFieldToSaveTo"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.SetError(System.String)">
+            <summary>
+            Sets an internal error message.
+            </summary>
+            <param name="Message"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.SetError(System.Exception)">
+            <summary>
+            Sets an internal error exception
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.SetError">
+            <summary>
+            Clear out errors
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.Context">
+            <summary>
+            Instance of the Data Context that is used for this class.
+            Note that this is a primary instance only - other instances
+            can be used in other situations.
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.TableInfo">
+            <summary>
+            Contains information about the primary table that is mapped
+            to this business object. Contains table name, Pk and version
+            field info. 
+            
+            Values are automatically set by the constructor so ensure
+            that the base constructor is always called.
+            </summary>        
+        </member>
+        <member name="P:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.Options">
+            <summary>
+            Contains options for the business object's operation
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.Converter">
+            <summary>
+            Object that handles conversion of queries into concreate
+            types and data structures. Allows conversion of queries
+            to a data reader, data table as well as the standard 
+            behaviors  ToList(), ToArray() using the entity class
+            as its input.
+            
+            This routine is useful in that it provides object parameters
+            the abillity to return output in a variety of ways which
+            makes anonymous type result more usable outside of local scope.
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.Entity">
+            <summary>
+            Instance of a locally managed entity object. Set with Load and New
+            methods.
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.AutoValidate">
+            <summary>
+            Determines whether or not the Save operation causes automatic
+            validation
+            </summary>        
+        </member>
+        <member name="P:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.ErrorException">
+            <summary>
+            Instance of an exception object that caused the last error
+            </summary>                
+        </member>
+        <member name="P:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.ValidationErrors">
+            <summary>
+            A collection that can be used to hold errors. This collection
+            is set by the AddValidationError method.
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.ErrorMessage">
+            <summary>
+            Error Message of the last exception
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "P:Westwind.BusinessFramework.LinqToSql.BusinessObjectLinq`2.Properties" -->
+        <member name="T:Westwind.BusinessFramework.LinqToSql.DataContextSql">
+            <summary>
+            Customization of the LINQ to SQL DataContext class that provides
+            core ADO.NET Data Access methods to the data context.
+            </summary>
+        </member>
+        <member name="T:Westwind.BusinessFramework.LinqToSql.TableInfo">
+            <summary>
+            Field structure for holding table information.
+            A Table Info object is specific for a mapped entity
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.TableInfo.#ctor">
+            <summary>
+            Default constructor - no assignments of any sort are applied
+            </summary>
+        </member>
+        <member name="M:Westwind.BusinessFramework.LinqToSql.TableInfo.#ctor(System.Data.Linq.DataContext,System.Type)">
+            <summary>
+            Initializes the TableInfo with information
+            from a provided context
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="F:Westwind.BusinessFramework.LinqToSql.TableInfo.Tablename">
+            <summary>
+            The name of the table that is mapped by the main Entity associated
+            with this business object.
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.LinqToSql.TableInfo.VersionField">
+            <summary>
+            The version field used by this table. Version fields are required
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.LinqToSql.TableInfo.PkField">
+            <summary>
+            The primary key id field used by this table.
+            </summary>
+        </member>
+        <member name="F:Westwind.BusinessFramework.LinqToSql.TableInfo.PkFieldType">
+            <summary>
+            The type of the PK field.
+            </summary>
+        </member>
+        <member name="T:Westwind.BusinessFramework.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.Properties.Resources.CouldnTLoadEntityInvalidKeyProvided">
+            <summary>
+              Looks up a localized string similar to Couldn&apos;t load entity - invalid key provided..
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.Properties.Resources.EntityIsNotPartOfTheContext">
+            <summary>
+              Looks up a localized string similar to Entity is not part of the context.
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.Properties.Resources.ErrorColon">
+            <summary>
+              Looks up a localized string similar to Error: .
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.Properties.Resources.UnableToFindMatchingEntityForKey">
+            <summary>
+              Looks up a localized string similar to Unable to find matching entity for key..
+            </summary>
+        </member>
+        <member name="P:Westwind.BusinessFramework.Properties.Resources.UnsupportedProviderForRawSQLStatementParam">
+            <summary>
+              Looks up a localized string similar to Unsupported provider for raw SQL Statement Parameters..
+            </summary>
+        </member>
+    </members>
+</doc>

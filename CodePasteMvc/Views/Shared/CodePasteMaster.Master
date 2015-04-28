@@ -1,0 +1,109 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <asp:ContentPlaceHolder runat="server" ID="headerstop">
+    </asp:ContentPlaceHolder>    
+    <% if (false) { //  use for CSS Intellisense to work %>
+        <link href="~/Css/Westwind.css" rel="stylesheet" type="text/css" />    
+        <link href="~/Css/CodePaste.css" rel="stylesheet" type="text/css" />
+        <link href="~/Css/csharp.css" rel="stylesheet" type="text/css" /> 
+    <% } %>
+    
+    
+    <link href="<%= Url.Content("~/Css/Westwind.css") %>" rel="stylesheet" type="text/css" />    
+    <link href="<%= Url.Content("~/Css/CodePaste.css") %>" rel="stylesheet" type="text/css" />
+    <link href="<%= Url.Content("~/Css/csharp.css") %>" rel="stylesheet" type="text/css" />    
+    <%= ScriptLoader.jQueryLink() %>
+    <%= ScriptLoader.wwJqueryLink() %>
+    
+    <link id="RssLink" rel="alternate" type="application/rss+xml" title="CodePaste.NET Recent Snippets" href="http://codepaste.net/feed" />
+    
+    <asp:ContentPlaceHolder runat="server" ID="headers">
+    </asp:ContentPlaceHolder>
+</head>
+<body >  
+<div id="divBodyWrapper" style="min-width: 800px;"> 
+    &nbsp;
+    <div id="imgBanner" onclick="location = '<%= Url.Content("~/") %>';">
+        <img src="<%= Url.Content("~/images/codepastebanner.png") %>" alt="CodePaste Logo"  
+             style="position: absolute; left: 5px top: 0px;float: left;" />
+    </div>
+    
+    <div id="divHeaderBar" >   
+        <div id="divSearchBox" style="float:right; margin-right: 10px;font-size: 0.8em;">            
+            <a href="http://feeds.feedburner.com/codepaste" class="hoverbutton"><img src="<%= Url.Content("~/images/rss.png") %>" /> Subscribe</a>
+            <a href="http://www.west-wind.com/wwThreads/default.asp?Forum=codepaste.net" class="hoverbutton"><img src="<%= Url.Content("~/images/group.png") %>" /> Discuss</a>
+            <a href="<%= Url.Content("~/home/whatsnew") %>" class="hoverbutton"><img src="<%= Url.Content("~/images/whatsnew.png")%>" /> News</a>
+            <a href="<%= Url.Content("~/home/about") %>" class="hoverbutton" ><img src="<%= Url.Content("~/images/info.png") %>"  /> About</a>             
+<%--            <a href="<%= Url.Content("~/search") %>">Search</a>:
+            <input type="text" name="txtSearch" id="txtSearch" />
+--%>    
+        </div>
+        <a href="<%= Url.Content("~/") %>" class="hoverbutton" ><img src="<%= Url.Content("~/images/newsnippet.png")  %>" alt="New Snippet"  /> New Snippet</a> 
+        <a href="<%= Url.Content("~/recent") %>" class="hoverbutton"><img src="<%= Url.Content("~/images/recent.png") %>" alt="Recent Snippets"/> Recent Snippets</a>        
+        <a href="<%= Url.Content("~/mysnippets") %>" class="hoverbutton"><img src="<%= Url.Content("~/images/clipboard.png") %>" alt="My Snippets"/> My Snippets</a>        
+        <a href="<%= Url.Content("~/myfavorites") %>" class="hoverbutton"><img src="<%= Url.Content("~/images/favorite.png") %>" alt="My Favorites"/> Favorites</a>        
+        <a href="<%= Url.Content("~/ShowUrl") %>" class="hoverbutton"><img src="<%= Url.Content("~/images/originalurl.png") %>" /> Web Code</a>
+        <a href="<%= Url.Content("~/search") %>" class="hoverbutton"><img src="<%= Url.Content("~/images/search.png") %>" alt="Search Snippets"/> Search</a>                
+    </div>
+    
+    <div class="logindisplay">
+        <% Html.RenderPartial("SignInUserControl"); %>
+    </div> 
+  
+    <div id="maincontainer" >
+
+        <div id="divContainerContent" class="containercontent">                        
+            <asp:ContentPlaceHolder runat="server" ID="content">
+            </asp:ContentPlaceHolder>   
+        </div>
+    
+        <div id="divSidebar">
+            <%= Html.Partial("SideBarContent") %>
+		</div>
+		    
+	</div>
+
+    <br clear="all"/>
+         
+    </div>
+    
+    
+    <div class="footer">        
+        <a href="<%= ResolveUrl("~/docs") %>" target="_blank">Developer Documentation</a> | <a href="<%= ResolveUrl("~/services/CodePasteSoapService.asmx") %>">Web Service</a> | <a href="http://codepaste.net/docs?page=_2py10t5gl.htm" target="_blank">HTTP API</a>
+        <div class="rightalign">
+        <small>
+            &copy; <a href="http://www.west-wind.com/" style="text-decoration:none;color: White;">West Wind Technologies</a>, 2009-<%= DateTime.Now.Year %>
+        </small>
+        </div>        
+    </div>
+
+<%--<script>
+    $(document).ready(function () {
+        $.getJSON("http://www.west-wind.com/weblog/weblogcallbacks.ashx?method=GetRandomBookImage&jsonp=?",
+                  function (amazonItem) {
+                      $img = $("#imgAmazonImage")
+                            .attr("src", amazonItem.AmazonImageUrl);                      
+                      $("#aAmazonImage")
+                            .attr("href", amazonItem.AmazonItemUrl);
+                      showStatus(img);
+                  });
+    });    
+</script>
+--%>
+
+<script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("UA-9492219-2");
+        pageTracker._trackPageview();
+    } catch (err) { }
+</script>  
+
+</body>
+</html>
+

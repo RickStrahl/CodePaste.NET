@@ -1,0 +1,158 @@
+﻿@{
+    Layout = "~/views/shared/_layout.cshtml";
+}
+@section headers{
+    <style type="text/css">
+        .newitem
+        {
+            padding: 10px;
+            margin: 8px;
+            border: solid 1px lightsteelblue;
+            background: ivory;
+            border-radius: 4px;
+        }
+        h3
+        {
+            margin-top: 20px;
+            font-size: 1.2em
+        }
+        h4
+        {
+            margin-bottom: 4px;
+            color: Navy;
+        }
+    </style>
+}
+<h2>What's new and changed on CodePaste.NET</h2>
+
+<fieldset>
+<div class="containercontent">
+    
+    <h3>Version 1.20</h3>
+    <div class="smalltext">January 20th, 2014</div>
+
+    <div class="newitem">
+        <h4>New Code Syntax Display</h4>
+        Switched to <a href="http://ace.c9.io">Ace Editor</a> to support more syntax
+        languages to display for code snippets.        
+    </div>
+    
+    <div class="newitem">
+        <h4>Syntax Theme Selection for registered Users</h4>
+        Registered users can now select a theme for their code views
+        when logged in. Any of Ace Editors themes plus a default Visual Studio
+        like theme are available.
+    </div>
+    
+    <div class="newitem">
+        <h4>Syntax Highlighting for Code Input and Editing</h4>
+        You now get syntax coloring for code input when entering new snippets.
+        You also can now live edit any of your own code snippet with live
+        syntax coloring as you type again thanks to Ace Editor.
+    </div>
+
+    <div class="newitem">
+        <h4>Updated UI Performance Improvements</h4>
+        The UI backend has been switched for improved performance.
+        Minor UI tweaks in the process.
+    </div>
+    
+    <div class="newitem">
+        <h4>Improved Mobile display support</h4>
+        Switched to responsive design for the display in order
+        to display better on small width devices. Currently
+        views work well with tablet displays. Phone display
+        is still messy but we'll get that rolling in the next rev.
+    </div>
+
+    <h3>Version 1.10</h3>
+    <div class="smalltext">April 15th, 2013</div>
+
+    <div class="newitem">
+        <h4>Added Favorites</h4>
+        You can now mark snippets as favorites for later reading or 
+        simple tracking of useful snippets if you are logged in.
+    </div>
+
+    <div class="newitem">
+        <h4>Fixed several performance issues</h4>
+        Fixed a serious hanging connection issue that caused connections
+        to overflow the connection pool. Fixed and drastically improved
+        perf as a result.
+    </div>
+
+
+    <h3>Version 1.08</h3>
+    <div class="smalltext">August 20th, 2012</div>
+
+    <div class="newitem">
+        <h4>Updated CodeSnippet Copying</h4>
+        Made the copy and edit operation buttons more visible
+        so it's more obvious for people to find and copy code
+        in plain text.
+    </div>
+
+    <div class="newitem">
+        <h4>UI Updates</h4>
+        Cleaned up the various toolbars and icons for a crisper
+        look and more concise menu options.
+    </div>
+
+    <div class="newitem">
+        <h4>Report Abuses notifications</h4>
+        Added additional notifications for Report Abuses
+        clicks so that they can be removed more easily. Also
+        added additional logic for potential spam blocking (ongoing).
+    </div>
+
+
+    <h3>Version 1.07</h3>
+    <div class="smalltext">May 22nd, 2012</div>
+    
+    <div class="newitem">    
+        <h4>Snippet Views by Author no longer counted</h4>
+        The snippet view count now excludes views by the snippet author who is likely to check
+        back onto snippets from time to time for comments and related tasks that end up skewing
+        the snippet view count.
+    </div>
+    
+    <div class="newitem">
+        <h4>Copying Code Snippets to Clipboard</h4>
+        Copying a code snippet to the clipboard no longer uses a Flash component due to various browser issues
+        and inconsistencies. Instead you now get an edit view with the content pre-selected. You do need to press Ctrl-C to copy the
+        content after which the edit view is released and the snippet view restored.
+    </div>
+    
+    <h3>Version 1.05</h3>
+    <div class="smalltext">Nov. 30th, 2011</div>
+
+    <div class="newitem">
+        <h4>Tweet this Code Snippet</h4>
+        You can now tweet a new code snippet using a new button on the code snippet toolbar. The twitter icon redirects
+        to the Twitter.com site and sends a tweet that embeds the name of the snippet, the URL and hashtag for potential
+        searching of the content.        
+    </div>
+    
+    <h3>Version 1.03</h3>
+    <div class="smalltext">Dec. 26th, 2010</div>
+
+    <div class="newitem">
+        <h4>Miscellaneous fixed to HTML and ASP.NET rendering</h4>
+        Fixed a number of syntax coloring issues in the ASP.NET and C# code rendering: Properly handle &lt;%= expressions %&gt;
+        without line breaks. Fix problem with multiple script tags in page. Fix string constant formatting issues.
+    </div>
+    
+    <div class="newitem">
+        <h4>Update FoxPro Syntax Parsing</h4>
+        Various fixes to the FoxPro syntax color highlighting functionality. Now properly handles pre-compiler directives
+        and string constant formatting. Also fixed various comment parsing issues (specifically && comments).
+    </div>
+    
+    <div class="newitem">
+        <h4>Fix various Code Snippet Posting issues in the SOAP Web Service</h4>
+        Fixed issue where posted snippets through the SOAP service would lose their author information.
+        Fixed issue that caused snippets to not return comments correctly for a snippet.
+    </div>
+    
+</div>
+</fieldset>

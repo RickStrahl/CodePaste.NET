@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 11.5" name="CodePasteContext">
+  <DataContextMoniker Name="/CodePasteDataContext" />
+  <nestedChildShapes>
+    <classShape Id="f80ae46b-3087-4372-9887-7ddb434b95b8" absoluteBounds="0.75, 0.75, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/CodePasteDataContext/Comment" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7f6b16e2-edb3-465c-89d0-cbaea9cbd6cc" absoluteBounds="0.765, 1.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="020dfebf-d711-45b6-839e-b5c1943ae652" absoluteBounds="3.75, 0.75, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/CodePasteDataContext/Favorite" />
+      <nestedChildShapes>
+        <elementListCompartment Id="40b1c04b-645a-4af7-a308-686ac7bff295" absoluteBounds="3.765, 1.21, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="74f75830-926b-4c22-81b2-6aba862e97bd" absoluteBounds="0.75, 3.75, 2, 1.9631982421875005">
+      <DataClassMoniker Name="/CodePasteDataContext/UserGroup" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3772756b-6158-4259-8f8c-d0bc766c427e" absoluteBounds="0.765, 4.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="dc2c3455-e747-4b2b-9f02-28da7ecab082" absoluteBounds="3.75, 3.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/CodePasteDataContext/SnippetClick" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8dc6e4a6-27ad-4744-9923-572fdc7b028a" absoluteBounds="3.765, 4.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="deee8adb-f8f3-4f53-be7a-15b13e847320" absoluteBounds="6.75, 0.75, 2, 1.9631982421875003">
+      <DataClassMoniker Name="/CodePasteDataContext/UserToken" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a4a73e61-96d8-4841-8eb6-1c6f0d206ea7" absoluteBounds="6.765, 1.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="4ed483b2-f47e-44fd-ac45-1409cd6413b1" absoluteBounds="0.75, 6.75, 2, 4.4631168619791666">
+      <DataClassMoniker Name="/CodePasteDataContext/CodeSnippet" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2d579dd6-cd35-4683-a051-929f06e90f5c" absoluteBounds="0.765, 7.21, 1.9700000000000002, 3.903116861979167" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8c84c61f-f8ca-436e-b8c5-6ea155cb3a9f" absoluteBounds="6.75, 3.75, 2, 3.8862125651041666">
+      <DataClassMoniker Name="/CodePasteDataContext/User" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6ccb1d83-d592-46e8-b8aa-72d0bfd7f890" absoluteBounds="6.765, 4.21, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="995e4425-4ab3-4ee1-a223-5d622e720bc6" absoluteBounds="3.5, 6.75, 2, 1.9631982421874987">
+      <DataClassMoniker Name="/CodePasteDataContext/AdditionalSnippet" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5025a65b-cf29-4b49-b339-ff660ce68892" absoluteBounds="3.515, 7.2100000000000009, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a72c7ab2-ed7d-4c07-abeb-6ddc6d58b4f4" absoluteBounds="6.75, 8.75, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/CodePasteDataContext/SpamKeyword" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0dcd09dd-e2b0-49d5-ac3e-e7ecfbf538ce" absoluteBounds="6.765, 9.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

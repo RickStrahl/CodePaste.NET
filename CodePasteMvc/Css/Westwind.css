@@ -1,0 +1,737 @@
+﻿/* BROWSER RESET (based on Eric Meyer's Reset) */
+html, body, div, span, applet, object, iframe, table, caption, tbody, tfoot, thead, tr, th, td, 
+del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, 
+h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, 
+dl, dt, dd, ol, ul, li, fieldset, form, label, legend {
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+	outline: 0px;		
+	line-height: normal;
+	vertical-align: baseline;
+	font-family: inherit;
+	font-size: 100%;
+}
+:focus {
+	outline: 0;
+}
+body {
+	background: white;
+	color: black;
+	line-height: 1.2;	
+}
+html,body { height: 100% }
+ol, ul {
+	list-style: disc;
+	margin: 20px;
+	}
+table {
+	border-collapse: separate;
+	border-spacing: 0;
+	}
+caption, th, td {
+	font-weight: normal;	
+	padding: 4px;
+	}
+td,th {
+    vertical-align: top;
+}
+ 
+blockquote:before, blockquote:after, q:before, q:after {
+	content: "";	
+	}
+blockquote, q {
+	quotes: "" "";
+	margin: 15px;
+	}
+input,select,textarea
+{
+	font-size: inherit;
+	font-weight: inherit;
+	font-style: inherit;
+}	
+p
+{
+	margin: 10px 0;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+b,
+strong {
+  font-weight: bold;
+}
+img {
+  color: transparent;
+  font-size: 0;
+  border: none;
+  -ms-interpolation-mode: bicubic;
+}
+/* END BROWSER RESET */
+
+
+body,table,td,th,input,textarea,select
+{
+    font-family:  Arial, sans-serif;    
+    font-size: 10.5pt;
+    line-height: 1.2em;     
+}
+pre
+{
+    color: black;
+    font-family: "Liberation Mono", Consolas, "Courier New", monospace !important;
+    font-weight: normal;
+    font-size: 10pt;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+h1
+{
+    background-color: #eeeeee;
+    color: navy;
+    font-size: 160%;
+    font-weight: bold;
+    padding: 5px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+h2
+{
+    color: maroon;
+    font-size: 140%;
+    font-weight: bold;
+    margin-bottom: 15px;
+    margin-top: 0;
+    padding-bottom: 0;
+    padding-top: 0;
+}
+h3
+{
+    color: steelblue;
+    font-size: 11.25pt;
+    font-weight: bold;
+    margin-bottom: 0pt;
+    margin-top: 0pt;
+    padding-bottom: 0pt;
+    padding-top: 0pt;
+}
+table.blackborder>tbody td
+{
+	border: solid 1px lightgrey;	
+}
+th
+{
+	border-collapse: collapse;
+	font-weight: bold;
+	text-align: center;
+}
+a 
+{ color:#003399; text-decoration: none; }
+a:visited
+{
+	color: darkred;
+}
+a:hover 
+{ color:red;  }
+hr 
+{ color: navy; background: navy; border: 0; height:1px;}
+	
+ul 
+{
+    margin-bottom: 0pt;
+    margin-top: 2pt;
+    padding-bottom: 2pt;
+    padding-top: 2pt;
+}	
+li
+{
+	padding-top: 2px;
+	padding-bottom: 3px;
+}
+fieldset
+{
+	border: solid 1px silver;	
+	margin-bottom: 15px;
+}
+.fieldsetpadding
+{
+	padding: 15px;
+}
+input, select, textarea {
+    font-size: inherit;
+    font-weight: inherit;
+    font-style: inherit;
+    -moz-box-sizing: border-box;    
+    box-sizing: border-box;    
+}
+input[type=text], input[type=password], select, textarea,
+input[type=url],input[type=email],input[type=date],input[type=datetime]
+{    	    	
+    border: 1px solid #cccccc;
+    box-shadow: 1px 1px  8px #eee;
+    transition: border linear 0.2s, box-shadow linear 0.2s;
+
+	background-color: #F5F7FA;    		
+	padding: 5px;
+	border-radius: 3px;
+}
+input[type=text]:focus, input[type=password]:focus,textarea:focus, 
+select:focus,input[type=url]:focus, input[type=email]:focus,input[type=date]:focus,
+input[type=datetime]:focus
+{
+    border-color: rgba(82, 168, 236, 0.8);
+    outline: 0;
+    outline: thin dotted \9;	    
+    background: cornsilk;        
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+}
+select:focus,
+input[type="file"]:focus,
+input[type="radio"]:focus,
+input[type="checkbox"]:focus {
+  outline: thin dotted #333;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.button, input[type=submit], input[type=button] {
+    min-width: 80px;
+    min-height: 27px;
+    font-size: 9pt;
+}
+.inputerror
+{
+	border: solid 1px red;
+	background: lightpink;
+}
+.blackborder
+{
+	border-style: solid;
+	border-width: 2px;
+	border-color: #003399;
+	background: white;
+	text-align: left;
+}
+
+/* 
+   used on the main page left table column 
+   the default contains the wave background
+*/
+small,.small
+{
+    font-size: 8.25pt;
+    font-weight: normal;
+}
+.bigtext
+{
+	font-size: 18pt;
+	font-weight: bold;
+	color: Navy;
+}
+.rightalign
+{
+	float: right;
+}
+
+/* block backgrounds for headers etc. */
+.menuband, .gridheader, .gridheaderbig, .gridpager, .buttonlinks, .blockheader, .roundedbar_top, .roundedbar_bottom
+{
+	color: cornsilk;
+	background-color: #003399;
+	padding: 0px;
+}
+/* alternate background color color to offset the background
+   used for the category list and banner strips for color
+   variety. should be a companion color to the block background
+   colors (previous tag
+*/
+.alternatebackground
+{
+	color: white;
+	background-color: #0066cc;
+}
+
+/* used for any block tags like headers on tables etc. */
+.blockheader
+{
+	font-weight:bold;
+}
+.banner
+{
+	color: cornsilk;
+	font-weight:bold;
+	background: #003399 url('../images/floralbackground_sm.gif') ;
+	height: 16px;
+	padding: 5px;
+	white-space:nowrap;
+}
+.bannertext
+{
+	color: White;
+	text-decoration: none;
+	padding: 1px 0;
+}
+.bannertext:visited
+{
+	color: white;
+}
+.bannertext:hover
+{
+	color: #003399;
+	background: white url('images/menuhighlight.png');	
+}
+.bannersubtitle
+{
+	color: khaki;
+	float:left;
+	padding-left:8px;
+}
+
+
+/* used on the category list as a standard link */
+.menucolumn 
+{ 
+	padding:5px;
+	border-bottom: solid 1px white ;
+}
+.menulink
+{
+    color: navy;
+    font-size: 8pt;
+    font-weight: normal;
+    text-decoration: none ;
+    display:block;
+    text-align:left;
+    padding-top:4px;
+    padding-bottom: 4px;
+    padding-left: 5px;
+    border: solid 1px transparent;
+}
+.menulink:visited { color: navy; } 
+.menulink:hover 
+{ 
+	color:#003399; 
+	text-decoration:none; 
+	font-weight:normal; 
+	background: white url('images/menuhighlight.png') repeat-x;
+}
+.menuband
+{	
+	font-weight: bold;
+	height: 20px;
+	padding-top: 5px;
+	text-align: center;
+	background: url('images/vertgradient.gif');
+}
+.menulinkcontainer
+{
+	padding: 5px;
+}
+.buttonlinks 
+{
+    font-weight:bold;
+    text-decoration: none;
+    display: block;
+    padding:2px;
+}
+.buttonlinks:visited { color: cornsilk; }
+.buttonlinks:hover { color:#003399; text-decoration:none; background:white;} 
+
+.imagelink
+{
+	text-decoration: none;
+	display: inline-block;
+	padding-left:4px;
+	padding-right: 4px;
+	padding-top: 2px;
+}
+.imagelink:hover { background: lightsteelblue; color:black; text-decoration:none; } 
+
+.submitbutton
+{
+	border-style: none;
+	border-color: inherit;
+	border-width: 0px;
+	font-weight: bold;
+    padding: 5px 20px;
+    font-size: 1.1em;
+	min-width: 120px;
+	background: #256abe;
+    border: 1px solid #346a98;
+    border-radius: 4px;
+	color: lemonchiffon;
+}
+.submitbutton:hover, .submitbutton:active { 
+    background: #325c90;    
+} 
+.smalltext
+{
+    font-size: 8pt;
+}
+.smallbutton
+{
+	border-style: none;
+	border-color: inherit;
+	border-width: 0px;
+	height: 22px;
+	width: 90px;
+	font-size: 8pt;
+	color: navy;
+	background: url('images/smallbutton.gif');
+}
+.smallbutton:hover { background: url('images/smallbuttonhover.gif');
+}
+.smallbutton:active { background: url('images/smallbuttonpressed.gif');
+}
+
+.gridheader, .gridheaderbig, .gridheaderleft, .gridheaderright, .gridpager
+{	
+	padding: 4px 4px 4px 4px;
+	background:  #003399 url('images/vertgradient.gif') repeat-x 50% bottom;
+	text-align: center;
+	font-weight: bold;
+	text-decoration: none;
+}
+.gridheader a, .gridheaderbig a
+{
+	color: cornsilk;
+	text-decoration: none;
+}
+.gridheaderleft
+{
+	text-align: left;
+}
+.gridheaderright
+{
+	text-align: right;
+}
+.gridheaderbig
+{	
+	background-image: url('images/vertgradient40.png');
+	background-repeat: repeat-x;
+	background-position: 50% bottom;
+}
+.gridnormal
+{
+	background-color: #eeeeee;
+}
+.gridalternate
+{
+	background-color:#b5c7d6;
+}
+.gridhighlight
+{
+	background-image: url(images/LightOrangeGradient.png);
+	background-repeat: repeat-x;
+	background-color: White;	
+	cursor:pointer;
+}
+.gridpager, .gridpager table tr td
+{	
+	border: none 0px transparent;	
+	text-align: right;
+	padding: 3px;
+	color: cornsilk;	
+	font-weight: bold;		
+}
+.gridpager a, .gridpager a:visited
+{	
+	font-weight: normal;
+	text-decoration: none;
+	color: white;	1	
+}
+.groupheader  
+{
+	background: SteelBlue; color: White; padding: 4px; margin-top: 10px; margin-bottom: 5px; font-weight: bold;
+}    
+.errormessage
+{
+	font-weight: bold !important;
+	color: maroon !important;
+}
+.errordisplay {
+  font-weight: normal;
+  color: maroon !important;
+  background-color: khaki !important;
+  border: solid 2px maroon !important;
+  margin: 7px 0;
+  padding: 10px;
+  box-shadow: 3px 3px 5px #535353;
+  border-radius: 4px;
+}
+.errordisplay-warning-icon,
+.errordisplay-info-icon {
+  width: 16px;
+  height: 16px;
+  float: left;
+  margin: 0 5px;
+  background-image: url(images/warning.png);
+}
+.errordisplay-info-icon {
+  background-image: url(images/info.png);
+}
+.errordisplay-text {
+  margin-left: 40px;
+  font-weight: bold;
+}
+.errordisplay hr {
+  background: maroon;
+}
+.errorhighlight {
+  background-color: #FCEBF2 !important;
+  border-color: Red !important;
+  border-width: 2px !important;
+}
+.clearfix {
+    clear: both;
+}
+.dialogwindow
+{
+	margin:0px;
+	background: #eeeeee;
+	font-size: 8pt;
+}
+.dialog
+{
+  background: White;
+  border: solid 1px steelblue;  
+  border-radius: 6px 6px 4px 4px;
+  box-shadow: 3px 3px 4px #535353;            
+}
+.dialog-header
+{	
+	background-image: url(images/dialogheader.png);    
+	background-repeat: repeat-x;
+	text-align: left;
+	color: cornsilk;
+	padding: 5px;	
+	padding-left: 10px;
+	font-size: 1.05em;
+	font-weight: bold;
+    border-radius: 5px 5px 0 0;
+}
+.dialog-content
+{
+	padding: 15px;
+}
+.dialog-statusbar, .dialog-toolbar
+{
+	background: #eeeeee;
+	background-image: url(images/dialogstrip.png);
+	background-repeat: repeat-x;
+	padding: 5px;
+	padding-left: 10px;
+	border-top: solid 1px silver;
+	border-bottom: solid 1px silver;
+	font-size: 0.8em;
+}
+.dialog-statusbar
+{
+    border-radius: 0 0 3px 3px;
+	padding-right: 10px;
+}
+.closebox,.closebox-container
+{
+	position: absolute;    	
+    right: 2px;
+	top: 2px;
+	width: 16px;
+	height: 16px;
+	background-image: url(images/close.png);
+	background-repeat: no-repeat;
+	cursor: pointer;    	
+	opacity: 0.80;
+	filter: alpha(opacity="80");
+} 
+.closebox-container {
+    right: -10px;
+	top: -10px;
+   	width: 28px;
+	height: 28px;
+	background-image: url(images/closex.png);
+}
+.closebox:hover,.closebox-container:hover 
+{	
+	opacity: 1;
+	filter: alpha(opacity="100");
+}
+
+.toolbarcontainer  
+{
+	background:#eeeeee;
+	background-image: url(images/dialogstrip.png);
+	background-repeat: repeat-x;
+	border: solid 1px silver;
+	vertical-align: top;
+	padding: 5px; 
+}
+.hoverbutton,.pagebutton
+{
+	text-decoration:none;		
+	padding: 4px; 	
+	font-size: 8pt; 		
+	border: solid 1px transparent; 			
+	cursor: hand;	
+    color: black;
+	border-radius:4px;
+}
+.hoverbutton img
+{
+    vertical-align: text-bottom;
+}
+.hoverbutton:hover
+{	
+	background: white url('images/dialoghighlight.png'); 
+    color: black;
+	border:  outset 1px silver; 	
+	cursor: hand;
+
+}     
+.hoverbutton a
+{
+	text-decoration: none;
+}
+.pagebutton, .pagebutton-selected
+{
+    padding: 4px 8px;
+    border: solid maroon 1px;    
+    background: white;
+}
+.pagebutton-selected
+{
+    font-weight: bold;    
+    background: cornsilk;
+}
+.pager
+{
+    padding: 10px;
+    text-align: right;
+    background: #eeeeee
+}
+.tabbutton, .selectedtabbutton
+{
+	border-style: none;
+	border-color: inherit;
+	border-width: 0px;
+	font-size: 8pt;
+	background: url('images/tabnormal.gif') no-repeat;
+	text-align: center;
+	vertical-align: middle;
+	cursor: hand;
+	color: darkblue;
+	width: 120px;
+	margin: 0px;
+	padding:0px;
+}
+.tabbutton:hover
+{
+	background: url('images/tabhover.gif') no-repeat;
+}
+.selectedtabbutton 
+{ 
+	font-weight: bold; 
+	color: white; 
+	background:url('images/tabselected.gif') no-repeat;
+	cursor:default;
+}
+.roundedbar_top
+{
+	height:20px;
+	width: 150px; 
+	padding: 5px 0px 0px 0px;
+	font-weight:bold;
+	text-align: center;	
+	background: url('images/roundedbar_top.png') no-repeat;
+	font-size: 10pt;
+}
+.roundedbar_bottom
+{
+	height:12px;
+	width: 170px; 
+	background: url('images/roundedbar_bottom.png') no-repeat;
+}
+.dragwindow
+{
+	background: white;
+	border: solid 2px steelblue;
+	position: absolute;				
+}
+.containercontent
+{
+	padding: 20px;	
+}
+legend
+{
+    text-align: center;
+	font-weight: bold;
+	background: #DE8079;
+	color: White;
+	padding: 3px;
+	margin: 10px;
+	border: solid 1px darkred;
+}    
+.grouping
+{
+    padding: 10px;
+	background-color: whitesmoke;   
+	position: relative; 	
+}
+.menucontainer
+{
+	margin: 3px;
+	margin-left: 10px;
+}
+.smallprogress,.smallprogressright
+{
+	width: 16px;
+	height: 16px;
+	background-image: url(images/loading_small.gif);
+	background-repeat: no-repeat;	
+	display: none;
+}
+.smallprogressright { float: right }
+
+.statusbar {
+  position: fixed ;
+  bottom: 0px;
+  left: 15px;
+  right: 15px;
+  height: 16px;
+  padding: 8px 2px 8px 10px;
+  font-weight: normal;
+  background: black;
+  color: white;
+  opacity: .80;
+  filter: alpha(opacity=85);
+  z-index: 200;
+  overflow: no-display;
+  border-radius: 8px 8px 0 0;
+  box-shadow: -1px -1px 6px 2px #535353;
+}
+.statusbarhighlight {
+  font-weight: bold;
+  color: khaki;
+}
+.statusbarclose {
+  position: absolute;
+  right: 3px;
+  top: 2px;
+  opacity: 0.80;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  background-image: url(images/closex.png);
+  background-repeat: no-repeat;
+}
+.statusbarclose:hover {
+  opacity: 1;
+}

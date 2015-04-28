@@ -1,0 +1,102 @@
+﻿@using CodePasteBusiness
+@using CodePasteMvc.Controllers
+@using Westwind.Utilities
+@using Westwind.Web
+@using Westwind.Web.Controls
+@model CodePasteMvc.DeleteSpamViewModel
+@{
+    Layout = "~/views/shared/_Layout.cshtml";
+    var busSnippet = new busCodeSnippet();
+    var errorDisplay = ViewData["ErrorDisplay"] as Westwind.Web.Mvc.ErrorDisplay;
+
+
+    var serverVars = new JsonVariables("serverVars");
+    serverVars.Add("baseUrl", Request.ApplicationPath);
+    serverVars.Add("callbackHandler", Url.Content("~/CodePasteHandler.ashx"));    
+}
+@section headers
+{
+    .snippet{
+    }
+}
+
+@Html.Raw(errorDisplay.Show(450, true))
+
+<h2>
+    Delete Spam Records
+</h2>
+<p class="small">
+        This page allows you to specify a keyword to find SPAM content then mark it to delete it
+        quickly.
+</p>
+
+
+<div style="margin-right: 300px;">
+    
+    @using (Html.BeginForm("DeleteSpam","Admin"))
+    {
+        <div>
+            <label>Keyword: </label>
+            @Html.TextBoxFor(m => m.SearchTerm) 
+            <input type="submit" id="btnSubmit" name="btnSubmit" value="Search" />
+            <button type="button" id="btnAddToFilter">Add to filter list</button>
+        </div>
+   
+        <hr />
+        <input type="submit" id="btnDelete" name="btnDelete" value="Delete selected items" />  @Model.Snippets.Count()
+        <span>items</span>
+        <hr />
+
+        foreach (var snippet in Model.Snippets)
+        {
+            <div class="snippet" id="snippet_@snippet.Id">
+                <div class="snippettitle">
+                    <input name="snippet_@snippet.Id" type="checkbox" checked="checked" /> @snippet.Title
+                </div>
+                <div class="snippetcode">
+                    @Html.Raw(busSnippet.GetFormattedCodeLines(snippet.FormattedCode, 10, snippet.Language))
+                </div>
+                
+                <div class="toolbarcontainer" style="margin-top: 5px;">
+                    <div class="snippetauthor">@(!string.IsNullOrEmpty(snippet.Author) ? " by " + snippet.Author + " - " : string.Empty)   @TimeUtils.FriendlyDateString(snippet.Entered, true)</div>
+                    <div><small>Tags: @Html.Raw(Url.GetTagLinkList(snippet.Tags))</small></div>
+                </div>
+
+                <div style="font-size: smaller;margin: 5px 0">
+                    <a href="javascript:{}" class="removelink">Remove Snippet</a>
+                </div>
+            </div>
+        }
+    }
+
+</div>
+
+
+<div id="SpamKeywordsSideBar" style="width: 270px; padding: 10px;position:absolute; top: 150px; right: 10px; background: whitesmoke; border-radius: 4px; box-shadow: 2px 2px 4px #535353">
+    @{
+        
+    }
+</div>
+
+
+@section scripts {
+
+    <script>
+        @serverVars.ToHtmlString(true);
+    </script>
+    <script src="~/Scripts/List.js">
+    </script>
+    <script>
+        showStatus({ afterTimeoutText: "Ready", closable: true });
+        
+        $("#btnAddToFilter").click(function () {
+            var kw = $("#SearchTerm").val();
+
+            ajaxCallMethod("@Url.Content("~/CodePasteHandler.ashx")", "AddSpamFilter",[kw],
+                function () {
+                    showStatus("Keyword added.", 5000, true);
+                },
+                onPageError);
+        });
+    </script>
+}

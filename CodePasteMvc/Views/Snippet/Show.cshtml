@@ -1,0 +1,292 @@
+@using System.Web.UI.WebControls
+@using CodePasteBusiness
+@using CodePasteMvc
+@using CodePasteMvc.Controllers
+@using Westwind.Utilities
+@using Westwind.Web
+@using Westwind.Web.Mvc
+@using Westwind.Web.Services
+
+@model CodePasteMvc.Controllers.ShowSnippetViewModel
+@{
+    Layout = "~/views/shared/_layout.cshtml";
+}
+@section headers {
+    <title>CodePaste.NET - @Model.Snippet.Title</title>
+    <meta id="metaKeyWords" name="Keywords" content="@Model.Snippet.Tags" />
+    <meta id="metaDescription" name="Description" content="CodePage.NET - paste and link .NET code for referencing from Social Network sites. Store and organize your code snippets." />
+    <style type="text/css">
+        .commentedit {
+            width: 400px;
+            height: 70px;
+        }
+
+        .tagedit {
+            width: 400px;
+            height: 15px;
+        }
+
+        #divViews {
+            float: left;
+            font-size: .825em;
+            font-weight: bold;
+            background-image: url(images/group.png);
+            background-repeat: no-repeat;
+        }
+        .copycode {
+            opacity: 0.30;
+        }
+
+        .copycode {
+            opacity: 1;
+        }
+
+        #EditOptionsHover {
+            opacity: 0.50;
+            position: absolute;
+            z-index: 9999;
+            right: 10px;
+            top: 1px;
+            background-color: #555;
+            color: white;
+            border-radius: 0 0 4px 4px;
+            padding: 7px;
+            cursor: pointer;
+            box-shadow: #808080 2px 2px 4px;
+        }
+
+        #EditOptionsHover:hover {
+            opacity: 1;
+        }
+
+        #EditOptionsHover.hoverbutton, #EditOptionsHover.hoverbutton:hover,
+        #EditOptionsHover a {
+            color: white;
+        }
+
+        #EditOptionsHover a:hover {
+            color: black;
+        }
+        .ace_editor, .ace_editor * {
+            font-family: "Liberation Mono", Consolas, "Courier New", monospace !important;
+            font-size: 10pt !important;
+            font-weight: normal !important;
+            letter-spacing: 0 !important;
+        }
+        .ace_content {
+            padding-top: 5px !important;
+        }
+        /*.ace_scrollbar {
+            display: none !important;
+        }*/
+    </style>
+}  
+@{
+    // server side variables persisted into JavaScript
+    JsonVariables scriptVars = new JsonVariables("serverVars");
+    scriptVars.Add("showLineNumbers", Model.Snippet.ShowLineNumbers);
+    scriptVars.Add("allowEdit", Model.AllowEdit);
+    scriptVars.Add("language", Model.Snippet.Language.ToLower());
+    scriptVars.Add("baseUrl", Url.Content("~/"));
+    scriptVars.Add("theme", Model.AppUserState.Theme);
+    scriptVars.Add("callbackHandler", Url.Content("~/CodePasteHandler.ashx"));
+
+}
+<script>
+    @scriptVars.ToHtmlString(true)
+</script>
+
+@Html.Raw(((ErrorDisplay)this.ViewData["ErrorDisplay"]).Show(400, true))
+
+@if (!string.IsNullOrEmpty(Model.Snippet.Language))
+{
+    <div style="float: right; margin-right: 8px; font-size: 0.8em">
+        <b>Language:</b>
+        @if (!@Model.AllowEdit)
+        {
+            <span id="Language">@Model.Snippet.Language</span>
+        }
+        else
+        {
+            @Html.Partial("LanguageDropdown-Partial")
+            <script> $("#Language").listSelectItem('@Model.Snippet.Language.ToLower()') </script>
+        }
+    </div>
+}
+  
+
+<div class="labelheader" style="margin-top: 0px;">
+    <h3>
+        <span id="Title">@(string.IsNullOrEmpty(Model.Snippet.Title) ? "No Title" : Model.Snippet.Title)</span>
+        @if (Model.AllowEdit)
+        {
+            <img src="~/css/images/editwhite.gif" id="imgEditTitle" class="hoverbutton" title="Edit Title" />
+        }
+    </h3>
+</div>
+
+<div class="toolbarcontainer">
+    <div id="divViews" style="padding: 2px 5px 0 21px;">
+        @(Model.Snippet.Views > 1 ? Model.Snippet.Views.ToString() + " Views" : "")
+        &nbsp;&nbsp;
+        @if (!Model.AppUserState.IsEmpty())
+        {
+            <a id="btnFavorite" href="#" class="hoverbutton" title="Add to your favorites">
+                <img src="~/images/favorite.png" />
+                <span id="btnFavorite-text">@(Model.IsFavoritedByUser ? "Unfavorite" : "Favorite")</span>
+                &nbsp;
+            </a>
+        }
+    </div>
+
+    <div style="text-align: right;">
+        @Html.Raw(ShareButtons.ShareOnTwitter(Model.Snippet.Title + ": http://codepaste.net/" + Model.Snippet.Id + " #" + Model.Snippet.Id))
+        @Html.Raw(ShareButtons.GooglePlusPlusOneButton())
+    </div>
+</div>
+
+<div style="clear: both"></div>
+
+<div style="position: relative">
+    <div id="EditOptionsHover">
+        <a id="btnCopyCode" href="#" class="hoverbutton" title="Copy code to clipboard. Requires you press Ctrl-C to capture text.">
+            <img src="~/images/paste.png" alt="Copy Code to Clipboard" />
+            Copy
+        </a>
+        <a href="#" id="btnShowLineNumbers" class="hoverbutton" title="Show/Hide Line Numbers">
+            <img src="~/css/images/LineNumbers.gif" alt="Show/Hide Line Numbers" />
+            Line#
+        </a>
+    </div>
+
+    <div style="border: 1px solid silver;">
+        @if (Model.AllowEdit)
+        {
+            <div style="background: cornsilk; color: darkred; font-size: x-small; padding: 4px;">
+                As the author, you can edit and update this snippet.
+                <input type="button" id="btnUpdateCode" value="Save Changes" accesskey="S" title="Save changes (alt-s)" style="font-size: x-small" />
+            </div>
+        }
+
+        <div id="CodeDisplay" class="codedisplay">@Model.Snippet.Code</div>
+    </div>
+</div>
+
+<div style="float: right;margin: 8px; font-size: 0.8em;width: 300px;text-align: right;">
+    @Html.Raw(Model.Snippet.User != null ? AppWebUtils.GravatarLink(Model.Snippet) : "")
+
+    @if (!string.IsNullOrEmpty(Model.Snippet.Author) || !(Model.Snippet.User != null))
+    {
+        <span>by</span>
+        @Html.Raw(Model.Snippet.User != null ?
+                        HtmlUtils.Href(Html.Encode(Model.Snippet.User.Name), "~/list/user/" + Model.Snippet.User.Id) :
+                        Html.Encode(Model.Snippet.Author))
+        <br />
+    }
+    &nbsp; <i>@TimeUtils.FriendlyDateString(Model.Snippet.Entered, true)</i>
+</div>
+
+
+
+@if (!string.IsNullOrEmpty(Model.Snippet.Tags) || Model.AllowEdit)
+{
+    <div class="labelheader" style="margin-top: 20px;">
+        Tags:
+        @if (Model.AllowEdit)
+        {
+            <img src="css/images/editwhite.gif" id="btnEditTags" class="hoverbutton" title="Edit Tags" />
+        }
+    </div>
+    <div id="Tags">@Html.Raw(Url.GetTagLinkList(Model.Snippet.Tags))</div>
+}
+
+@if (!string.IsNullOrEmpty(Model.Snippet.Comment) || Model.AllowEdit)
+{
+    <div class="labelheader">
+        Description:
+        @if (Model.AllowEdit)
+        {
+            <img src="~/css/images/editwhite.gif" id="btnEditComment" class="hoverbutton" title="Edit Comment" />
+        }
+    </div>
+
+    <div id="Comment">@HtmlUtils.DisplayMemo(Model.Snippet.Comment)</div>
+}
+
+<div class="clearfix"></div>
+
+<div id="divComments" style="margin-top: 20px;">
+    @if (Model.Snippet.Comments != null)
+    {
+        foreach (Comment comment in Model.Snippet.Comments)
+        {
+            <div class="@(comment.Author == Model.Snippet.Author ? " snippetcommentauthor" : "snippetcomment")">
+                <small>
+                    <div class="snippetcommentheader">
+                        @( comment.Author != null ? "by " + Html.Encode(comment.Author) : "")
+                        &nbsp;&nbsp; @TimeUtils.FriendlyDateString(comment.Entered, true)
+                    </div>
+                    <p>
+                        @HtmlUtils.DisplayMemo(comment.CommentText)
+                    </p>
+                </small>
+            </div>
+        }
+    }
+</div>
+
+<div class="snippetcommentauthor" id="divNewComment">
+    <small>
+        <div class="snippetcommentheader" style="text-align: left; font-style: normal; font-weight:bold; margin-bottom: 15px;">
+            Add a comment
+        </div>
+        <textarea id="txtNewComment" style="width:100%;height: 50px; overflow-y:scroll;"></textarea>
+        <input type="button" id="btnSaveComment" value="Save Comment" />
+    </small>
+</div>
+
+
+<br clear="all" />
+<hr />
+<small>
+    @if (Model.AllowEdit)
+    {
+        <a href="javascript:{}" onclick="RemoveSnippet('@Model.Snippet.Id') ">Remove Snippet</a> <span>|</span>
+    }
+    @if (Model.AppUserState.IsAdmin || !Model.Snippet.IsAbuse)
+    {
+        <a href="javascript:{}" onclick="ReportAbuse() ">
+            @(Model.Snippet.IsAbuse ? "Undo Abuse" :"Report Abuse" )
+        </a>
+    }
+</small>
+
+<div>
+    <input type="hidden" id="SnippetId" value="@Model.Snippet.Id" />
+</div>
+
+<div id="divCopyDialog" class="dialog dialog-content" style="width: 300px; display: none;">
+    <h3>Press Ctrl-C to copy to your Clipboard</h3>
+    <p>
+        <ul>
+            <li><b>Ctrl-C</b> or <b>Ctrl-X</b> to copy to the clipboard.</li>
+            <li><b>ESC</b> to exit copy mode.</li>
+        </ul>
+    </p>
+</div>
+
+<script type="text/html" id="commentTemplate">
+    <div class="snippetcommentauthor">
+        <small>
+            <div class="snippetcommentheader">
+                <# =headerText #>
+            </div>
+            <div><# =commentText #></div>
+        </small>
+    </div>
+</script>
+
+
+<script src="~/Scripts/Ace/ace.js"></script>
+<script src="~/Scripts/aceEditorConfig.js"></script>
+<script src="~/scripts/show.js" type="text/javascript"></script>

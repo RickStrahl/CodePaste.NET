@@ -1,0 +1,82 @@
+@using Westwind.Utilities
+@using Westwind.Web.Mvc
+@model CodePasteMvc.Controllers.ShowSnippetViewModel
+@{
+    Layout = "~/views/shared/_layout.cshtml";
+}
+@section headers{
+    <title>CodePaste.NET</title>        
+    <style type="text/css">
+        .commentedit {width: 400px;height: 70px; }
+        .tagedit {width: 400px;height: 15px; }
+        #divViews {float: left;
+            margin: 5px;
+            padding-left: 20px;
+            font-size: .825em;
+            font-weight: bold;
+            background-image: url(css/images/users.gif);
+            background-repeat: no-repeat;
+        }
+    </style>
+}
+
+
+                
+    @Html.Raw(( (ErrorDisplay) this.ViewData["ErrorDisplay"]).Show(400,true))
+    
+    
+    @if (string.IsNullOrEmpty(ViewData["originalUrl"] as string))
+    {
+        <form action="" method="get">
+            <h2>Display Syntax  Colored Code from a URL</h2>
+        
+            <p>
+                Below you can enter a url to a page that returns raw code from a source repository or
+                other source and have it displayed with syntax coloring. You can also specify the url
+                and language via query string. The url referenced must respond within 2 seconds.
+
+            </p>
+            
+            <div style="margin: 20px 0;">
+                <div class="labelheader">Web Location of raw unformatted code:</div>
+                <input type="text" id="url" name="url" value="@ViewData["originalUrl"]"  style="width: 99.5%"/>
+                
+                <div class="labelheader">Code syntax:</div>
+                @Html.DropDownList("Language", ViewData["languageList"] as List<SelectListItem>)      
+                       
+                <div>
+                    <input type="submit" id="btnSubmit" value="Show highlighted code" 
+                           class="pagesubmitbutton"  style="width: 150px; margin-top: 20px;"/> 
+                </div>                                
+            </div>
+            
+            <hr />
+            <div class="smalltext">                
+                Alternately you can also specify the <b>Url</b> and <b>Language</b> as query string parameters. 
+                Check the URL after you've used the form above for syntax.                
+            </div>
+            
+        </form>
+    }
+    else
+    {
+
+        <h2>@ViewData["fileName"]</h2>
+
+        <div class="toolbarcontainer">
+            <a href="@ViewData["originalUrl"]" class="hoverbutton" 
+               title="View the original source code link on the Web"
+               target="_blank">            
+                @Html.Raw(HtmlUtils.ImgRef("~/images/OriginalUrl.png"))
+                Source Url
+            </a>        
+        
+            <a href="@(Url.Action("new", "Snippet", new {url = ViewData["originalurl"] as string}))"
+               title="Creates a permanent snippet from this code" class="hoverbutton">
+                @Html.Raw(HtmlUtils.ImgRef("~/css/images/newsnippet.gif"))  Create Snippet</a>
+        </div>
+
+        <div class="codedisplay">            
+            <div id="CodeDisplay">@Html.Raw(Model.FormattedCode)</div>
+        </div>
+    }       

@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style>
+        body,html {margin: 0}
+         #editor {            
+             height: 200px;                        
+         }
+    </style>
+</head>
+<body>
+
+
+    <div id="editor">
+        /**
+        * In fact, you're looking at ACE right now. Go ahead and play with it!
+        *
+        * We are currently showing off the JavaScript mode. ACE has support for 45
+        * language modes and 24 color themes!
+        */
+
+        function add(x, y) {
+            var resultString = "Hello, ACE! The result of your math is: ";
+            var result = x + y;
+            return resultString + result;
+
+
+        }
+
+        var addResult = add(3, 2);
+        console.log(addResult);
+        
+        &lt;script&gt;alert('hello world')&lt;/script&gt;
+    </div>
+
+    <label>Code:</label>
+    <textarea id="txtCode" style="width: 100%;display:block; height: 400px;"></textarea>
+
+    <label>Language:</label>
+    <input id="txtLang" type="text" value="ace/mode/csharp" />
+
+    <a id="btnUpdate" href="#/Update">Update</a>
+
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="Ace/ace.js"></script>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.getSession().setMode("ace/mode/javascript");
+        editor.setReadOnly(true);  // false to make it editable
+
+        $(function () {
+            var code = editor.getValue();
+            $("#txtCode").val(code);
+
+            $("#btnUpdate").click(function () {
+                code = $("#txtCode").val();
+                var lang = $("#txtLang").val();
+
+                alert(lang);
+                editor.getSession().setMode(lang);
+                editor.setValue(code);
+
+            });
+
+        });
+
+    </script>
+</body>
+
+</html>

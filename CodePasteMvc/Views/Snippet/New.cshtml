@@ -1,0 +1,245 @@
+@model CodePasteBusiness.CodeSnippet
+@using System.Web.UI.WebControls
+@using CodePasteMvc
+@using Westwind.Web
+@{
+    Layout = "~/views/shared/_layout.cshtml";
+    AppUserState userState = ViewData["UserState"] as AppUserState;           
+}
+@section headerstop {
+    <title>New Code Snippet - Codepaste.net</title>
+    <meta id="metaKeyWords" name="Keywords" content="CodePaste,Paste,Code,DotNet,.Net,C#,ASP.NET,AJAX,JQuery,HTML,CSS,JavScript,ADO.Net"  />
+ 	<meta id="metaDescription" name="Description" content="CodePage.NET - paste and link .NET code for referencing from Social Network sites. Store, link and organize your code snippets."  />
+}
+@section headers {
+    <script src="~/scripts/new.js"></script>
+    <style>
+        .containercontent input[type=text],
+        .containercontent textarea {
+            width: 100%;            
+        }
+         .ace_editor, .ace_editor * {
+             font-family: "Liberation Mono", Consolas, "Courier New", monospace !important;
+             font-size: 10pt !important;
+             font-weight: normal;
+             letter-spacing: 0;            
+         }
+        .ace_content {
+            padding-top: 5px !important;
+        }
+        .ace_heading {
+            font-weight: bold !important;   
+        }
+        .ace_strong {
+            font-weight: bold !important;
+        }
+        .ace_emphasis {
+            font-style: italic !important;
+        }  
+    /*.ace_scrollbar {
+                display: none !important;
+            }*/
+    </style>
+
+}
+    
+    @Html.Raw(((Westwind.Web.Mvc.ErrorDisplay) this.ViewData["ErrorDisplay"]).Show(400,true) )
+
+    <form id="snippetform" action="new" method="post">
+        <fieldset style="background:white; width: 100%">
+            <div class="containercontent">
+                <div style="float: right; margin-bottom: 8px;">
+                    <b>Syntax:</b>
+                    @Html.Partial("LanguageDropdown-Partial")
+
+                    @*<b><input type="checkbox" id="Private" name="Private" /><label for="Private">Private Snippet</label></b>*@
+                </div>
+
+                <div class="labelheader">Title:</div>
+                <input type="text" name="Title" id="Title"  value="@Model.Title"  placeholder="Enter a descriptive title for your snippet"/>
+                
+                <div style="border: 1px solid silver; width: 100%;margin-top: 5px;">
+                    <div id="CodeDisplay" class="codedisplay" style="min-height: 250px;">@Model.Code</div>
+                    <input type="hidden" id="Code" name="Code" />
+                </div>
+                                
+
+                <div class="fieldmessage" style="float: right">(left margins are automatically stripped from code)</div>
+                @Html.CheckBox("ShowLineNumbers", Model.ShowLineNumbers) <label for="ShowLineNumbers" class="labelheader" style="display: inline" title="Determines if line numbers are displayed by default (can be overridden)">Show Line Numbers</label>
+
+                <div class="labelheader" style="margin-top: 15px;">Tags: <small>(separate with commas)</small></div>
+                <input type="text" name="Tags" id="Tags" style="width: 100%;" value="@this.Model.Tags" placeholder="Comma separated list of tags that describe this snippet." />
+
+                <div class="labelheader">Comment: <small>(optional)</small></div>
+                <textarea id="Comment" name="Comment" style="width: 100%; height: 50px;" placeholder="Any additional descriptive notes you might have about this code snippet">@this.Model.Comment</textarea>
+
+                <div class="labelheader">Your Name: <small>(optional)</small></div>
+                <input type="text" name="Author" id="Author" style="width: 100%;" value="@this.Model.Author" />
+
+                <input type="submit" id="btnPaste" name="btnPaste" value="Paste your Code" class="pagesubmitbutton" style="width: 150px;" />
+                <div class="fieldmessage">(JavaScript required for SPAM prevention)</div>
+            </div>
+        </fieldset>             
+    </form>       
+    
+    <div id="divSignInNag" class="dialog dialog-content" style="width: 350px; display: none; position: absolute; z-index: 10000">
+        <h3>You're not signed in</h3>
+        
+        <p>
+            Signing in allows you to track and edit your code snippets after you've created them.
+            You can quickly register and sign in - it only takes a minute and provides
+            many usage enhancements.
+        </p>
+        <p>
+            Anonymous snippets are allowed, but they are removed after 10 days.
+        </p>        
+        @Html.ActionLink("Sign in or Register","LogOn","Account",null, new { @class="hoverbutton" } )        
+    </div>
+        
+    @if (Request.HttpMethod == "GET" && string.IsNullOrEmpty(userState.UserId))
+    {
+        <script type="text/javascript">
+            $(document).ready(function() {
+                showLayover();
+            });
+        </script>
+    }
+
+
+
+
+@section scripts{
+    @{
+        // server side variables persisted into JavaScript
+        JsonVariables scriptVars = new JsonVariables("serverVars");
+        scriptVars.Add("showLineNumbers", false);
+        scriptVars.Add("allowEdit", true);
+        scriptVars.Add("baseUrl", Url.Content("~/"));
+        scriptVars.Add("theme", userState.Theme);
+        scriptVars.Add("callbackHandler", Url.Content("~/CodePasteHandler.ashx"));
+    }
+    <script>
+        @scriptVars.ToHtmlString(true)
+    </script>
+    <script src="~/Scripts/Ace/ace.js"></script>    
+    <script src="~/Scripts/aceEditorConfig.js"></script>
+    <script>
+        window.aceEditor = configureAceEditor(serverVars);
+        aceEditor.focus();
+
+        $("#Language").change(function() {
+            var lang = $(this).val();
+            aceEditor.getSession().setMode("ace/mode/" + lang);
+        });
+    </script>
+
+    @*
+    <!-- typo.js integration -->
+    <script src="~/Scripts/typo.js"></script>
+    <script>
+        // You also need to load in typo.js and jquery.js
+
+        // You should configure these classes.
+        var editor = "CodeDisplay"; // This should be the id of your editor element.
+        var lang = "en_US";
+        var dicPath = "./scripts/en-US.dic.txt";
+        var affPath = "./scripts/en-US.aff.txt";
+
+        // Make red underline for gutter and words.
+        $("<style type='text/css'>.ace_marker-layer .misspelled { position: absolute; z-index: -2; border-bottom: 1px solid red; margin-bottom: -1px; }</style>").appendTo("head");
+        $("<style type='text/css'>.misspelled { border-bottom: 1px solid red; margin-bottom: -1px; }</style>").appendTo("head");
+
+        // Load the dictionary.
+        // We have to load the dictionary files sequentially to ensure
+        var dictionary = null;
+        $.get(dicPath, function(data) {
+            dicData = data;
+        }).done(function() {
+            $.get(affPath, function(data) {
+                affData = data;
+            }).done(function() {
+                console.log("Dictionary loaded");
+                dictionary = new Typo(lang, affData, dicData);
+                enable_spellcheck();
+                spell_check();
+            });
+        });
+
+        // Check the spelling of a line, and return [start, end]-pairs for misspelled words.
+        function misspelled(line) {
+            var words = line.split(' ');
+            var i = 0;
+            var bads = [];
+            for (word in words) {
+                var x = words[word] + "";
+                var checkWord = x.replace(/[^a-zA-Z']/g, '');
+                if (!dictionary.check(checkWord)) {
+                    bads[bads.length] = [i, i + words[word].length];
+                }
+                i += words[word].length + 1;
+            }
+            return bads;
+        }
+
+        var contents_modified = true;
+
+        var currently_spellchecking = false;
+
+        var markers_present = [];
+        window.typoLastAccess = new Date().getSeconds();
+
+        // Spell check the Ace editor contents.
+        function spell_check() {
+            // Wait for the dictionary to be loaded.
+            if (dictionary == null) {
+                return;
+            }
+            if (currently_spellchecking) {
+                return;
+            }
+
+            if (!contents_modified) {
+                return;
+            }
+            currently_spellchecking = true;
+            var session = ace.edit(editor).getSession();
+
+            // Clear the markers.
+            for (var i in markers_present) {
+                session.removeMarker(markers_present[i]);
+            }
+            markers_present = [];
+
+            try {
+                var Range = ace.require('ace/range').Range
+                var lines = session.getDocument().getAllLines();
+                for (var i in lines) {
+                    // Clear the gutter.
+                    session.removeGutterDecoration(i, "misspelled");
+                    // Check spelling of this line.
+                    var misspellings = misspelled(lines[i]);
+
+                    // Add markers and gutter markings.
+                    if (misspellings.length > 0) {
+                        session.addGutterDecoration(i, "misspelled");
+                    }
+                    for (var j in misspellings) {
+                        var range = new Range(i, misspellings[j][0], i, misspellings[j][1]);
+                        markers_present[markers_present.length] = session.addMarker(range, "misspelled", "typo", true);
+                    }
+                }
+            } finally {
+                currently_spellchecking = false;
+                contents_modified = false;
+            }
+        }
+
+        function enable_spellcheck() {
+            ace.edit(editor).getSession().on('change', function(e) {
+                contents_modified = true;
+            });
+            setInterval(spell_check, 1000);
+        }
+    </script>
+    *@
+}

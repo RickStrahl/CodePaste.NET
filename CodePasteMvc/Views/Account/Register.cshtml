@@ -1,0 +1,210 @@
+﻿@model CodePasteMvc.Controllers.AccountViewModel
+@{
+    Layout = "~/views/shared/_layout.cshtml";
+}
+@section headers{
+
+    <style type="text/css">
+        label {
+            display: block;
+            margin-bottom: 7px;            
+            font-weight: bold;
+        }
+
+        input[type=text], input[type=password], select {
+            width: 250px;
+        }
+
+        #divOpenIdIcons {
+            margin-top: 5px;
+            margin-left: 30px;
+        }
+
+            #divOpenIdIcons img {
+                cursor: pointer;
+                border: solid 1px silver;
+            }
+    </style>
+    <script src="~/Scripts/account.js"></script>
+}
+
+
+@{
+    bool isNewUser = (bool) ViewData["IsNew"];
+}
+@if (isNewUser)
+{
+    <h2>Create a New Account</h2>
+}
+else
+{
+    <h2>Your Account</h2>
+}
+@if (!isNewUser)
+{
+    <div class="rightalign">
+        <input id="deleteButton" name="btnDeleteAccount" type="button" value="Delete Account" />
+    </div>
+}
+
+    <p style="padding: 5px;">
+        Create a new account by signing in with <a href="http://openid.net/get-an-openid/" target="_blank">OpenID</a> or using Email and Password for logins.
+    </p>
+
+    @Html.Raw(this.Model.ErrorDisplay.Show(450,true))
+
+
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "frmRegistration" }))
+            {
+                @Html.AntiForgeryToken()
+                <div>
+                    <fieldset>
+                        <div class="containercontent">
+                            <p>
+                                <label for="username" class="labelheader">Your name:</label>
+                                @Html.TextBox("Name", this.Model.busUser.Entity.Name)
+                                @Html.ValidationMessage("Name", "error")
+
+                            </p>
+                            <p>
+                                <label for="Email" class="labelheader">
+                                    Email:
+                                    <small> &nbsp;(will be verified) </small>
+                                </label>
+                                @Html.TextBox("Email", this.Model.busUser.Entity.Email)
+
+                                <small>(username and <a href="http://gravatar.com" target="_blank">Gravatar</a> image)</small>
+                                <br/>
+                            </p>
+
+                            @if (string.IsNullOrEmpty(Model.busUser.Entity.OpenId))
+                            {
+                                <p>
+                                    <label for="Password" class="labelheader">Password:</label>
+                                    @Html.Password("Password", this.Model.busUser.Entity.Password)
+                                </p>
+                                <p>
+                                    <label for="confirmPassword" class="labelheader">Confirm password:</label>
+                                    @Html.Password("confirmPassword", this.Model.busUser.Entity.Password)
+                                    @Html.ValidationMessage("confirmPassword")
+                                </p>
+                            }
+
+                            <label for="Theme" class="labelheader">Code Editor Theme:</label>
+                            <select id="Theme" name="Theme" size="1">
+                                <optgroup label="Bright">
+                                    <option value="visualstudio">Visual Studio</option>
+                                    <option value="chrome">Chrome</option>
+                                    <option value="clouds">Clouds</option>
+                                    <option value="crimson_editor">Crimson Editor</option>
+                                    <option value="dawn">Dawn</option>
+                                    <option value="dreamweaver">Dreamweaver</option>
+                                    <option value="eclipse">Eclipse</option>
+                                    <option value="github">GitHub</option>
+                                    <option value="solarized_light">Solarized Light</option>
+                                    <option value="textmate">TextMate</option>
+                                    <option value="tomorrow">Tomorrow</option>
+                                    <option value="xcode">XCode</option>
+                                    <option value="kuroir">Kuroir</option>
+                                    <option value="katzenmilch">KatzenMilch</option>
+                                </optgroup>
+                                <optgroup label="Dark">
+                                    <option value="ambiance">Ambiance</option>
+                                    <option value="chaos">Chaos</option>
+                                    <option value="clouds_midnight">Clouds Midnight</option>
+                                    <option value="cobalt">Cobalt</option>
+                                    <option value="idle_fingers">idle Fingers</option>
+                                    <option value="kr_theme">krTheme</option>
+                                    <option value="merbivore">Merbivore</option>
+                                    <option value="merbivore_soft">Merbivore Soft</option>
+                                    <option value="mono_industrial">Mono Industrial</option>
+                                    <option value="monokai">Monokai</option>
+                                    <option value="pastel_on_dark">Pastel on dark</option>
+                                    <option value="solarized_dark">Solarized Dark</option>
+                                    <option value="terminal">Terminal</option>
+                                    <option value="tomorrow_night">Tomorrow Night</option>
+                                    <option value="tomorrow_night_blue">Tomorrow Night Blue</option>
+                                    <option value="tomorrow_night_bright">Tomorrow Night Bright</option>
+                                    <option value="tomorrow_night_eighties">Tomorrow Night 80s</option>
+                                    <option value="twilight">Twilight</option>
+                                    <option value="vibrant_ink">Vibrant Ink</option>
+                                </optgroup>
+                            </select>
+                            <script>
+                                $("#Theme").listSelectItem("@Model.busUser.Entity.Theme")
+                            </script>
+
+                            <p>
+                                <input type="submit" value="Register"/>
+
+                                @if (Model.busUser.Entity.InActive && Model.busUser.Entity.Id != null)
+                                {
+                                    <a href="~/account/ResetEmailValidation"
+                                       class="hoverbutton"
+                                       style="background: Red;"
+                                       title="Your email address is not validated. Click to validate your email address">Verify Email Address now</a>
+                                }
+                            </p>
+                        </div>
+                    </fieldset>
+                </div>
+
+                @Html.Hidden("btnDeleteAccount", "")
+                <input type="hidden" name="Id" value="@Model.busUser.Entity.Id" />
+            }
+
+@if (string.IsNullOrEmpty(Model.busUser.Entity.OpenId))
+{
+
+    using (Html.BeginForm("ExternalLinkLogin", "Account"))
+    {
+        @Html.AntiForgeryToken()
+
+        <fieldset>
+            <div class="containercontent" style="padding: 10px 20px;">
+                <label>Link an External Account <small>(optional)</small>:</label>
+                <button type="submit" id="btnLinkGoogle" name="provider" value="Google" class="submitbutton"><i class="fa fa-google-plus"></i> Google</button>
+                <button type="submit" id="btnLinkGoogle" name="provider" value="GitHub" class="submitbutton"><i class="fa fa-github"></i> GitHub</button>
+                <button type="submit" id="btnLinkGoogle" name="provider" value="Twitter" class="submitbutton"><i class="fa fa-twitter"></i> Twitter</button>               
+            </div>
+
+        </fieldset>
+        <input type="hidden" name="Id" value="@Model.busUser.Entity.Id"/>
+    }
+}
+else
+{
+    using (Html.BeginForm("ExternalUnLinkLogin", "Account"))
+    {
+        @Html.AntiForgeryToken()
+        <fieldset>
+            <div class="containercontent" style="padding: 10px 20px;">
+                <label for="OpenId" class="labelheaderblock">External Account Association</label>
+                <img src="~/css/images/greencheck.gif"/>
+                <span>This user account is linked to a <b>@Model.busUser.Entity.OpenId Login</b></span>
+                <input id="btnExternalLoginUnlink" name="btnOpenIdUnlink" type="submit" value="Unlink"/>
+
+            </div>
+        </fieldset>
+        <input type="hidden" name="Id" value="@Model.busUser.Entity.Id" />
+    }
+}
+
+
+<script type="text/javascript">
+    $(document).ready(function () {        
+        $("#deleteButton").click(function() {
+            $.modalDialog("Are you sure you want to delete your account?", "Account deletion",
+                ["No don't delete my account", "Yes delete my account"],
+                function() {
+                    var txt = $(this).val();
+                    if (txt == "Yes delete my account") {
+                        $("#btnDeleteAccount").val("true");
+                        $("#frmRegistration").submit();
+                    }
+                    return true;
+                });
+        });
+
+    });
+</script>

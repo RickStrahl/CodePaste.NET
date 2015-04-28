@@ -1,0 +1,105 @@
+﻿@model CodePasteMvc.Controllers.AccountViewModel
+@{
+    Layout = "~/views/shared/_layout.cshtml";
+}
+@section headers{
+    <style type="text/css">
+        label
+        {
+            float: left;
+            width: 120px;
+            font-weight: bold;
+        }
+        input[type=text], input[type=password]
+        {
+            width: 250px;
+        }
+        #divOpenIdIcons
+        {
+            margin-top: 5px;
+            margin-left: 30px;
+        }
+        #divOpenIdIcons img
+        {
+            cursor: pointer;
+            border: solid 1px silver;
+        }
+    </style>
+    <script src="~/Scripts/account.js"></script>
+}
+
+    <h2>Log On</h2>
+    <p>
+        Please log in using either <a href="http://openid.net/get-an-openid/" target="_blank">OpenID</a> or a username and password or <b>@Html.ActionLink("Register", "Register")</b> a new account.
+    </p>
+    @Html.Raw(this.Model.ErrorDisplay.Show(400,true) )
+
+    @using (Html.BeginForm("ExternalLogin","Account"))
+    {
+        @Html.AntiForgeryToken()
+        
+        <fieldset>
+            <div class="containercontent" style="padding: 10px 20px;">
+                <div class="labelheaderblock">Log on using these providers:</div>
+                <button type="submit" id="btnLinkGoogle" name="provider" value="Google" class="submitbutton"><i class="fa fa-google-plus"></i> Google</button>
+                <button type="submit" id="btnLinkGoogle" name="provider" value="GitHub" class="submitbutton"><i class="fa fa-github"></i> GitHub</button>
+                <button type="submit" id="btnLinkGoogle" name="provider" value="Twitter" class="submitbutton"><i class="fa fa-twitter"></i> Twitter</button>  
+            </div>
+        </fieldset>
+    }
+
+    @using (Html.BeginForm())
+    {
+        <div>
+            <fieldset>                
+                <div class="containercontent">
+                
+                    <p>
+                        <label for="email">Email Address:</label>
+                        @Html.TextBox("email")
+                        @Html.ValidationMessage("email")
+                    </p>
+                    <div id="divPassword">
+                        <label for="password">Password:</label>
+                        @Html.Password("password")
+                        @Html.ValidationMessage("password")  
+                    </div>
+                    <div id="divRememberMe" style="padding-left: 120px;">
+                        @Html.CheckBox("rememberMe", true) <label for="rememberMe" style="float: none;">Remember me?</label>
+                    </div>
+                
+                    <div style="margin: 5px;">
+                        <input type="submit" id="btnLogOn" value="Log On" />
+                    </div>
+                
+                    <hr />
+                    <small>
+                        If you've forgotten your password check the box below then fill in your email address and click the <i>Email my password</i> button above to have your password
+                        emailed to the email address supplied above.
+                    
+                        <div style="margin-top: 8px;">
+                            @Html.CheckBox("emailpassword", false) <label  style="float: none;" for="emailPassword">Email me my password.</label>
+                        </div>
+                    </small>                               
+                </div>
+            </fieldset>
+        </div>
+    }
+
+    <script>
+        $(document).ready(function() {
+            $("#emailpassword").click(function () {                
+                if ($(this).prop("checked") == true) {
+                    $("#btnLogOn").val("Email my password");
+                    $("#divPassword").hide();
+                    $("#divRememberMe").hide();
+                }
+                else {
+                    $("#btnLogOn").val("Log On");
+                    $("#divPassword").show();
+                    $("#divRememberMe").show();
+                }
+            });
+        });
+        
+    </script>

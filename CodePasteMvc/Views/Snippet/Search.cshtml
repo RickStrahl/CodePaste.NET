@@ -1,0 +1,172 @@
+@using System.Web.UI.WebControls
+@using Westwind.Utilities
+@using Westwind.Web
+@using CodePasteBusiness
+@using CodePasteMvc.Controllers
+@model CodePasteMvc.Controllers.ListSnippetViewModel
+@{
+    Layout = "~/views/shared/_layout.cshtml";
+}
+           
+@section headers {       
+    <style type="text/css">
+        td:first-child
+        {
+            font-weight: bold;
+            vertical-align: middle;
+        }
+        .searchheader
+        {
+            float: left;
+            width: 90px;
+            vertical-align: middle;
+            font-weight: bold;
+        }
+        .searchfield
+        {
+            width: 220px;
+            display: block;
+        }
+        .searchfieldshort
+        {
+            width: 100px;
+            display: block;
+        }
+        .datefield
+        {
+            width: 80px;
+        }
+    </style>
+    @Html.Raw(ScriptLoader.jQueryUiLink())
+    <script src="~/scripts/List.js"></script>
+}
+
+@{
+    // Create serverVars instance for JavaScript vars visible in .js file
+    var serverVars = new JsonVariables("serverVars");
+    serverVars.Add("baseUrl", Request.ApplicationPath);
+    serverVars.Add("callbackHandler", Url.Content("~/CodePasteHandler.ashx"));
+
+}
+<script>
+    @serverVars.ToHtmlString(true)
+</script>
+
+    <div class="listpageheader">@Model.PageTitle</div>
+    @Html.Raw(Model.ErrorDisplay.Show(450,true))
+    
+    <form id="form1" name="form1" action="" method="post">
+    <fieldset id="divSearchCriteria">
+    <div class="containercontent">
+        <div id="divSearchGroup" style="float: left; margin-right: 10px;">
+            <table cellpadding="5">        
+            <tr>
+                <td>Search Text:</td>
+                <td>@Html.TextBox("SearchString", Model.Parameters.SearchString, new { @class = "searchfield" })</td>
+            </tr>
+            <tr>
+                <td>Language:</td>
+                <td>@Html.TextBox("Language", Model.Parameters.Language, new { @class="searchfield" })</td>
+            </tr>
+            <tr>
+                <td>Tags:</td>
+                <td>@Html.TextBox("Tags", Model.Parameters.Tags, new { @class="searchfield" })</td>
+            </tr>
+        </table>                              
+        </div>
+        <div id="divSearchGroup2" style="float: left;">
+                <table>
+                    <tr>
+                        <td>From:</td>
+                        <td>@Html.Raw(Html.Control<DateControl>("FromDate",                                   
+                            new DateControl 
+                            { 
+                                CssClass="datefield", 
+                                SelectedDate = Model.Parameters.FromDate,
+                                DateFormat = "MM/dd/yyyy"
+                            },null)) 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>To:</td>
+                        <td>
+                            @Html.Raw(Html.Control<DateControl>("ToDate",
+                           new DateControl
+                           {
+                               CssClass = "datefield",
+                               Theme = "Redmond",
+                               SelectedDate = Model.Parameters.ToDate,
+                               DateFormat = "MM/dd/yyyy"
+                           },
+                           null ))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>By:</td>
+                        <td>@Html.TextBox("Author", Model.Parameters.Author, new { @class="searchfieldshort"})</td>
+                    </tr>
+                </table>                                                
+        </div>        
+        <div class="clearfix"></div>
+        <hr />
+     
+        <div class="rightalign">
+        <span class="labelheader">Display Order:</span> @Html.DropDownList("SearchOrder", Model.SearchOrderItems)
+        </div>
+        <input id="btnSearch" name="btnSearch" type="submit" value="Search" class="labelheader" style="width: 80px;height: 25px;"/>
+                        
+    </div>
+    </fieldset>
+    </form>
+    
+    
+    @foreach (CodeSnippetListItem snip in Model.SnippetList) { 
+            
+        <div class="@(!string.IsNullOrEmpty(snip.UserId) &&  snip.UserId == Model.AppUserState.UserId ? "snippetofauthor" : "snippet")  id="snippet_@snip.Id">        
+        <div class="snippetlang">@snip.Language</div>
+            <div class="snippettitle"><b><a href='@Url.Action("Show",new { id=snip.Id } )'>
+                                             @(string.IsNullOrEmpty(snip.Title) ? "#" : Html.Encode(snip.Title))
+                                         </a>
+                                      </b>
+            </div>
+        <div class="snippetcode">            
+                @Html.Raw(Model.busSnippet.GetFormattedCodeLines(snip.FormattedCode, 10, snip.Language))            
+        </div>
+        
+
+        <div class="toolbarcontainer" style="margin-top: 5px;">            
+            <div class="snippetauthor">@Html.Raw(!string.IsNullOrEmpty(snip.Author) ? " by " + snip.GetAuthorLink() + "&nbsp;&nbsp;" : string.Empty)   @TimeUtils.FriendlyDateString(snip.Entered, true)</div>       
+            <div><small>Tags: @Html.Raw(Url.GetTagLinkList(snip.Tags))</small></div>
+        </div>
+        &nbsp;
+        <div class="rightalign">
+            @if (snip.Views > 1)
+            {
+                <div class="viewcount">           
+                    @snip.Views Views            
+                </div>
+            }
+              
+            <div class="snippetcommentcount">
+                &nbsp;@(snip.CommentCount < 1 ? "no comments" : snip.CommentCount.ToString() + " comments")                     
+            </div>              
+        </div>
+
+        @if (Model.AppUserState.IsAdmin)
+        { 
+            <div style="font-size: smaller;margin: 5px 0"><a href="javascript:{}" class="removelink">Remove Snippet</a></div>
+        } 
+       </div>
+    }        
+   
+   @Html.Partial("ListPostPager", Model.Paging ?? new PagingDetails { RenderPager = false })
+   
+ <script type="text/javascript">   
+    function pageClick(pageNo) {
+        var loc = window.location;            
+        $("#form1")
+            .attr("action","@Url.Action("search")" + setUrlEncodedKey("page",pageNo))
+            .submit();            
+    }        
+</script>
+

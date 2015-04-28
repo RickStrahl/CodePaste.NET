@@ -1,0 +1,11 @@
+﻿@using CodePasteMvc
+@{
+    AppUserState appUserState = (AppUserState) this.ViewData["UserState"];
+}
+@if (Request.IsAuthenticated && !appUserState.IsEmpty()) {
+    <small>Signed in as: @Html.ActionLink(appUserState.Name, "Register", "Account", new { id = appUserState.UserId  }, new { @class = "hoverbutton" }) | 
+    @Html.ActionLink("Sign out", "LogOff", "Account", null, new { @class="hoverbutton" } )</small>
+}
+else {
+    <small><b>@Html.ActionLink("Sign in", "LogOn", "Account", null, new { @class = "hoverbutton" })</b>or <b>@Html.ActionLink("Register", "Register", "Account", null, new { @class = "hoverbutton" })</b></small> 
+}

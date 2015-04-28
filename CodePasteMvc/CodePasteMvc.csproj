@@ -1,0 +1,777 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{57E0E75B-F3EB-41A5-82D6-A91DB1AAC500}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CodePasteMvc</RootNamespace>
+    <AssemblyName>CodePasteMvc</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <TargetFrameworkProfile />
+    <UseIISExpress>false</UseIISExpress>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\CodePaste\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.1.0\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin.Security.Providers">
+      <HintPath>..\packages\Owin.Security.Providers.1.17.1\lib\net45\Owin.Security.Providers.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Westwind.BusinessFramework, Version=1.25.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SupportAssemblies\Westwind.BusinessFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Westwind.Web, Version=2.62.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Westwind.Web.2.62\lib\net45\Westwind.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Westwind.Web.WebForms">
+      <HintPath>..\packages\Westwind.Web.WebForms.2.59\lib\net45\Westwind.Web.WebForms.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\Startup.cs" />
+    <Compile Include="Controllers\ApiControllerBase.cs" />
+    <Compile Include="Classes\AppWebUtils.cs" />
+    <Compile Include="Classes\Controls\PageEnvironment.cs" />
+    <Compile Include="Classes\ErrorDisplay.cs" />
+    <Compile Include="Classes\Gravatar.cs" />
+    <Compile Include="Classes\AppUserState.cs" />
+    <Compile Include="CodePasteHandler.ashx.cs">
+      <DependentUpon>CodePasteHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Services\CodePasteServiceBase.cs" />
+    <Compile Include="Controllers\ViewModelsAndHelpers\NewSnippetViewModel.cs" />
+    <Compile Include="Models\DeleteSpamViewModel.cs" />
+    <Compile Include="Services\CodePasteSoapService.asmx.cs">
+      <DependentUpon>CodePasteSoapService.asmx</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ApiController.cs" />
+    <Compile Include="Controllers\baseController.cs" />
+    <Compile Include="Classes\Controls\BaseControl.cs" />
+    <Compile Include="Classes\Controls\DateControl.cs" />
+    <Compile Include="Classes\Controls\HtmlHelperExtensions.cs" />
+    <Compile Include="Controllers\ViewModelsAndHelpers\ListSnippetViewModel.cs" />
+    <Compile Include="Controllers\ViewModelsAndHelpers\ErrorViewModel.cs" />
+    <Compile Include="Controllers\ViewModelsAndHelpers\ShowSnippetViewModel.cs" />
+    <Compile Include="Controllers\ViewModelsAndHelpers\baseViewModel.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SnippetController.cs" />
+    <Compile Include="Classes\Controls\UrlHelperExtensions.cs" />
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Classes\Services\ICodePasteSoapService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Css\ace-vs.css" />
+    <Content Include="Css\bootstrap.css" />
+    <Content Include="Css\CodePaste.css" />
+    <Content Include="Css\csharp.css" />
+    <Content Include="Css\font-awesome.css" />
+    <Content Include="Css\fonts\fontawesome-webfont.svg" />
+    <Content Include="Css\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Css\Images\calendar.gif" />
+    <Content Include="Css\Images\calendar.png" />
+    <Content Include="Css\Images\close.gif" />
+    <Content Include="Css\Images\close.png" />
+    <Content Include="Css\Images\closeX.png" />
+    <Content Include="Css\Images\edit.gif" />
+    <Content Include="Css\Images\edit.png" />
+    <Content Include="Css\Images\EditBlue.gif" />
+    <Content Include="Css\Images\EditBlue.png" />
+    <Content Include="Css\Images\EditWhite.gif" />
+    <Content Include="Css\Images\GreenCheck.png" />
+    <Content Include="Css\Images\HeaderGradient.png" />
+    <Content Include="Css\Images\help.gif" />
+    <Content Include="Css\Images\help.png" />
+    <Content Include="Css\Images\home.gif" />
+    <Content Include="Css\Images\home.png" />
+    <Content Include="Css\Images\Info.gif" />
+    <Content Include="Css\Images\info.png" />
+    <Content Include="Css\Images\LightBlueGradient.png" />
+    <Content Include="Css\Images\LightOrangeGradient.png" />
+    <Content Include="Css\Images\Linenumbers.png" />
+    <Content Include="Css\Images\list.png" />
+    <Content Include="Css\Images\loading_black.gif" />
+    <Content Include="Css\Images\loading_small.gif" />
+    <Content Include="Css\Images\MenuHighlight.png" />
+    <Content Include="Css\Images\mysnippets.png" />
+    <Content Include="Css\Images\New.gif" />
+    <Content Include="Css\Images\new.png" />
+    <Content Include="Css\Images\next.png" />
+    <Content Include="Css\Images\prev.png" />
+    <Content Include="Css\Images\refresh.gif" />
+    <Content Include="Css\Images\refresh.png" />
+    <Content Include="Css\Images\Remove.gif" />
+    <Content Include="Css\Images\remove.png" />
+    <Content Include="Css\Images\search.gif" />
+    <Content Include="Css\Images\SmallButton.gif" />
+    <Content Include="Css\Images\SmallButtonHover.gif" />
+    <Content Include="Css\Images\SmallButtonPressed.gif" />
+    <Content Include="Css\Images\Sort.gif" />
+    <Content Include="Css\Images\sort.png" />
+    <Content Include="Css\Images\SubmitButton.gif" />
+    <Content Include="Css\Images\SubmitButtonHover.gif" />
+    <Content Include="Css\Images\SubmitButtonPressed.gif" />
+    <Content Include="Css\Images\TabHover.gif" />
+    <Content Include="Css\Images\TabNormal.gif" />
+    <Content Include="Css\Images\TabSelected.gif" />
+    <Content Include="Css\Images\users.gif" />
+    <Content Include="Css\Images\users.png" />
+    <Content Include="Css\Images\VertGradient.gif" />
+    <Content Include="Css\Images\warning.gif" />
+    <Content Include="Css\Images\warning.png" />
+    <Content Include="Css\Westwind.css" />
+    <Content Include="Default.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="Images\clipboard.png" />
+    <Content Include="Images\codepage_icon.png" />
+    <Content Include="Images\donation.png" />
+    <Content Include="Images\edit.png" />
+    <Content Include="Images\favorite.png" />
+    <Content Include="Images\Graph.png" />
+    <Content Include="Images\GreenCheck.png" />
+    <Content Include="Images\group.png" />
+    <Content Include="Images\info.png" />
+    <Content Include="Images\newsnippet.png" />
+    <Content Include="Images\paste.png" />
+    <Content Include="Images\recent.png" />
+    <Content Include="Images\search.png" />
+    <Content Include="Images\wwToolbarLogo.png" />
+    <Content Include="Scripts\Ace\ace.js" />
+    <Content Include="Scripts\Ace\ext-chromevox.js" />
+    <Content Include="Scripts\Ace\ext-elastic_tabstops_lite.js" />
+    <Content Include="Scripts\Ace\ext-emmet.js" />
+    <Content Include="Scripts\Ace\ext-error_marker.js" />
+    <Content Include="Scripts\Ace\ext-keybinding_menu.js" />
+    <Content Include="Scripts\Ace\ext-language_tools.js" />
+    <Content Include="Scripts\Ace\ext-modelist.js" />
+    <Content Include="Scripts\Ace\ext-old_ie.js" />
+    <Content Include="Scripts\Ace\ext-options.js" />
+    <Content Include="Scripts\Ace\ext-searchbox.js" />
+    <Content Include="Scripts\Ace\ext-settings_menu.js" />
+    <Content Include="Scripts\Ace\ext-spellcheck.js" />
+    <Content Include="Scripts\Ace\ext-split.js" />
+    <Content Include="Scripts\Ace\ext-static_highlight.js" />
+    <Content Include="Scripts\Ace\ext-statusbar.js" />
+    <Content Include="Scripts\Ace\ext-textarea.js" />
+    <Content Include="Scripts\Ace\ext-themelist.js" />
+    <Content Include="Scripts\Ace\ext-whitespace.js" />
+    <Content Include="Scripts\Ace\keybinding-emacs.js" />
+    <Content Include="Scripts\Ace\keybinding-vim.js" />
+    <Content Include="Scripts\Ace\mode-abap.js" />
+    <Content Include="Scripts\Ace\mode-actionscript.js" />
+    <Content Include="Scripts\Ace\mode-ada.js" />
+    <Content Include="Scripts\Ace\mode-apache_conf.js" />
+    <Content Include="Scripts\Ace\mode-asciidoc.js" />
+    <Content Include="Scripts\Ace\mode-assembly_x86.js" />
+    <Content Include="Scripts\Ace\mode-autohotkey.js" />
+    <Content Include="Scripts\Ace\mode-batchfile.js" />
+    <Content Include="Scripts\Ace\mode-c9search.js" />
+    <Content Include="Scripts\Ace\mode-clojure.js" />
+    <Content Include="Scripts\Ace\mode-cobol.js" />
+    <Content Include="Scripts\Ace\mode-coffee.js" />
+    <Content Include="Scripts\Ace\mode-coldfusion.js" />
+    <Content Include="Scripts\Ace\mode-csharp.js" />
+    <Content Include="Scripts\Ace\mode-css.js" />
+    <Content Include="Scripts\Ace\mode-curly.js" />
+    <Content Include="Scripts\Ace\mode-c_cpp.js" />
+    <Content Include="Scripts\Ace\mode-d.js" />
+    <Content Include="Scripts\Ace\mode-dart.js" />
+    <Content Include="Scripts\Ace\mode-diff.js" />
+    <Content Include="Scripts\Ace\mode-django.js" />
+    <Content Include="Scripts\Ace\mode-dot.js" />
+    <Content Include="Scripts\Ace\mode-ejs.js" />
+    <Content Include="Scripts\Ace\mode-erlang.js" />
+    <Content Include="Scripts\Ace\mode-forth.js" />
+    <Content Include="Scripts\Ace\mode-foxpro-bak.js" />
+    <Content Include="Scripts\Ace\mode-foxpro.js" />
+    <Content Include="Scripts\Ace\mode-ftl.js" />
+    <Content Include="Scripts\Ace\mode-glsl.js" />
+    <Content Include="Scripts\Ace\mode-golang.js" />
+    <Content Include="Scripts\Ace\mode-groovy.js" />
+    <Content Include="Scripts\Ace\mode-haml.js" />
+    <Content Include="Scripts\Ace\mode-handlebars.js" />
+    <Content Include="Scripts\Ace\mode-haskell.js" />
+    <Content Include="Scripts\Ace\mode-haxe.js" />
+    <Content Include="Scripts\Ace\mode-html.js" />
+    <Content Include="Scripts\Ace\mode-html_completions.js" />
+    <Content Include="Scripts\Ace\mode-html_ruby.js" />
+    <Content Include="Scripts\Ace\mode-ini.js" />
+    <Content Include="Scripts\Ace\mode-jack.js" />
+    <Content Include="Scripts\Ace\mode-jade.js" />
+    <Content Include="Scripts\Ace\mode-java.js" />
+    <Content Include="Scripts\Ace\mode-javascript.js" />
+    <Content Include="Scripts\Ace\mode-json.js" />
+    <Content Include="Scripts\Ace\mode-jsoniq.js" />
+    <Content Include="Scripts\Ace\mode-jsp.js" />
+    <Content Include="Scripts\Ace\mode-jsx.js" />
+    <Content Include="Scripts\Ace\mode-julia.js" />
+    <Content Include="Scripts\Ace\mode-latex.js" />
+    <Content Include="Scripts\Ace\mode-less.js" />
+    <Content Include="Scripts\Ace\mode-liquid.js" />
+    <Content Include="Scripts\Ace\mode-lisp.js" />
+    <Content Include="Scripts\Ace\mode-livescript.js" />
+    <Content Include="Scripts\Ace\mode-logiql.js" />
+    <Content Include="Scripts\Ace\mode-lsl.js" />
+    <Content Include="Scripts\Ace\mode-lua.js" />
+    <Content Include="Scripts\Ace\mode-luapage.js" />
+    <Content Include="Scripts\Ace\mode-lucene.js" />
+    <Content Include="Scripts\Ace\mode-makefile.js" />
+    <Content Include="Scripts\Ace\mode-markdown.js" />
+    <Content Include="Scripts\Ace\mode-matlab.js" />
+    <Content Include="Scripts\Ace\mode-mel.js" />
+    <Content Include="Scripts\Ace\mode-mushcode.js" />
+    <Content Include="Scripts\Ace\mode-mushcode_high_rules.js" />
+    <Content Include="Scripts\Ace\mode-mysql.js" />
+    <Content Include="Scripts\Ace\mode-nix.js" />
+    <Content Include="Scripts\Ace\mode-objectivec.js" />
+    <Content Include="Scripts\Ace\mode-ocaml.js" />
+    <Content Include="Scripts\Ace\mode-pascal.js" />
+    <Content Include="Scripts\Ace\mode-perl.js" />
+    <Content Include="Scripts\Ace\mode-pgsql.js" />
+    <Content Include="Scripts\Ace\mode-php.js" />
+    <Content Include="Scripts\Ace\mode-plain_text.js" />
+    <Content Include="Scripts\Ace\mode-powershell.js" />
+    <Content Include="Scripts\Ace\mode-prolog.js" />
+    <Content Include="Scripts\Ace\mode-properties.js" />
+    <Content Include="Scripts\Ace\mode-protobuf.js" />
+    <Content Include="Scripts\Ace\mode-python.js" />
+    <Content Include="Scripts\Ace\mode-r.js" />
+    <Content Include="Scripts\Ace\mode-rdoc.js" />
+    <Content Include="Scripts\Ace\mode-rhtml.js" />
+    <Content Include="Scripts\Ace\mode-ruby.js" />
+    <Content Include="Scripts\Ace\mode-rust.js" />
+    <Content Include="Scripts\Ace\mode-sass.js" />
+    <Content Include="Scripts\Ace\mode-scad.js" />
+    <Content Include="Scripts\Ace\mode-scala.js" />
+    <Content Include="Scripts\Ace\mode-scheme.js" />
+    <Content Include="Scripts\Ace\mode-scss.js" />
+    <Content Include="Scripts\Ace\mode-sh.js" />
+    <Content Include="Scripts\Ace\mode-sjs.js" />
+    <Content Include="Scripts\Ace\mode-snippets.js" />
+    <Content Include="Scripts\Ace\mode-soy_template.js" />
+    <Content Include="Scripts\Ace\mode-space.js" />
+    <Content Include="Scripts\Ace\mode-sql.js" />
+    <Content Include="Scripts\Ace\mode-stylus.js" />
+    <Content Include="Scripts\Ace\mode-svg.js" />
+    <Content Include="Scripts\Ace\mode-tcl.js" />
+    <Content Include="Scripts\Ace\mode-tex.js" />
+    <Content Include="Scripts\Ace\mode-text.js" />
+    <Content Include="Scripts\Ace\mode-textile.js" />
+    <Content Include="Scripts\Ace\mode-tmsnippet.js" />
+    <Content Include="Scripts\Ace\mode-toml.js" />
+    <Content Include="Scripts\Ace\mode-twig.js" />
+    <Content Include="Scripts\Ace\mode-typescript.js" />
+    <Content Include="Scripts\Ace\mode-vbscript.js" />
+    <Content Include="Scripts\Ace\mode-velocity.js" />
+    <Content Include="Scripts\Ace\mode-verilog.js" />
+    <Content Include="Scripts\Ace\mode-vhdl.js" />
+    <Content Include="Scripts\Ace\mode-xml.js" />
+    <Content Include="Scripts\Ace\mode-xquery.js" />
+    <Content Include="Scripts\Ace\mode-yaml.js" />
+    <Content Include="Scripts\Ace\snippets\abap.js" />
+    <Content Include="Scripts\Ace\snippets\actionscript.js" />
+    <Content Include="Scripts\Ace\snippets\ada.js" />
+    <Content Include="Scripts\Ace\snippets\apache_conf.js" />
+    <Content Include="Scripts\Ace\snippets\asciidoc.js" />
+    <Content Include="Scripts\Ace\snippets\assembly_x86.js" />
+    <Content Include="Scripts\Ace\snippets\autohotkey.js" />
+    <Content Include="Scripts\Ace\snippets\batchfile.js" />
+    <Content Include="Scripts\Ace\snippets\c9search.js" />
+    <Content Include="Scripts\Ace\snippets\clojure.js" />
+    <Content Include="Scripts\Ace\snippets\cobol.js" />
+    <Content Include="Scripts\Ace\snippets\coffee.js" />
+    <Content Include="Scripts\Ace\snippets\coldfusion.js" />
+    <Content Include="Scripts\Ace\snippets\csharp.js" />
+    <Content Include="Scripts\Ace\snippets\css.js" />
+    <Content Include="Scripts\Ace\snippets\curly.js" />
+    <Content Include="Scripts\Ace\snippets\c_cpp.js" />
+    <Content Include="Scripts\Ace\snippets\d.js" />
+    <Content Include="Scripts\Ace\snippets\dart.js" />
+    <Content Include="Scripts\Ace\snippets\diff.js" />
+    <Content Include="Scripts\Ace\snippets\django.js" />
+    <Content Include="Scripts\Ace\snippets\dot.js" />
+    <Content Include="Scripts\Ace\snippets\ejs.js" />
+    <Content Include="Scripts\Ace\snippets\erlang.js" />
+    <Content Include="Scripts\Ace\snippets\forth.js" />
+    <Content Include="Scripts\Ace\snippets\ftl.js" />
+    <Content Include="Scripts\Ace\snippets\glsl.js" />
+    <Content Include="Scripts\Ace\snippets\golang.js" />
+    <Content Include="Scripts\Ace\snippets\groovy.js" />
+    <Content Include="Scripts\Ace\snippets\haml.js" />
+    <Content Include="Scripts\Ace\snippets\handlebars.js" />
+    <Content Include="Scripts\Ace\snippets\haskell.js" />
+    <Content Include="Scripts\Ace\snippets\haxe.js" />
+    <Content Include="Scripts\Ace\snippets\html.js" />
+    <Content Include="Scripts\Ace\snippets\html_completions.js" />
+    <Content Include="Scripts\Ace\snippets\html_ruby.js" />
+    <Content Include="Scripts\Ace\snippets\ini.js" />
+    <Content Include="Scripts\Ace\snippets\jack.js" />
+    <Content Include="Scripts\Ace\snippets\jade.js" />
+    <Content Include="Scripts\Ace\snippets\java.js" />
+    <Content Include="Scripts\Ace\snippets\javascript.js" />
+    <Content Include="Scripts\Ace\snippets\json.js" />
+    <Content Include="Scripts\Ace\snippets\jsoniq.js" />
+    <Content Include="Scripts\Ace\snippets\jsp.js" />
+    <Content Include="Scripts\Ace\snippets\jsx.js" />
+    <Content Include="Scripts\Ace\snippets\julia.js" />
+    <Content Include="Scripts\Ace\snippets\latex.js" />
+    <Content Include="Scripts\Ace\snippets\less.js" />
+    <Content Include="Scripts\Ace\snippets\liquid.js" />
+    <Content Include="Scripts\Ace\snippets\lisp.js" />
+    <Content Include="Scripts\Ace\snippets\livescript.js" />
+    <Content Include="Scripts\Ace\snippets\logiql.js" />
+    <Content Include="Scripts\Ace\snippets\lsl.js" />
+    <Content Include="Scripts\Ace\snippets\lua.js" />
+    <Content Include="Scripts\Ace\snippets\luapage.js" />
+    <Content Include="Scripts\Ace\snippets\lucene.js" />
+    <Content Include="Scripts\Ace\snippets\makefile.js" />
+    <Content Include="Scripts\Ace\snippets\markdown.js" />
+    <Content Include="Scripts\Ace\snippets\matlab.js" />
+    <Content Include="Scripts\Ace\snippets\mel.js" />
+    <Content Include="Scripts\Ace\snippets\mushcode.js" />
+    <Content Include="Scripts\Ace\snippets\mushcode_high_rules.js" />
+    <Content Include="Scripts\Ace\snippets\mysql.js" />
+    <Content Include="Scripts\Ace\snippets\nix.js" />
+    <Content Include="Scripts\Ace\snippets\objectivec.js" />
+    <Content Include="Scripts\Ace\snippets\ocaml.js" />
+    <Content Include="Scripts\Ace\snippets\pascal.js" />
+    <Content Include="Scripts\Ace\snippets\perl.js" />
+    <Content Include="Scripts\Ace\snippets\pgsql.js" />
+    <Content Include="Scripts\Ace\snippets\php.js" />
+    <Content Include="Scripts\Ace\snippets\plain_text.js" />
+    <Content Include="Scripts\Ace\snippets\powershell.js" />
+    <Content Include="Scripts\Ace\snippets\prolog.js" />
+    <Content Include="Scripts\Ace\snippets\properties.js" />
+    <Content Include="Scripts\Ace\snippets\protobuf.js" />
+    <Content Include="Scripts\Ace\snippets\python.js" />
+    <Content Include="Scripts\Ace\snippets\r.js" />
+    <Content Include="Scripts\Ace\snippets\rdoc.js" />
+    <Content Include="Scripts\Ace\snippets\rhtml.js" />
+    <Content Include="Scripts\Ace\snippets\ruby.js" />
+    <Content Include="Scripts\Ace\snippets\rust.js" />
+    <Content Include="Scripts\Ace\snippets\sass.js" />
+    <Content Include="Scripts\Ace\snippets\scad.js" />
+    <Content Include="Scripts\Ace\snippets\scala.js" />
+    <Content Include="Scripts\Ace\snippets\scheme.js" />
+    <Content Include="Scripts\Ace\snippets\scss.js" />
+    <Content Include="Scripts\Ace\snippets\sh.js" />
+    <Content Include="Scripts\Ace\snippets\sjs.js" />
+    <Content Include="Scripts\Ace\snippets\snippets.js" />
+    <Content Include="Scripts\Ace\snippets\soy_template.js" />
+    <Content Include="Scripts\Ace\snippets\space.js" />
+    <Content Include="Scripts\Ace\snippets\sql.js" />
+    <Content Include="Scripts\Ace\snippets\stylus.js" />
+    <Content Include="Scripts\Ace\snippets\svg.js" />
+    <Content Include="Scripts\Ace\snippets\tcl.js" />
+    <Content Include="Scripts\Ace\snippets\tex.js" />
+    <Content Include="Scripts\Ace\snippets\text.js" />
+    <Content Include="Scripts\Ace\snippets\textile.js" />
+    <Content Include="Scripts\Ace\snippets\toml.js" />
+    <Content Include="Scripts\Ace\snippets\twig.js" />
+    <Content Include="Scripts\Ace\snippets\typescript.js" />
+    <Content Include="Scripts\Ace\snippets\vbscript.js" />
+    <Content Include="Scripts\Ace\snippets\velocity.js" />
+    <Content Include="Scripts\Ace\snippets\verilog.js" />
+    <Content Include="Scripts\Ace\snippets\vhdl.js" />
+    <Content Include="Scripts\Ace\snippets\xml.js" />
+    <Content Include="Scripts\Ace\snippets\xquery.js" />
+    <Content Include="Scripts\Ace\snippets\yaml.js" />
+    <Content Include="Scripts\Ace\theme-ambiance.js" />
+    <Content Include="Scripts\Ace\theme-chaos.js" />
+    <Content Include="Scripts\Ace\theme-chrome.js" />
+    <Content Include="Scripts\Ace\theme-clouds.js" />
+    <Content Include="Scripts\Ace\theme-clouds_midnight.js" />
+    <Content Include="Scripts\Ace\theme-cobalt.js" />
+    <Content Include="Scripts\Ace\theme-crimson_editor.js" />
+    <Content Include="Scripts\Ace\theme-dawn.js" />
+    <Content Include="Scripts\Ace\theme-dreamweaver.js" />
+    <Content Include="Scripts\Ace\theme-eclipse.js" />
+    <Content Include="Scripts\Ace\theme-github.js" />
+    <Content Include="Scripts\Ace\theme-idle_fingers.js" />
+    <Content Include="Scripts\Ace\theme-katzenmilch.js" />
+    <Content Include="Scripts\Ace\theme-kr.js" />
+    <Content Include="Scripts\Ace\theme-kuroir.js" />
+    <Content Include="Scripts\Ace\theme-merbivore.js" />
+    <Content Include="Scripts\Ace\theme-merbivore_soft.js" />
+    <Content Include="Scripts\Ace\theme-monokai.js" />
+    <Content Include="Scripts\Ace\theme-mono_industrial.js" />
+    <Content Include="Scripts\Ace\theme-pastel_on_dark.js" />
+    <Content Include="Scripts\Ace\theme-solarized_dark.js" />
+    <Content Include="Scripts\Ace\theme-solarized_light.js" />
+    <Content Include="Scripts\Ace\theme-terminal.js" />
+    <Content Include="Scripts\Ace\theme-textmate.js" />
+    <Content Include="Scripts\Ace\theme-tomorrow.js" />
+    <Content Include="Scripts\Ace\theme-tomorrow_night.js" />
+    <Content Include="Scripts\Ace\theme-tomorrow_night_blue.js" />
+    <Content Include="Scripts\Ace\theme-tomorrow_night_bright.js" />
+    <Content Include="Scripts\Ace\theme-tomorrow_night_eighties.js" />
+    <Content Include="Scripts\Ace\theme-twilight.js" />
+    <Content Include="Scripts\Ace\theme-vibrant_ink.js" />
+    <Content Include="Scripts\Ace\theme-visualstudio.js" />
+    <Content Include="Scripts\Ace\theme-xcode.js" />
+    <Content Include="Scripts\Ace\worker-coffee.js" />
+    <Content Include="Scripts\Ace\worker-css.js" />
+    <Content Include="Scripts\Ace\worker-javascript.js" />
+    <Content Include="Scripts\Ace\worker-json.js" />
+    <Content Include="Scripts\Ace\worker-lua.js" />
+    <Content Include="Scripts\Ace\worker-php.js" />
+    <Content Include="Scripts\Ace\worker-xquery.js" />
+    <Content Include="Scripts\ace_spell_check.js" />
+    <Content Include="Scripts\jquery.js" />
+    <Content Include="Scripts\jquery.min.js">
+      <DependentUpon>jquery.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\aceEditorConfig.js" />
+    <Content Include="Scripts\en-US.dic.txt" />
+    <Content Include="Scripts\en-US.aff.txt" />
+    <Content Include="Scripts\typo.js" />
+    <None Include="Scripts\_references.js" />
+    <Content Include="Scripts\ww.jquery.js" />
+    <Content Include="Scripts\ww.jquery.min.js" />
+    <Content Include="Views\Account\LogOn.cshtml" />
+    <Content Include="Views\Admin\AbuseSnippets.aspx" />
+    <Content Include="Css\fonts\fontawesome-webfont.eot" />
+    <Content Include="Css\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Css\fonts\fontawesome-webfont.woff" />
+    <Content Include="Css\fonts\FontAwesome.otf" />
+    <Content Include="Css\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Css\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Css\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Views\Shared\SidebarContent.cshtml" />
+    <Content Include="Views\Shared\ListPostPager.cshtml" />
+    <Content Include="Views\Home\WhatsNew.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Shared\SidebarContent.ascx" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Snippet\Search.cshtml" />
+    <Content Include="Views\Shared\SignInUserControl.cshtml" />
+    <Content Include="Views\Snippet\List.cshtml" />
+    <Content Include="Views\Snippet\New.cshtml" />
+    <Content Include="Views\Snippet\ShowUrl.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Shared\SignInUserControl.ascx" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.min-vsdoc.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Scripts\jquery-vsdoc.js" />
+    <Content Include="Scripts\show.js" />
+    <Content Include="Scripts\jquery.min-vsdoc.js" />
+    <Content Include="Views\Shared\CodePasteMaster.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CodePasteHandler.ashx" />
+    <Content Include="Css\Images\DialogHeader.png" />
+    <Content Include="Css\Images\DialogHighlight.png" />
+    <Content Include="Css\Images\DialogSelection.png" />
+    <Content Include="Css\Images\DialogStrip.png" />
+    <Content Include="Css\Images\GreenCheck.gif" />
+    <Content Include="Css\Images\NewSnippet.gif" />
+    <Content Include="Css\Images\openId-icon.png" />
+    <Content Include="Images\CodePasteBanner.png" />
+    <Content Include="Images\discuss.gif" />
+    <Content Include="Images\donation.gif" />
+    <Content Include="Images\Graph.gif" />
+    <Content Include="Images\GreenCheck.gif" />
+    <Content Include="Images\openId-icon.png" />
+    <Content Include="Images\openid-logo.jpg" />
+    <Content Include="Images\OriginalUrl.png" />
+    <Content Include="Images\Punchout.gif" />
+    <Content Include="Images\rss.png" />
+    <Content Include="Images\Skype.png" />
+    <Content Include="Images\SmallButton.gif" />
+    <Content Include="Images\SmallButtonHover.gif" />
+    <Content Include="Images\SmallButtonPressed.gif" />
+    <Content Include="Images\Space.gif" />
+    <Content Include="Images\Tweet.png" />
+    <Content Include="Images\twitter.png" />
+    <Content Include="Images\twittersearch.png" />
+    <Content Include="Images\whatsnew.png" />
+    <Content Include="Images\wwtoollogo.jpg" />
+    <Content Include="Images\wwtoollogo_text.gif" />
+    <Content Include="Scripts\account.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
+    <Content Include="Scripts\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Scripts\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Scripts\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Scripts\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Scripts\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Scripts\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Scripts\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Scripts\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Scripts\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Scripts\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Scripts\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Scripts\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Scripts\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Scripts\themes\base\ui.accordion.css" />
+    <Content Include="Scripts\themes\base\ui.all.css" />
+    <Content Include="Scripts\themes\base\ui.base.css" />
+    <Content Include="Scripts\themes\base\ui.core.css" />
+    <Content Include="Scripts\themes\base\ui.datepicker.css" />
+    <Content Include="Scripts\themes\base\ui.dialog.css" />
+    <Content Include="Scripts\themes\base\ui.jqgrid.css" />
+    <Content Include="Scripts\themes\base\ui.progressbar.css" />
+    <Content Include="Scripts\themes\base\ui.tabs.css" />
+    <Content Include="Scripts\themes\base\ui.theme.css" />
+    <Content Include="Scripts\themes\redmond\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Scripts\themes\redmond\images\ui-bg_flat_55_fbec88_40x100.png" />
+    <Content Include="Scripts\themes\redmond\images\ui-bg_glass_75_d0e5f5_1x400.png" />
+    <Content Include="Scripts\themes\redmond\images\ui-bg_glass_85_dfeffc_1x400.png" />
+    <Content Include="Scripts\themes\redmond\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Scripts\themes\redmond\images\ui-bg_gloss-wave_55_5c9ccc_500x100.png" />
+    <Content Include="Scripts\themes\redmond\images\ui-bg_inset-hard_100_f5f8f9_1x100.png" />
+    <Content Include="Scripts\themes\redmond\images\ui-bg_inset-hard_100_fcfdfd_1x100.png" />
+    <Content Include="Scripts\themes\redmond\images\ui-icons_217bc0_256x240.png" />
+    <Content Include="Scripts\themes\redmond\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Scripts\themes\redmond\images\ui-icons_469bdd_256x240.png" />
+    <Content Include="Scripts\themes\redmond\images\ui-icons_6da8d5_256x240.png" />
+    <Content Include="Scripts\themes\redmond\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Scripts\themes\redmond\images\ui-icons_d8e7f3_256x240.png" />
+    <Content Include="Scripts\themes\redmond\images\ui-icons_f9bd01_256x240.png" />
+    <Content Include="Scripts\themes\redmond\ui.all.css" />
+    <Content Include="Scripts\themes\redmond\ui.jqgrid.css" />
+    <Content Include="Scripts\themes\smoothness\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Scripts\themes\smoothness\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Scripts\themes\smoothness\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Scripts\themes\smoothness\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Scripts\themes\smoothness\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Scripts\themes\smoothness\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Scripts\themes\smoothness\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Scripts\themes\smoothness\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Scripts\themes\smoothness\images\ui-icons_222222_256x240.png" />
+    <Content Include="Scripts\themes\smoothness\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Scripts\themes\smoothness\images\ui-icons_454545_256x240.png" />
+    <Content Include="Scripts\themes\smoothness\images\ui-icons_888888_256x240.png" />
+    <Content Include="Scripts\themes\smoothness\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Scripts\themes\smoothness\ui.all.css" />
+    <Content Include="Scripts\themes\smoothness\ui.jqgrid.css" />
+    <Content Include="Services\CodePasteSoapService.asmx" />
+    <Content Include="Css\Images\background.png" />
+    <Content Include="Css\Images\code.gif" />
+    <Content Include="Css\Images\Comment_new.gif" />
+    <Content Include="Css\Images\Comment.gif" />
+    <Content Include="Css\Images\Linenumbers.gif" />
+    <Content Include="Css\Images\mysnippets.gif" />
+    <Content Include="Css\Images\Paste.gif" />
+    <Content Include="Css\Images\report.gif" />
+    <Content Include="Css\Images\Space.gif" />
+    <Content Include="Css\Images\Time.gif" />
+    <Content Include="Scripts\List.js" />
+    <Content Include="Scripts\new.js" />
+    <Content Include="Views\Admin\Configuration.aspx" />
+    <Content Include="Views\Home\Developer.cshtml" />
+    <Content Include="Views\Admin\Index.aspx" />
+    <Content Include="Views\Admin\Users.aspx" />
+    <Content Include="Views\Shared\Error.aspx" />
+    <Content Include="Views\Snippet\CodeOnly.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\WestwindToolkit\Westwind.Utilities\Westwind.Utilities.csproj">
+      <Project>{1c9829a8-8979-4493-863c-635726f8a61c}</Project>
+      <Name>Westwind.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodePasteBusiness\CodePasteBusiness.csproj">
+      <Project>{f6060956-3e40-48dc-94e3-44a041083208}</Project>
+      <Name>CodePasteBusiness</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CSHARPFORMAT\CSharpFormat.csproj">
+      <Project>{7A17C857-F1ED-465F-A455-E0607E681F69}</Project>
+      <Name>CSharpFormat</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Admin\DeleteSpam.cshtml" />
+    <None Include="Properties\PublishProfiles\Profile1.pubxml" />
+    <Content Include="Scripts\jquery.min.js.map">
+      <DependentUpon>jquery.js</DependentUpon>
+    </Content>
+    <Content Include="Views\Snippet\Show.cshtml" />
+    <Content Include="Views\Snippet\LanguageDropdown-Partial.cshtml" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target> -->
+  <Target Name="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)\..\$(ProjectName)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>32084</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/codepastemvc/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+</Project>
