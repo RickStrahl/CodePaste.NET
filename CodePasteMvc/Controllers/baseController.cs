@@ -30,35 +30,30 @@ namespace CodePasteMvc.Controllers
         /// ErrorDisplay control that holds page level error information
         /// </summary>
         protected ErrorDisplay ErrorDisplay = new ErrorDisplay();
-
         
 
         protected override void Initialize(RequestContext requestContext)
         {
             base.Initialize(requestContext);
 
-            // Grab the user's login information from FormsAuth
+            // Grab the user's login information from Identity
             AppUserState appUserState = new AppUserState();
-            if (this.User is ClaimsPrincipal)
+            if (User is ClaimsPrincipal)
             {
                 var user = User as ClaimsPrincipal;
                 var claims = user.Claims.ToList();
 
                 var userStateString = GetClaim(claims, "userState");
-                var name = GetClaim(claims, ClaimTypes.Name);
-                var id = GetClaim(claims, ClaimTypes.NameIdentifier);
+                //var name = GetClaim(claims, ClaimTypes.Name);
+                //var id = GetClaim(claims, ClaimTypes.NameIdentifier);
 
                 if (!string.IsNullOrEmpty(userStateString))
                    appUserState.FromString(userStateString);
-
             }
-            this.AppUserState = appUserState;
-
-            // have to explicitly add this so Master can see untyped value
-            this.ViewData["UserState"] = this.AppUserState;
-            this.ViewData["ErrorDisplay"] = this.ErrorDisplay;
-
-            // custom views should also add these as properties
+            AppUserState = appUserState;
+            
+            ViewData["UserState"] = AppUserState;
+            ViewData["ErrorDisplay"] = ErrorDisplay;
         }
 
         public static string GetClaim(List<Claim> claims, string key)
@@ -78,7 +73,7 @@ namespace CodePasteMvc.Controllers
         /// <param name="requestContext"></param>
         public void InitializeForced(RequestContext requestContext)
         {
-            this.Initialize(requestContext);
+            Initialize(requestContext);
         }
 
 
@@ -93,7 +88,7 @@ namespace CodePasteMvc.Controllers
         protected internal ActionResult DisplayErrorPage(string title, string message, string redirectTo = null)
         {
             ErrorController controller = new ErrorController();
-            controller.InitializeForced(this.ControllerContext.RequestContext);
+            controller.InitializeForced(ControllerContext.RequestContext);
             return controller.ShowError(title, message, redirectTo);
         }
 

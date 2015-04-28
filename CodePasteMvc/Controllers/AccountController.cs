@@ -33,14 +33,6 @@ namespace CodePasteMvc.Controllers
             ViewModel.ErrorDisplay = ErrorDisplay;
             ViewModel.AppUserState = AppUserState;
 
-            // have to explicitly add this so Master can see untyped value
-            //this.ViewData["UserState"] = this.UserState;
-
-            //AppUserState = new AppUserState();
-            //if (User.Identity != null && User.Identity is FormsIdentity)
-            //{
-            //    AppUserState.FromString(((FormsIdentity)User.Identity).Ticket.UserData);                
-            //}
             ViewData["UserState"] = AppUserState;
         }
 
