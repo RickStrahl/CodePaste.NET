@@ -30,7 +30,7 @@ namespace CodePasteMvc.Controllers
         /// ErrorDisplay control that holds page level error information
         /// </summary>
         protected ErrorDisplay ErrorDisplay = new ErrorDisplay();
-        
+
 
         protected override void Initialize(RequestContext requestContext)
         {
@@ -48,17 +48,17 @@ namespace CodePasteMvc.Controllers
                 //var id = GetClaim(claims, ClaimTypes.NameIdentifier);
 
                 if (!string.IsNullOrEmpty(userStateString))
-                   appUserState.FromString(userStateString);
+                    appUserState.FromString(userStateString);
             }
             AppUserState = appUserState;
-            
+
             ViewData["UserState"] = AppUserState;
             ViewData["ErrorDisplay"] = ErrorDisplay;
         }
 
         public static string GetClaim(List<Claim> claims, string key)
-        {            
-            var claim  = claims.FirstOrDefault(c => c.Type == key);
+        {
+            var claim = claims.FirstOrDefault(c => c.Type == key);
             if (claim == null)
                 return null;
 

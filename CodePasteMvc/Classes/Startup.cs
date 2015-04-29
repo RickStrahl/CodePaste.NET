@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Security.Claims;
-using System.Web;
+﻿using System.Security.Claims;
 using System.Web.Helpers;
 using CodePasteBusiness;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
 using Owin;
 using Owin.Security.Providers.GitHub;
 
 namespace CodePasteMvc
-{   
+{
     public partial class Startup
     {
         public void Configuration(IAppBuilder app)
@@ -34,12 +27,12 @@ namespace CodePasteMvc
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/LogOn")
             });
-            
+
             // these values are stored in CodePasteKeys.json
             // and are NOT included in repro - autocreated on first load
             if (!string.IsNullOrEmpty(App.Secrets.GitHubClientId))
             {
-                app.UseGoogleAuthentication(                
+                app.UseGoogleAuthentication(
                     clientId: App.Secrets.GoogleClientId,
                     clientSecret: App.Secrets.GoogleClientSecret);
             }

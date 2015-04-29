@@ -128,3 +128,4 @@ Temp
 .idea
 
 /CodePasteMvc/Properties/PublishProfiles/*.pubxml
+CodePasteMvc/CodePasteKeys.json
