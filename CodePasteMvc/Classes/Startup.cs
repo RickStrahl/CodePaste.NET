@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using System.Web.Helpers;
 using CodePasteBusiness;
 using Microsoft.AspNet.Identity;
@@ -28,9 +29,13 @@ namespace CodePasteMvc
                 LoginPath = new PathString("/Account/LogOn")
             });
 
+            // MAKE SURE PROVIDERS KEYS ARE SET IN the CodePasteKeys.json FILE
+            if (App.Secrets.GoogleClientId == null)
+                throw new ArgumentException("External Logon Provider keys appear to be missing. Please update the values in the separate configuration file.");
+
             // these values are stored in CodePasteKeys.json
             // and are NOT included in repro - autocreated on first load
-            if (!string.IsNullOrEmpty(App.Secrets.GitHubClientId))
+            if (!string.IsNullOrEmpty(App.Secrets.GoogleClientId))
             {
                 app.UseGoogleAuthentication(
                     clientId: App.Secrets.GoogleClientId,

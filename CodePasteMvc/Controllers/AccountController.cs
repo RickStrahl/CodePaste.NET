@@ -220,21 +220,24 @@ to validate your email address.</p>");
         #endregion
 
 
+
         #region External Provider Logins
 
         // POST: /Account/ExternalLogin
-        [HttpPost]
-        [AllowAnonymous]
+        [AllowAnonymous]        
+        [HttpPost]        
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider)
         {
             string returnUrl = Url.Action("New", "Snippet", null);
+
             return new ChallengeResult(provider,
-                Url.Action("ExternalLoginCallback", "Account", new {ReturnUrl = returnUrl}));
+                Url.Action("ExternalLoginCallback", "Account", 
+                new {ReturnUrl = returnUrl}));
         }
 
 
-// GET: /Account/ExternalLoginCallback
+        // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
