@@ -11,6 +11,7 @@ using System.IO;
 using System.Xml;
 using Westwind.Web.JsonSerializers;
 using System.Text.RegularExpressions;
+using Westwind.Web;
 
 namespace CodePasteMvc.Controllers
 {
@@ -31,12 +32,12 @@ namespace CodePasteMvc.Controllers
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
             // Create a custom Invoker that handles non-actionresult controller methods
-            this.ActionInvoker = new ApiActionInvoker();
+            ActionInvoker = new ApiActionInvoker();
 
             base.Initialize(requestContext);
 
             // pick up the format
-            this.Format = (Request.QueryString["Format"] ?? string.Empty).ToLower();
+            Format = (Request.QueryString["Format"] ?? string.Empty).ToLower();
 
             //if (string.IsNullOrEmpty(this.Format))
             //    this.Format = "xml";
@@ -49,20 +50,20 @@ namespace CodePasteMvc.Controllers
         /// <returns></returns>
         protected internal virtual ActionResult ApiResult(object instance)
         {            
-            if (string.IsNullOrEmpty(this.Format))
+            if (string.IsNullOrEmpty(Format))
                 return null;
 
-            if (this.Format == "json")
-                return this.Json(instance, JsonRequestBehavior.AllowGet);
-            else if (this.Format == "xml")
+            if (Format == "json")
+                return Json(instance, JsonRequestBehavior.AllowGet);
+            else if (Format == "xml")
             {
                 string xmlResult = string.Empty;
 
                 if (!SerializationUtils.SerializeObject(instance, out xmlResult))
                     throw new InvalidOperationException("Unable to serialize instance to Xml");
-                return this.Content(xmlResult, "text/xml", Encoding.UTF8);
+                return Content(xmlResult, "text/xml", Encoding.UTF8);
             }
-            else if (this.Format == "rss" || this.Format == "atom")
+            else if (Format == "rss" || Format == "atom")
             {
                 return GetFeed(instance);
             }
@@ -80,9 +81,9 @@ namespace CodePasteMvc.Controllers
             try
             {
                 string title = "CodePaste.NET";
-                string action = this.RouteData.Values["listAction"] as string;
+                string action = RouteData.Values["listAction"] as string;
                 if (string.IsNullOrEmpty(action))
-                    action = this.RouteData.Values["Action"] as string ?? string.Empty;
+                    action = RouteData.Values["Action"] as string ?? string.Empty;
                 action = action.ToLower();
 
                 if (action == "recent")
@@ -132,7 +133,7 @@ namespace CodePasteMvc.Controllers
                     CheckCharacters = false                 
                 };
                 XmlWriter writer = XmlWriter.Create(ms,settings);
-                if (this.Format == "rss")
+                if (Format == "rss")
                 {
                     Rss20FeedFormatter rssFormatter = new Rss20FeedFormatter(feed);
                     rssFormatter.WriteTo(writer);
@@ -146,7 +147,7 @@ namespace CodePasteMvc.Controllers
 
                 ms.Position = 0;
 
-                return this.Content(Encoding.UTF8.GetString(ms.ToArray()), "application/xml");
+                return Content(Encoding.UTF8.GetString(ms.ToArray()), "application/xml");
             }
             catch (Exception ex)
             {
@@ -199,20 +200,19 @@ namespace CodePasteMvc.Controllers
 
             // only handle API results here: Format must be set
             // otherwise fall through and return
-            if (string.IsNullOrEmpty(this.Format))
+            if (string.IsNullOrEmpty(Format))
                 return;
 
             Response.StatusCode = 500;
 
-            Westwind.Web.CallbackException exception = new Westwind.Web.CallbackException();
-            exception.message = filterContext.Exception.Message;
+            CallbackException exception = new CallbackException(filterContext.Exception.Message);
+            
+            //if (HttpContext.IsDebuggingEnabled)                                
+            //    exception.StackTrace = filterContext.Exception.StackTrace;
 
-            if (HttpContext.IsDebuggingEnabled)
-                exception.stackTrace = filterContext.Exception.StackTrace;
+            exception.IsError = true;
 
-            exception.isCallbackError = true;
-
-            filterContext.Result = this.ApiResult(exception);
+            filterContext.Result = ApiResult(exception);
             filterContext.ExceptionHandled = true;
         }
 
@@ -220,28 +220,26 @@ namespace CodePasteMvc.Controllers
         {
             Response.StatusCode = 500;
 
-            Westwind.Web.CallbackException exception = new Westwind.Web.CallbackException();
-            exception.message = ex.GetBaseException().Message;
+            CallbackException exception = new CallbackException(ex.GetBaseException().Message);
+            
+            //if (HttpContext.IsDebuggingEnabled)
+            //    exception.StackTrace = ex.StackTrace;
 
-            if (HttpContext.IsDebuggingEnabled)
-                exception.stackTrace = ex.StackTrace;
-
-            exception.isCallbackError = true;
+            exception.IsError = true;
 
             // return result based on ?Format= 
-            return this.ApiResult(exception);
+            return ApiResult(exception);
         }
 
         protected ActionResult ExceptionResult(string message)
         {
             Response.StatusCode = 500;
 
-            Westwind.Web.CallbackException exception = new Westwind.Web.CallbackException();
-            exception.message = message;
-            exception.isCallbackError = true;
+            CallbackException exception = new CallbackException(message);            
+            exception.IsError = true;
 
             // return result based on ?Format=
-            return this.ApiResult(exception);
+            return ApiResult(exception);
         }
 
     }
@@ -278,7 +276,5 @@ namespace CodePasteMvc.Controllers
             // Process as normal request
             return base.CreateActionResult(controllerContext, actionDescriptor, actionReturnValue);
         }
-
-
     }
 }
