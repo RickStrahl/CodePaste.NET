@@ -557,7 +557,6 @@
     <None Include="Scripts\_references.js" />
     <Content Include="Scripts\ww.jquery.js" />
     <Content Include="Scripts\ww.jquery.min.js" />
-    <Content Include="test.html" />
     <Content Include="Views\Account\LogOn.cshtml" />
     <Content Include="Views\Admin\AbuseSnippets.aspx" />
     <Content Include="Css\fonts\fontawesome-webfont.eot" />
