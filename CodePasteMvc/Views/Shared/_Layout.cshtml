@@ -1,41 +1,41 @@
 ﻿@using Westwind.Web
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">        
-        @RenderSection("headerstop", false)
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    @RenderSection("headerstop", false)
 
-        <link href="~/Css/Westwind.css" rel="stylesheet" type="text/css" />
-        <link href="~/Css/CodePaste.css" rel="stylesheet" type="text/css"/>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" async>
+    <link href="~/Css/Westwind.css" rel="stylesheet" type="text/css"/>
+    <link href="~/Css/CodePaste.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" async>
 
-        @*<link href="~/Css/csharp.css" rel="stylesheet" type="text/css" />*@
-        @Html.Raw(ScriptLoader.jQueryLink())
-        @Html.Raw(ScriptLoader.wwJqueryLink())
+    @*<link href="~/Css/csharp.css" rel="stylesheet" type="text/css" />*@
+    @Html.Raw(ScriptLoader.jQueryLink())
+    @Html.Raw(ScriptLoader.wwJqueryLink())
 
-        <link id="RssLink" rel="alternate" type="application/rss+xml" title="CodePaste.NET Recent Snippets" href="http://codepaste.net/feed" />
+    <link id="RssLink" rel="alternate" type="application/rss+xml" title="CodePaste.NET Recent Snippets" href="http://codepaste.net/feed"/>
 
-        @RenderSection("headers", false)
-    </head>
+    @RenderSection("headers", false)
+</head>
 <body>
 
     <div id="divBodyWrapper">
         &nbsp;
-        <div id="imgBanner" onclick="location = '@Url.Content("~/")';">
+        <div id="imgBanner" onclick="location = '@Url.Content("~/")';" >
             <img src="~/images/codepastebanner.png" alt="CodePaste Logo"
-                 style="position: absolute; left: 5px top: 0px;float: left;" />
+                 style="position: absolute; left: 0px; top: 0px;float: left; width: 300px;" />
         </div>
 
         <div id="divHeaderBar">
-            <div id="divSearchBox" style="float:right; margin-right: 10px;font-size: 0.8em;">
+            <div id="divSearchBox" style="float:right; margin-right: 10px;font-size: 0.8em;"  class="hidable">
                 @*<a href="http://feeds.feedburner.com/codepaste" class="hoverbutton"><img src="~/images/rss.png" /> Subscribe</a>*@
-                <a href="~/home/about" class="hoverbutton"><img src="~/images/info.png" /> About</a>
+                <a href="~/home/about" class="hoverbutton"><img src="~/images/info.png"/> About</a>
             </div>
             <a href="~/" class="hoverbutton"><img src="~/images/newsnippet.png" alt="New Snippet" /> New</a>
-            <a href="~/recent" class="hoverbutton"><img src="~/images/recent.png" alt="Recent Snippets" /> Recent Snippets</a>
-            <a href="~/mysnippets" class="hoverbutton"><img src="~/images/clipboard.png" alt="My Snippets" /> My Snippets</a>
-            <a href="~/myfavorites" class="hoverbutton"><img src="~/images/favorite.png" alt="My Favorites" /> Favorites</a>
-            <a href="~/ShowUrl" class="hoverbutton"><img src="~/images/originalurl.png" /> Web Code</a>
+            <a href="~/recent" class="hoverbutton"><img src="~/images/recent.png" alt="Recent Snippets"/> Recent <span class="hidable">Snippets</span></a>
+            <a href="~/mysnippets" class="hoverbutton"><img src="~/images/clipboard.png" alt="My Snippets" /> My <span class="hidable">Snippets</span></a>
+            <a href="~/myfavorites" class="hoverbutton hidable"><img src="~/images/favorite.png" alt="My Favorites" /> Favorites</a>
+            <a href="~/ShowUrl" class="hoverbutton hidable"><img src="~/images/originalurl.png" /> Web Code</a>
             <a href="~/search" class="hoverbutton"><img src="~/images/search.png" alt="Search Snippets" /> Search</a>
         </div>
 
@@ -44,15 +44,14 @@
         </div>
 
         <div id="maincontainer">
-            <div class="row">
+            
                 <div id="divContainerContent">
                     @RenderBody()
                 </div>
 
                 <div id="divSidebar">
                     @Html.Partial("~/views/shared/SideBarContent.cshtml")
-                </div>
-            </div>
+                </div>            
         </div>
     </div>
 

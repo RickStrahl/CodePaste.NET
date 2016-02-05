@@ -13,14 +13,20 @@
 }
 @section headers {
     <title>CodePaste.NET - @Model.Snippet.Title</title>
-    <meta id="metaKeyWords" name="Keywords" content="@Model.Snippet.Tags" />
-    <meta id="metaDescription" name="Description" content="CodePage.NET - paste and link .NET code for referencing from Social Network sites. Store and organize your code snippets." />
+    <meta id="metaKeyWords" name="Keywords" content="@Model.Snippet.Tags"/>
+    <meta id="metaDescription" name="Description" content="CodePage.NET - paste and link .NET code for referencing from Social Network sites. Store and organize your code snippets."/>
     <style type="text/css">
         .commentedit {
             width: 400px;
             height: 70px;
         }
 
+        @@media(max-width: 767px)
+        {
+            #divContainerContent {
+                padding: 10px;
+            }
+        }
         .tagedit {
             width: 400px;
             height: 15px;
@@ -76,11 +82,12 @@
         .ace_content {
             padding-top: 5px !important;
         }
-        /*.ace_scrollbar {
+       
+    /*.ace_scrollbar {
             display: none !important;
         }*/
     </style>
-}  
+}
 @{
     // server side variables persisted into JavaScript
     JsonVariables scriptVars = new JsonVariables("serverVars");
@@ -113,9 +120,9 @@
         }
     </div>
 }
-  
 
-<div class="labelheader" style="margin-top: 0px;">
+
+<div class="labelheader" style="margin-top: 0;">
     <h3>
         <span id="Title">@(string.IsNullOrEmpty(Model.Snippet.Title) ? "No Title" : Model.Snippet.Title)</span>
         @if (Model.AllowEdit)
@@ -148,7 +155,7 @@
 <div style="clear: both"></div>
 
 <div style="position: relative">
-    <div id="EditOptionsHover">
+    <div id="EditOptionsHover" class="hidable">
         <a id="btnCopyCode" href="#" class="hoverbutton" title="Copy code to clipboard. Requires you press Ctrl-C to capture text.">
             <img src="~/images/paste.png" alt="Copy Code to Clipboard" />
             Copy
@@ -256,7 +263,7 @@
     @if (Model.AppUserState.IsAdmin || !Model.Snippet.IsAbuse)
     {
         <a href="javascript:{}" onclick="ReportAbuse() ">
-            @(Model.Snippet.IsAbuse ? "Undo Abuse" :"Report Abuse" )
+            @(Model.Snippet.IsAbuse ? "Undo Abuse" : "Report Abuse" )
         </a>
     }
 </small>

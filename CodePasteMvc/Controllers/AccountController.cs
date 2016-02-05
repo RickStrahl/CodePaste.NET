@@ -92,7 +92,10 @@ namespace CodePasteMvc.Controllers
             if (!string.IsNullOrEmpty(returnUrl))
                 return Redirect(returnUrl);
 
-            return RedirectToAction("New", "Snippet", null);
+            returnUrl = WebUtils.ResolveServerUrl("~/new");
+            return Redirect(returnUrl);
+
+            //return RedirectToAction("New", "Snippet", null);
         }
 
         public ActionResult LogOff()
@@ -229,7 +232,8 @@ to validate your email address.</p>");
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider)
         {
-            string returnUrl = Url.Action("New", "Snippet", null);
+            string returnUrl = WebUtils.ResolveServerUrl("~/new");
+            //string returnUrl = Url.Action("New", "Snippet", null);
 
             return new ChallengeResult(provider,
                 Url.Action("ExternalLoginCallback", "Account", 

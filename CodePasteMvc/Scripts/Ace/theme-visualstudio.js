@@ -45,7 +45,7 @@ background: #e8e8e8;\
 background-color: #6B72E6;\
 }\
 .ace-vs {\
-background-color: #FFFFFF;\
+background-color: #EEE;\
 }\
 .ace-vs .ace_cursor {\
 color: black;\

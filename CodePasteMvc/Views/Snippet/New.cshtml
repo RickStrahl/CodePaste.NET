@@ -46,7 +46,6 @@
     @Html.Raw(((Westwind.Web.Mvc.ErrorDisplay) this.ViewData["ErrorDisplay"]).Show(400,true) )
 
     <form id="snippetform" action="new" method="post">
-        <fieldset style="background:white; width: 100%">
             <div class="containercontent">
                 <div style="float: right; margin-bottom: 8px;">
                     <b>Syntax:</b>
@@ -78,8 +77,7 @@
 
                 <input type="submit" id="btnPaste" name="btnPaste" value="Paste your Code" class="pagesubmitbutton" style="width: 150px;" />
                 <div class="fieldmessage">(JavaScript required for SPAM prevention)</div>
-            </div>
-        </fieldset>             
+            </div>        
     </form>       
     
     <div id="divSignInNag" class="dialog dialog-content" style="width: 350px; display: none; position: absolute; z-index: 10000">

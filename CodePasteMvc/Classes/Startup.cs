@@ -51,9 +51,7 @@ namespace CodePasteMvc
 
             if (!string.IsNullOrEmpty(App.Secrets.GitHubClientId))
             {
-                app.UseGitHubAuthentication(
-                    clientId: App.Secrets.GitHubClientId,
-                    clientSecret: App.Secrets.GitHubClientSecret);
+                app.UseGitHubAuthentication(App.Secrets.GitHubClientId, App.Secrets.GitHubClientSecret);
             }
 
             AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;

@@ -94,7 +94,7 @@ namespace CodePasteBusiness
             get { return _DaysToDeleteAnonymousSnippets; }
             set { _DaysToDeleteAnonymousSnippets = value; }
         }
-        private int _DaysToDeleteAnonymousSnippets = 10;
+        private int _DaysToDeleteAnonymousSnippets = 5;
 
         /// <summary>
         /// The minimum number of Views to keep a snippet
