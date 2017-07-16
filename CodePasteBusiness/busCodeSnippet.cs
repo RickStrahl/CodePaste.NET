@@ -719,7 +719,7 @@ namespace CodePasteBusiness
         public int ClearAnonymousSnippets(int hours, int viewCount)
         { 
             int result = ExecuteNonQuery("delete from CodeSnippets where entered < @date and userid = ''",
-                                                      Context.Db.CreateParameter("@date",DateTime.Now.Date.AddHours(hours * -1) ),
+                                                      Context.Db.CreateParameter("@date",DateTime.Now.AddHours(hours * -1) ),
                                                       Context.Db.CreateParameter("@viewCount",viewCount) );
 
             return result;
@@ -740,7 +740,7 @@ namespace CodePasteBusiness
 
 
 
-        #region SnippetClick Operations
+        #region Snippet Callback Operations
 
         /// <summary>
         /// Retrieves the total count of views
