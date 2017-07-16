@@ -5,15 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">    
     @RenderSection("headerstop", false)
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link href="~/Css/Westwind.css" rel="stylesheet" type="text/css"/>
     <link href="~/Css/CodePaste.css" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" async>
-
-    @*<link href="~/Css/csharp.css" rel="stylesheet" type="text/css" />*@
+    
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" async>
+    
     @Html.Raw(ScriptLoader.jQueryLink())
     @Html.Raw(ScriptLoader.wwJqueryLink())
 
-    <link id="RssLink" rel="alternate" type="application/rss+xml" title="CodePaste.NET Recent Snippets" href="http://codepaste.net/feed"/>
+    <link id="RssLink" rel="alternate" type="application/rss+xml" title="CodePaste.NET Recent Snippets" href="httpd://codepaste.net/feed"/>
 
     @RenderSection("headers", false)
 </head>
@@ -64,9 +65,9 @@
 
         <a href="~/docs" target="_blank">Developer Documentation</a> |
         <a href="~/services/CodePasteSoapService.asmx">Web Service</a> |
-        <a href="http://codepaste.net/docs?page=_2py10t5gl.htm" target="_blank">HTTP API</a>
+        <a href="//codepaste.net/docs?page=_2py10t5gl.htm" target="_blank">HTTP API</a>
         <br />
-        <a href="http://www.west-wind.com/wwThreads/default.asp?Forum=codepaste.net">Questions or Comments?</a>
+        <a href="https://support.west-wind.com?Forum=codepaste.net">Questions or Comments?</a>
         <br />
         <a href="~/home/whatsnew">CodePaste Recent News</a>
 
@@ -75,7 +76,7 @@
 
     @*<script>
             $(document).ready(function () {
-                $.getJSON("http://www.west-wind.com/weblog/weblogcallbacks.ashx?method=GetRandomBookImage&jsonp=?",
+                $.getJSON("https://www.west-wind.com/weblog/weblogcallbacks.ashx?method=GetRandomBookImage&jsonp=?",
                           function (amazonItem) {
                               $img = $("#imgAmazonImage")
                                     .attr("src", amazonItem.AmazonImageUrl);

@@ -22,7 +22,7 @@ function openIdUrl(site)
         autoClick = true;
     }
     else if (site == "yahoo") {
-        value = "http://yahoo.com/"
+        value = "http://yahoo.com/";
         autoClick = true;
     }
         

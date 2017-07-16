@@ -60,12 +60,10 @@ namespace CodePasteMvc.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult LogOn(string email, string password, bool rememberMe, string returnUrl, bool emailPassword)
+        public ActionResult LogOn(string email, string password, bool rememberMe, string returnUrl)
         {
-            if (emailPassword)
+            if (WebUtils.IsFormVar("btnRecover"))
             {
-                if (ModelState.ContainsKey("emailpassword"))
-                    ModelState.Remove("emailpassword");
                 return EmailPassword(email);
             }
 
@@ -478,8 +476,10 @@ to validate your email address.</p>");
         {
             User user = busUser.LoadUserByEmail(email);
             if (user == null)
-                ErrorDisplay.ShowError(
-                    "Email address doesn't exist. Please make sure you have typed the address correctly");
+                // always confirm - otherwise link gets spammed
+                ErrorDisplay.ShowMessage("We've sent password recovery info to: " + busUser.Entity.Email);
+                //ErrorDisplay.ShowError(
+                //        "Email address doesn't exist. Please make sure you have typed the address correctly");
             else
             {
                 // Always create a new random password
@@ -493,7 +493,7 @@ to validate your email address.</p>");
                     "Please log in, view your profile and then change your password to something you can more easily remember.",
                     busUser.Entity.Email,
                     true))
-                    ErrorDisplay.ShowMessage("Password information has been emailed to: " + busUser.Entity.Email);
+                    ErrorDisplay.ShowMessage("We've sent password recovery info to: " + busUser.Entity.Email);
                 else
                     ErrorDisplay.ShowError("Emailing of password failed.");
             }
