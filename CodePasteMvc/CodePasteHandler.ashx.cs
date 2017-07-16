@@ -249,13 +249,31 @@ namespace CodePasteMvc
                 if (Snippet.Load(snippetId) == null)
                     throw new InvalidOperationException("Unable to delete snippet");
 
-                if (!this.AppUserState.IsAdmin && !this.IsEditAllowed(Snippet.Entity))
+                if (!AppUserState.IsAdmin && !this.IsEditAllowed(Snippet.Entity))
                     throw new UnauthorizedAccessException("Unauthorized Access: You have to be signed in as an administrator in delete snippets.");
 
                 Snippet.Delete();
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Removes a user and all of his posts. This is an admin
+        /// only operation.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [CallbackMethod]
+        public bool RemoveUser(string userId)
+        {
+            if (!AppUserState.IsAdmin)
+                throw new UnauthorizedAccessException("Unauthorized Access: You have to be signed in as an administrator in delete snippets.");
+
+            using (var userBus = new busUser())
+            {
+                return userBus.Delete(userId);
+            }
         }
 
         /// <summary>
