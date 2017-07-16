@@ -6,6 +6,7 @@ $(document).ready(function() {
     showStatus("hide");
 
     $(".removelink").click(RemoveSnippet);
+    $(".removeUserLink").click(RemoveUser);
     $("#ApiFormats").change(displayApiFormat);
 });
 
@@ -19,6 +20,15 @@ function RemoveSnippet(e) {
         jSnip.fadeOut("slow", function() { jSnip.remove(); });
     }, onPageError);
 
+}
+
+function RemoveUser(e) {
+    var id = $(this).data("userid");    
+    var jSnip = $(this).parents(".snippet,.snippetofauthor");
+
+    ajaxCallMethod(serverVars.callbackHandler, "RemoveUser", [id], function (res) {                
+        jSnip.fadeOut("slow", function () { jSnip.remove(); });
+    }, onPageError);
 }
 
 function displayApiFormat() {

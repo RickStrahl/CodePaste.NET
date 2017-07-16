@@ -63,7 +63,7 @@
                 <a href='@Url.Action("Show", new {id = snip.Id})'>
                     @(string.IsNullOrEmpty(snip.Title) ?
                     "No Title" :
-                    Html.Encode(snip.Title))
+                    snip.Title)
                 </a>
 
             </div>
@@ -91,7 +91,11 @@
 
             @if (UserState.IsAdmin)
         {
-                <div style="font-size: smaller; margin: 5px 0"><a href="javascript:{}" class="removelink">Remove Snippet</a></div>
+            <div style="font-size: smaller; margin: 5px 0">
+                <a href="javascript:{}" class="removelink">Remove Snippet</a> |
+                <a href="javascript:{}" class="removeUserLink" data-userid="@snip.UserId">Remove User</a>
+
+            </div>
         }
         else
         {
