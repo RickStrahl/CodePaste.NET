@@ -89,12 +89,12 @@ namespace CodePasteBusiness
         /// <summary>
         /// The days after which an anonymous snippet is deleted
         /// </summary>
-        public int DaysToDeleteAnonymousSnippets
+        public int HoursToDeleteAnonymousSnippets
         {
-            get { return _DaysToDeleteAnonymousSnippets; }
-            set { _DaysToDeleteAnonymousSnippets = value; }
+            get { return _hoursToDeleteAnonymousSnippets; }
+            set { _hoursToDeleteAnonymousSnippets = value; }
         }
-        private int _DaysToDeleteAnonymousSnippets = 5;
+        private int _hoursToDeleteAnonymousSnippets = 1;
 
         /// <summary>
         /// The minimum number of Views to keep a snippet

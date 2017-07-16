@@ -42,15 +42,19 @@ namespace CodePasteBusiness
         /// <returns></returns>
         public override bool Delete(object Pk)
         {
-            if (Pk == null)
+            string pk = Pk as string;
+
+            if (string.IsNullOrEmpty(pk))
             {
                 SetError("No user key provided for deletion");
                 return false;
             }
-
-            // clear all code snippets of this user
-            int result = Context.Db.ExecuteNonQuery("update codesnippets set userId='' where userId=@Pk;update comments set userId='' where userId=@Pk",
-                    Context.Db.CreateParameter("@Pk", Pk));
+           
+            
+            // clear all code snippets and comments from this user
+            int result = Context.Db.ExecuteNonQuery("delete codesnippets where userId=@Pk;" +
+                                                    "delete comments where userId=@Pk",
+                    Context.Db.CreateParameter("@Pk", pk));
 
             if (result == -1)
             {
@@ -58,7 +62,7 @@ namespace CodePasteBusiness
                 return false;
             }
 
-            return base.Delete(Pk);
+            return base.Delete(Pk);                
         }
 
         /// <summary>

@@ -410,7 +410,7 @@ namespace CodePasteBusiness
                            .OrderByDescending(snip => snip.Entered)
                            .Take(recordCount);
             }
-            if (filter == "tag")
+            else if (filter == "tag")
             {
                 string tag = (filterParameter ?? string.Empty).ToLower();
 
@@ -420,14 +420,14 @@ namespace CodePasteBusiness
                                          .Take(recordCount);                
 
             }
-            if (filter == "language")
+            else if (filter == "language")
             {
                 string language = filterParameter ?? string.Empty;
                 snippetQuery = Context.CodeSnippets.Where(snip => snip.Language == language )
                                          .OrderByDescending(snip => snip.Entered)
                                          .Take(recordCount);
             }
-            if (filter == "user")
+            else if (filter == "user")
             {
 
                 string user = filterParameter ?? string.Empty;                
@@ -713,13 +713,13 @@ namespace CodePasteBusiness
         /// Clears out old snippets that are older than a the specified number of days
         /// and have less than the specified number of views
         /// </summary>
-        /// <param name="days">Age of anonymous snippets to delete</param>
+        /// <param name="hours">Age of anonymous snippets to delete</param>
         /// <param name="viewCount">Number of views to keep snippet from being deleted</param>
         /// <returns>number of records deleted or -1 on failure</returns>
-        public int ClearAnonymousSnippets(int days, int viewCount)
+        public int ClearAnonymousSnippets(int hours, int viewCount)
         { 
             int result = ExecuteNonQuery("delete from CodeSnippets where entered < @date and userid = ''",
-                                                      Context.Db.CreateParameter("@date",DateTime.Now.Date.AddDays(days * -1) ),
+                                                      Context.Db.CreateParameter("@date",DateTime.Now.Date.AddHours(hours * -1) ),
                                                       Context.Db.CreateParameter("@viewCount",viewCount) );
 
             return result;

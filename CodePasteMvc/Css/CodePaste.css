@@ -4,10 +4,21 @@
 	background-repeat:repeat;
 	width: 100%;
     height: 100%;
-    overflow-x: hidden;
+    overflow-x: hidden;    
 }
 pre {
     background-color: transparent;
+}
+h1, h2, h3,h4, h5, h6 {
+    font-family: Trebuchet,'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bold;
+}
+h1 {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+h2 {
+    font-size: 1.6em;
 }
 a:hover {
     color: #c73030;
@@ -82,20 +93,20 @@ a:hover {
 { 
   flex: 1 1 auto;              
   background: white;
-  padding: 10px;     
+  padding: 22px 15px;   
+  width: 100%;  
   border: 1px solid silver;
   border-radius: 10px 10px 10px 10px;  
   
 }
 #divSidebar {
-    flex: none;
-    width: 100%;
+    flex: none;    
     margin-left: 15px;
     margin-right: 10px;
     padding-top: 30px;
     width: 240px;
     text-align: center;
-    font-size: 80%;
+    font-size: 0.8em;
     vertical-align: top;
     
 }
@@ -123,7 +134,7 @@ a:hover {
 #Code
 {
 	display: block;
-	font-family: "Liberation Mono", Consolas, "Courier New", monospace !important;
+	font-family: "Menlo", Consolas, "Courier New", monospace !important;
 	font-size: 100%;
 	width: 100%;
 	height: 300px;
@@ -270,8 +281,13 @@ fieldset
 	background-image: url(images/LightOrangeGradient.png);
 }
 .snippetcode
-{		
-	overflow-x: auto;
+{
+    overflow-x: hidden;
+}
+.snippetcode pre {
+    width: 99%;            
+    max-width: 767px;
+    overflow-x: hidden !important;
 }
 .snippettitle
 {

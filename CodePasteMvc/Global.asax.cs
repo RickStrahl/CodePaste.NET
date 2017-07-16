@@ -123,10 +123,32 @@ namespace CodePasteMvc
 
             // Clear out expired anonymous snippets whenever app starts
             busCodeSnippet Snippet = new busCodeSnippet();
-            Snippet.ClearAnonymousSnippets(App.Configuration.DaysToDeleteAnonymousSnippets,
+            Snippet.ClearAnonymousSnippets(App.Configuration.HoursToDeleteAnonymousSnippets,
                                            App.Configuration.MinViewBeforeDeleteAnonymousSnippets);
+
+            // Clear Anonymous snippets
+            scheduler = new Scheduler();
+            scheduler.CheckFrequency = 3600 * 1000;
+            scheduler.ExecuteScheduledEvent += Scheduler_ExecuteScheduledEvent;            
         }
 
+        protected void Application_End()
+        {
+            scheduler?.Dispose();
+        }
+        
+
+        private Scheduler scheduler;
+
+        private void Scheduler_ExecuteScheduledEvent(object sender, EventArgs e)
+        {
+            try
+            {
+                var admin = new busCodeSnippet();
+                admin.ClearAnonymousSnippets(App.Configuration.HoursToDeleteAnonymousSnippets, 9999999);
+            }
+            catch { }
+        }
 
         protected void Application_Error()
         {

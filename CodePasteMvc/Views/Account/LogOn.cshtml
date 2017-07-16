@@ -30,7 +30,7 @@
 
     <h2>Log On</h2>
     <p>
-        Please log in using either <a href="http://openid.net/get-an-openid/" target="_blank">OpenID</a> or a username and password or <b>@Html.ActionLink("Register", "Register")</b> a new account.
+        Please log in using either one of the social logins or a username and password, or <b>@Html.ActionLink("Register", "Register")</b> a new account.
     </p>
     @Html.Raw(this.Model.ErrorDisplay.Show(400,true) )
 
@@ -51,9 +51,9 @@
     @using (Html.BeginForm())
     {
         <div>
-            <fieldset>                
+            <fieldset>
                 <div class="containercontent">
-                
+
                     <p>
                         <label for="email">Email Address:</label>
                         @Html.TextBox("email")
@@ -62,25 +62,43 @@
                     <div id="divPassword">
                         <label for="password">Password:</label>
                         @Html.Password("password")
-                        @Html.ValidationMessage("password")  
+                        @Html.ValidationMessage("password")
                     </div>
                     <div id="divRememberMe" style="padding-left: 120px;">
                         @Html.CheckBox("rememberMe", true) <label for="rememberMe" style="float: none;">Remember me?</label>
                     </div>
-                
-                    <div style="margin: 5px;">
-                        <input type="submit" id="btnLogOn" value="Log On" />
-                    </div>
-                
+
+                    <button type="submit" id="btnLogOn" name="btnLogon" value="Log On" 
+                            class="btn btn-primary" style="margin: 5px;">
+                        <i class="fa fa-sign-in"></i>
+                        Sign In
+                    </button>
+
+
+                    <button type="submit" id="btnRecover" name="btnRecover" 
+                            class="btn btn-default" style="margin: 5px; display: none;" value="btnRecover">
+                        <i class="fa fa-refresh"></i>
+                        Recover Password
+                    </button>
+
                     <hr />
                     <small>
-                        If you've forgotten your password check the box below then fill in your email address and click the <i>Email my password</i> button above to have your password
-                        emailed to the email address supplied above.
-                    
-                        <div style="margin-top: 8px;">
-                            @Html.CheckBox("emailpassword", false) <label  style="float: none;" for="emailPassword">Email me my password.</label>
-                        </div>
-                    </small>                               
+                        If you've forgotten your password check the box below then fill in your email address and click the
+                        <i>Email my password</i> button above to have your password emailed to the email address
+                        supplied above.
+                        <br />
+                        <a id="RecoverLogin" href="#" class="btn btn-link">
+                            <i class="fa fa-refresh"></i>
+                            Recover Account
+                        </a>
+
+                        @*
+                    <div style="margin-top: 8px;">
+                        @Html.CheckBox("recoverpassword", false) <label  style="float: none;" for="recoverPassword">Email me my password.</label>
+                    </div>
+                        *@
+
+                    </small>
                 </div>
             </fieldset>
         </div>
@@ -88,17 +106,9 @@
 
     <script>
         $(document).ready(function() {
-            $("#emailpassword").click(function () {                
-                if ($(this).prop("checked") == true) {
-                    $("#btnLogOn").val("Email my password");
-                    $("#divPassword").hide();
-                    $("#divRememberMe").hide();
-                }
-                else {
-                    $("#btnLogOn").val("Log On");
-                    $("#divPassword").show();
-                    $("#divRememberMe").show();
-                }
+            $("#RecoverLogin").click(function () {
+                $("#btnLogOn,#divPassword,#divRememberMe").hide();
+                $("#btnRecover").show();
             });
         });
         

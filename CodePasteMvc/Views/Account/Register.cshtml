@@ -48,12 +48,10 @@ else
 }
 
     <p style="padding: 5px;">
-        Create a new account by signing in with <a href="http://openid.net/get-an-openid/" target="_blank">OpenID</a> or using Email and Password for logins.
+        Create a new account by signing in with a social account or using Email and Password for logins.
     </p>
 
     @Html.Raw(this.Model.ErrorDisplay.Show(450,true))
-
-
             @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "frmRegistration" }))
             {
                 @Html.AntiForgeryToken()
@@ -135,7 +133,11 @@ else
                             </script>
 
                             <p>
-                                <input type="submit" value="Register"/>
+                                <button typeof="submit" value="Register"
+                                        class="btn btn-primary">
+                                    <i class="fa fa-edit"></i> 
+                                    Register
+                                </button>
 
                                 @if (Model.busUser.Entity.InActive && Model.busUser.Entity.Id != null)
                                 {

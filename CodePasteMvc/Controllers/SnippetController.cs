@@ -345,10 +345,17 @@ message to validate your email.<br><br>
                 return MyFavorites();
 
             using (busCodeSnippet busSnippet = new busCodeSnippet())
-            {
+            {                
                 var snippetList = busSnippet.GetSnippetList(listAction, listFilter);
                 busSnippet.Dispose();
 
+
+                //if (listAction == "recent")
+                //{
+                //    // keep the snippetlist short
+                //    if (snippetList != null)
+                //        snippetList = snippetList.Take(20).ToList();
+                //}
                 this.ViewData["busSnippet"] = busSnippet;
                 this.ViewData["SnippetList"] = snippetList;
 

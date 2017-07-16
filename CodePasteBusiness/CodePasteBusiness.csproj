@@ -59,9 +59,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -71,10 +71,12 @@
     <Reference Include="System.Data.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
@@ -82,9 +84,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SupportAssemblies\Westwind.BusinessFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Westwind.Utilities, Version=2.66.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Westwind.Utilities.2.66\lib\net45\Westwind.Utilities.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Westwind.Utilities, Version=3.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Westwind.Utilities.3.0.0.9-preview1-0\lib\net45\Westwind.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="Westwind.Web, Version=2.66.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Westwind.Web.2.66\lib\net45\Westwind.Web.dll</HintPath>

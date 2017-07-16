@@ -20,11 +20,11 @@ namespace CodePasteMvc.Controllers
 
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
-            base.Initialize(requestContext);           
+            base.Initialize(requestContext);
 
-            this.ViewModel.ErrorDisplay = this.ErrorDisplay;
-            this.ViewModel.AppUserState = this.AppUserState;
-            this.busUser = CodePasteFactory.GetUser();
+            ViewModel.ErrorDisplay = ErrorDisplay;
+            ViewModel.AppUserState = AppUserState;
+            busUser = CodePasteFactory.GetUser();
 
         }
 
@@ -34,9 +34,9 @@ namespace CodePasteMvc.Controllers
 
 
             ActionResult result = null;
-            if (!this.AppUserState.IsAdmin)
-                result = this.DisplayErrorPage("Access Denied", "This area of the site requires Admin access. Please <a href='" + 
-                                               this.Url.Content("~/account/logon") + "'>log in</a> first.","~/");
+            if (!AppUserState.IsAdmin)
+                result = DisplayErrorPage("Access Denied", "This area of the site requires Admin access. Please <a href='" +
+                                               Url.Content("~/account/logon") + "'>log in</a> first.","~/");
 
             filterContext.Result = result;            
         }
@@ -44,7 +44,7 @@ namespace CodePasteMvc.Controllers
         public ActionResult Index()
         {
             PageEnvironment environment = new PageEnvironment();           
-            return View(this.ViewModel);
+            return View(ViewModel);
         }
 
         
@@ -53,14 +53,14 @@ namespace CodePasteMvc.Controllers
         {
             if (formVars == null || formVars.Count == 0)
             {
-                this.ViewModel.UserList = this.busUser.GetUserList(null);             
+                ViewModel.UserList = busUser.GetUserList(null);             
             }
 
-            ActionResult action = this.ApiResult(this.ViewModel.UserList);
+            ActionResult action = ApiResult(ViewModel.UserList);
             if (action != null)
                 return action;
 
-            return View( this.ViewModel );
+            return View(ViewModel);
         }
 
 
@@ -70,9 +70,9 @@ namespace CodePasteMvc.Controllers
 
             ViewBag.busSnippet = busSnippet;
 
-            this.ViewModel.SnippetList = busSnippet.GetAbuseReportedSnippets();
+            ViewModel.SnippetList = busSnippet.GetAbuseReportedSnippets();
 
-            return View(this.ViewModel);
+            return View(ViewModel);
         }
 
 
@@ -81,22 +81,22 @@ namespace CodePasteMvc.Controllers
             busAdministration admin = new busAdministration();
 
             if (!admin.ShrinkDatabase())
-                this.ErrorDisplay.ShowError(admin.ErrorMessage);
+                ErrorDisplay.ShowError(admin.ErrorMessage);
             else
-                this.ErrorDisplay.ShowMessage("Database has been shrunk");
+                ErrorDisplay.ShowMessage("Database has been shrunk");
 
-            return View("Index", this.ViewModel);
+            return View("Index", ViewModel);
         }
 
         public ActionResult UpdateFormattedCode()
         {
             busAdministration admin = new busAdministration();
             if (!admin.UpdateFormattedCode())
-                this.ErrorDisplay.ShowError(admin.ErrorMessage);
+                ErrorDisplay.ShowError(admin.ErrorMessage);
             else
-                this.ErrorDisplay.ShowMessage("Snippets have been updated...");
+                ErrorDisplay.ShowMessage("Snippets have been updated...");
             
-            return View("Index", this.ViewModel);
+            return View("Index", ViewModel);
         }
 
         [HttpGet]
@@ -132,14 +132,14 @@ namespace CodePasteMvc.Controllers
             var adminBus = new busAdministration();
 
             if (!adminBus.DeleteSnippets(snipKeys))
-                this.ErrorDisplay.ShowError(adminBus.ErrorMessage);
+                ErrorDisplay.ShowError(adminBus.ErrorMessage);
             else
-                this.ErrorDisplay.ShowMessage(snipKeys.Length + " snippets deleted.");
+                ErrorDisplay.ShowMessage(snipKeys.Length + " snippets deleted.");
 
             var busAdmin = new busAdministration();
             model.Snippets = busAdmin.GetSpamKeywords(model.SearchTerm);
 
-            return this.View("DeleteSpam",model);
+            return View("DeleteSpam",model);
         }
 
 
@@ -155,16 +155,14 @@ namespace CodePasteMvc.Controllers
         public ActionResult ClearAnonymousSnippets()
         {
             busCodeSnippet codeSnippet = CodePasteFactory.GetCodeSnippet();
-            int result = codeSnippet.ClearAnonymousSnippets(App.Configuration.DaysToDeleteAnonymousSnippets,
+            int result = codeSnippet.ClearAnonymousSnippets(App.Configuration.HoursToDeleteAnonymousSnippets,
                                                     App.Configuration.MinViewBeforeDeleteAnonymousSnippets) ;
             if (result < 0)
-                this.ErrorDisplay.ShowError(codeSnippet.ErrorMessage);
+                ErrorDisplay.ShowError(codeSnippet.ErrorMessage);
             else
-            {
-                    this.ErrorDisplay.ShowMessage((result).ToString() + " old snippets have been cleared out.");
-            }
+                ErrorDisplay.ShowMessage((result).ToString() + " old snippets have been cleared out.");
 
-            return this.View("Index", this.ViewModel);
+            return View("Index", ViewModel);
         }
 
 
@@ -175,36 +173,36 @@ namespace CodePasteMvc.Controllers
             int result = codeSnippet.DatabaseHouseKeeping();
 
             if (result < 0)
-                this.ErrorDisplay.ShowError(codeSnippet.ErrorMessage);
+                ErrorDisplay.ShowError(codeSnippet.ErrorMessage);
             else
             {
                 if (result < 0)
-                    this.ErrorDisplay.ShowMessage("Database housekeeping failed: " + codeSnippet.ErrorMessage);
+                    ErrorDisplay.ShowMessage("Database housekeeping failed: " + codeSnippet.ErrorMessage);
                 else
-                    this.ErrorDisplay.ShowMessage((result).ToString() + " snippets have been cleared out.");
+                    ErrorDisplay.ShowMessage((result).ToString() + " snippets have been cleared out.");
             }
 
-            return this.View("Index", this.ViewModel);
+            return View("Index", ViewModel);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Configuration(FormCollection formVars)
         {
-            this.TryUpdateModel(App.Configuration);
+            TryUpdateModel(App.Configuration);
 
             if (App.Configuration.Write())
-                this.ErrorDisplay.ShowMessage("Configuration values written.");
+                ErrorDisplay.ShowMessage("Configuration values written.");
             else
-                this.ErrorDisplay.ShowError("Configuration values couldn't be saved:" + App.Configuration.ErrorMessage);
+                ErrorDisplay.ShowError("Configuration values couldn't be saved:" + App.Configuration.ErrorMessage);
 
-            return this.Configuration();
+            return Configuration();
             
         }
 
         private ActionResult AdminRequired()
         {
-            if (!this.AppUserState.IsAdmin)
-                return this.DisplayErrorPage("Access Denied", "This area of the site requires Admin access.", "~/");
+            if (!AppUserState.IsAdmin)
+                return DisplayErrorPage("Access Denied", "This area of the site requires Admin access.", "~/");
 
             return null;
         }
@@ -219,7 +217,7 @@ namespace CodePasteMvc.Controllers
             }
 
             ViewModel.ErrorDisplay.ShowMessage("User accounts have been updated.");
-            return View("Index",this.ViewModel);
+            return View("Index", ViewModel);
         }
     }
 
